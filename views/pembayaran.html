@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <h1>Pembayaran</h1>
+    <form action="/proses_pembayaran" method="post">
+      <!-- Menampilkan id_pasien, nama_pasien, dan email_pasien dari sesi -->
+      <label>ID :<input name="id_pasien" value="<%= id_pasien %>" /></label
+      ><br />
+      <label
+        >Nama : <input name="nama_pasien" value="<%= nama_pasien %>" /></label
+      ><br />
+      <label
+        >Email :
+        <input name="email_pasien" value="<%= email_pasien %>" /></label
+      ><br />
+
+      <label for="jumlah_biaya">Jumlah Biaya:</label>
+      <input type="number" name="jumlah_biaya" required /><br />
+
+      <!-- Menampilkan pilihan metode pembayaran dari ENUM yang telah Anda buat -->
+      <label for="metode_pembayaran">Metode Pembayaran:</label>
+      <select name="metode_pembayaran" required>
+        <option value="cash">Cash</option>
+        <option value="kartu kredit">Kartu Kredit</option>
+        <option value="transfer bank">Transfer Bank</option>
+        <!-- Tambahkan pilihan metode pembayaran lainnya jika diperlukan --></select
+      ><br />
+
+      <button type="submit">Bayar</button>
+    </form>
+  </body>
+</html>
