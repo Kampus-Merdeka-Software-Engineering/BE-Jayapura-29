@@ -31,15 +31,25 @@ window.onclick = function (event) {
 };
 
 //
-// document.addEventListener("DOMContentLoaded", function () {
-//   const bookingForm = document.getElementById("bookingForm");
-//   bookingForm.addEventListener("submit", function (event) {
-//     event.preventDefault(); // Prevent the default form submission
+function updateLayout() {
+  const navbar = document.querySelector(".navbar");
+  const tombolKanan = document.querySelector(".tombol_kanan");
+  const baru = document.querySelector(".baru");
+  const windowWidth = window.innerWidth;
 
-//     // You can customize the notification message here
-//     const notificationMessage = "Booking berhasil dilakukan.";
+  if (windowWidth <= 768) {
+    // Saat lebar layar kurang dari atau sama dengan 768px, tambahkan .tombol_kanan ke dalam .navbar
+    if (tombolKanan.parentNode !== navbar) {
+      navbar.appendChild(tombolKanan);
+    }
+  } else {
+    // Saat lebar layar lebih besar dari 768px, pastikan .tombol_kanan ada dalam .baru
+    const baru = document.querySelector(".baru");
+    if (tombolKanan.parentNode !== baru) {
+      baru.appendChild(tombolKanan);
+    }
+  }
+}
 
-//     // Display the notification
-//     alert(notificationMessage);
-//   });
-// });
+// Panggil fungsi saat halaman dimuat dan saat jendela diubah ukurannya.
+window.addEventListener("resize", updateLayout);

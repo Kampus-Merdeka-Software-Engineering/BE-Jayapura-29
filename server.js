@@ -149,53 +149,57 @@ app.get("/profile", checkLoggedIn, (req, res) => {
     if (results.length === 1) {
       const profileData = results[0];
 
-      // Query SQL untuk mengambil data pembayaran dari tb_pembayaran sesuai dengan id_pasien dan email_pasien
-      const pembayaranQuery =
-        "SELECT jumlah_biaya, tanggal_bayar,status_bayar, metode_pembayaran FROM tb_pembayaran WHERE id_pasien = ? AND email_pasien = ?";
+      // Query SQL untuk mengambil data appointment dari tb_appointment
+      const appointmentQuery =
+        "SELECT tanggal, waktu FROM tb_appointment WHERE id_pasien = ?";
 
-      db.query(
-        pembayaranQuery,
-        [id_pasien, email_pasien],
-        (err, pembayaranResults) => {
-          if (err) {
-            throw err;
-          }
-
-          // Mengambil data pembayaran jika ada
-          if (pembayaranResults.length === 1) {
-            const pembayaranData = pembayaranResults[0];
-            profileData.jumlah_bayar = pembayaranData.jumlah_biaya;
-            profileData.status_bayar = pembayaranData.status_bayar; // Ubah kolom status_bayar
-          } else {
-            profileData.jumlah_bayar = "Anda belum melakukan pembayaran";
-            profileData.status_bayar = "belum";
-          }
-
-          // Query SQL untuk mengambil data appointment dari tb_appointment
-          const appointmentQuery =
-            "SELECT tanggal, waktu FROM tb_appointment WHERE id_pasien = ?";
-
-          db.query(appointmentQuery, [id_pasien], (err, appointmentResults) => {
-            if (err) {
-              throw err;
-            }
-
-            // Mengambil data appointment jika ada
-            if (appointmentResults.length > 0) {
-              const appointmentData = appointmentResults[0];
-              profileData.tanggal = appointmentData.tanggal;
-              profileData.waktu = appointmentData.waktu;
-            } else {
-              // Jika tidak ada appointment, atur "jumlah bayar" dan "status bayar" sesuai ketentuan
-              profileData.jumlah_bayar = "-";
-              profileData.status_bayar = "-";
-            }
-
-            // Render halaman profil dengan data pengguna, data pembayaran, dan data appointment
-            res.render("profile", { profileData });
-          });
+      db.query(appointmentQuery, [id_pasien], (err, appointmentResults) => {
+        if (err) {
+          throw err;
         }
-      );
+
+        // Mengambil data appointment jika ada
+        if (appointmentResults.length > 0) {
+          const appointmentData = appointmentResults[0];
+          profileData.tanggal = appointmentData.tanggal;
+          profileData.waktu = appointmentData.waktu;
+
+          // Query SQL untuk mengambil data pembayaran dari tb_pembayaran sesuai dengan id_pasien dan email_pasien
+          const pembayaranQuery =
+            "SELECT jumlah_biaya, tanggal_bayar, status_bayar, metode_pembayaran FROM tb_pembayaran WHERE id_pasien = ? AND email_pasien = ?";
+
+          db.query(
+            pembayaranQuery,
+            [id_pasien, email_pasien],
+            (err, pembayaranResults) => {
+              if (err) {
+                throw err;
+              }
+
+              // Mengambil data pembayaran jika ada
+              if (pembayaranResults.length === 1) {
+                const pembayaranData = pembayaranResults[0];
+                profileData.jumlah_bayar = pembayaranData.jumlah_biaya;
+                profileData.status_bayar = pembayaranData.status_bayar; // Menggunakan status bayar dari data pembayaran
+              } else {
+                // Jika tidak ada data pembayaran, atur "jumlah bayar" dan "status bayar" sesuai ketentuan
+                profileData.jumlah_bayar = 70000; // Atur jumlah bayar sesuai dengan ketentuan
+                profileData.status_bayar = "Belum"; // Set status bayar ke "Belum"
+              }
+
+              // Render halaman profil dengan data pengguna, data pembayaran, dan data appointment
+              res.render("profile.html", { profileData });
+            }
+          );
+        } else {
+          // Jika tidak ada appointment, atur "jumlah bayar" dan "status bayar" sesuai ketentuan
+          profileData.jumlah_bayar = "-";
+          profileData.status_bayar = "-";
+
+          // Render halaman profil dengan data pengguna, data pembayaran, dan data appointment
+          res.render("profile.html", { profileData });
+        }
+      });
     }
   });
 });
