@@ -241,11 +241,53 @@ app.get("/pembayaran", checkLoggedIn, (req, res) => {
   const nama_pasien = req.session.nama_pasien;
   const email_pasien = req.session.email_pasien;
 
-  // Render halaman pembayaran dengan data pengguna
-  res.render("pembayaran", {
-    id_pasien: id_pasien,
-    nama_pasien: nama_pasien,
-    email_pasien: email_pasien,
+  // Mengambil data appointment terakhir pengguna
+  const getLastAppointmentQuery =
+    "SELECT nama_psikolog FROM tb_appointment WHERE id_pasien = ? ORDER BY tanggal DESC LIMIT 1";
+
+  db.query(getLastAppointmentQuery, [id_pasien], (err, appointmentResult) => {
+    if (err) {
+      console.error("Kesalahan saat mengambil data appointment:", err);
+      res
+        .status(500)
+        .send("Terjadi kesalahan saat mengambil data appointment.");
+      return;
+    }
+
+    // Menyimpan nama_psikolog dari hasil query
+    const nama_psikolog = appointmentResult[0]
+      ? appointmentResult[0].nama_psikolog
+      : "";
+
+    // Mengambil data psikolog berdasarkan nama_psikolog
+    const getPsikologQuery =
+      "SELECT gambar_psikolog, spesialisasi FROM tb_psikolog WHERE nama_psikolog = ?";
+
+    db.query(getPsikologQuery, [nama_psikolog], (err, psikologResult) => {
+      if (err) {
+        console.error("Kesalahan saat mengambil data psikolog:", err);
+        res.status(500).send("Terjadi kesalahan saat mengambil data psikolog.");
+        return;
+      }
+
+      // Menyimpan data gambar_psikolog dan spesialisasi dari hasil query
+      const gambar_psikolog = psikologResult[0]
+        ? psikologResult[0].gambar_psikolog
+        : "";
+      const spesialisasi = psikologResult[0]
+        ? psikologResult[0].spesialisasi
+        : "";
+
+      // Render halaman pembayaran dengan data pengguna, nama_psikolog, gambar_psikolog, dan spesialisasi
+      res.render("pembayaran", {
+        id_pasien: id_pasien,
+        nama_pasien: nama_pasien,
+        email_pasien: email_pasien,
+        nama_psikolog: nama_psikolog,
+        gambar_psikolog: gambar_psikolog,
+        spesialisasi: spesialisasi,
+      });
+    });
   });
 });
 

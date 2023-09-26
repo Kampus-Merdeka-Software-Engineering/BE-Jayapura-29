@@ -7,29 +7,44 @@
   </head>
   <body>
     <h1>Pembayaran</h1>
-    <form action="/proses_pembayaran" method="post">
+<label>Gambar Psikolog: <img src="data:image/png;base64,<%= gambar_psikolog.toString('base64') %>" /></label><br />
+<label>Nama Psikolog: <%= nama_psikolog %></label><br />
+<label>Spesialisasi: <%= spesialisasi %></label><br />
+
+<form action="/proses_pembayaran" method="post">
       <!-- Menampilkan id_pasien, nama_pasien, dan email_pasien dari sesi -->
-      <label>ID :<input name="id_pasien" value="<%= id_pasien %>" /></label
-      ><br />
+      <label style="display: none"
+        >ID :<input name="id_pasien" value="<%= id_pasien %>" readonly /></label
       <label
-        >Nama : <input name="nama_pasien" value="<%= nama_pasien %>" /></label
-      ><br />
-      <label
+        >Nama :
+        <input name="nama_pasien" value="<%= nama_pasien %>" readonly /></label>
+      <label style="display: none"
         >Email :
-        <input name="email_pasien" value="<%= email_pasien %>" /></label
+        <input
+          name="email_pasien"
+          value="<%= email_pasien %>"
+          readonly /></label
       ><br />
 
-      <label for="jumlah_biaya">Jumlah Biaya:</label>
-      <input type="number" name="jumlah_biaya" required /><br />
+      <label for="jumlah_biaya">Jumlah Biaya:</label><br>
+      <label for="biaya_sesi">Biaya Sesi:</label>
+<input type="number" name="biaya_sesi" value="70000" readonly /><br />
 
-      <!-- Menampilkan pilihan metode pembayaran dari ENUM yang telah Anda buat -->
-      <label for="metode_pembayaran">Metode Pembayaran:</label>
-      <select name="metode_pembayaran" required>
-        <option value="cash">Cash</option>
-        <option value="kartu kredit">Kartu Kredit</option>
-        <option value="transfer bank">Transfer Bank</option>
-        <!-- Tambahkan pilihan metode pembayaran lainnya jika diperlukan --></select
-      ><br />
+<label for="biaya_layanan">Biaya Layanan:</label>
+<input type="number" name="biaya_layanan" value="10000" readonly /><br />
+
+<label for="jumlah_biaya">Total Biaya:</label>
+<input type="number" name="jumlah_biaya" value="80000" readonly /><br />
+
+      <label>Metode Pembayaran:</label><br />
+<input type="radio" name="metode_pembayaran" value="cash" id="cash" required />
+<label for="cash">Cash</label><br />
+
+<input type="radio" name="metode_pembayaran" value="kartu kredit" id="kartu_kredit" />
+<label for="kartu_kredit">Kartu Kredit</label><br />
+
+<input type="radio" name="metode_pembayaran" value="transfer bank" id="transfer_bank" />
+<label for="transfer_bank">Transfer Bank</label><br />
 
       <button type="submit">Bayar</button>
     </form>
