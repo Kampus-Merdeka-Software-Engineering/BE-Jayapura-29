@@ -312,13 +312,8 @@ app.post("/signup", upload.single("foto_pasien"), (req, res) => {
     password,
   } = req.body;
 
-  // Ambil file gambar yang diunggah
-  const foto_pasien = req.file;
-
-  // Pastikan file gambar telah diunggah dengan benar
-  if (!foto_pasien) {
-    return res.status(400).send("Gambar profil harus diunggah.");
-  }
+  // Ambil file gambar yang diunggah, atau gunakan foto profil default jika tidak ada yang diunggah
+  const foto_pasien = req.file || { path: "img/poto-profil.png" };
 
   // Konversi gambar menjadi bentuk Base64
   const gambarBase64 = fs.readFileSync(foto_pasien.path, "base64");
@@ -417,43 +412,58 @@ app.post(
   upload.single("foto_pasien"),
   (req, res) => {
     const id_pasien = req.session.userId;
-    const { nama_pasien, email_pasien, alamat, nomor_ponsel } = req.body;
+    const {
+      nama_pasien,
+      tanggal_lahir,
+      gender,
+      nomor_ponsel,
+      email_pasien,
+      alamat,
+      password,
+    } = req.body;
 
-    // Lakukan validasi dan pembaruan data profil di sini sesuai kebutuhan
-    // Misalnya, Anda dapat melakukan validasi data yang diterima dan memastikan data tersebut valid
+    // Ambil file gambar yang diunggah
+    const foto_pasien = req.file;
 
-    // Jika foto profil berhasil diunggah, Anda dapat menghandle pembaruan gambar profil di sini
-    if (req.file) {
-      const newProfilePicture = req.file.filename;
-      // Lakukan sesuatu dengan gambar profil yang baru diunggah, jika diperlukan
+    // Pastikan file gambar telah diunggah dengan benar
+    if (!foto_pasien) {
+      return res.status(400).send("Gambar profil harus diunggah.");
     }
 
+    // Konversi gambar menjadi bentuk Base64
+    const gambarBase64 = fs.readFileSync(foto_pasien.path, "base64");
+
+    // Simpan data pengguna ke database, termasuk gambar profil
+    const user = {
+      foto_pasien: gambarBase64, // Simpan gambar dalam format Base64
+      nama_pasien,
+      tanggal_lahir,
+      gender,
+      nomor_ponsel,
+      email_pasien,
+      alamat,
+      password, // Simpan kata sandi dalam teks biasa (tanpa hashing)
+    };
+
     // Query SQL untuk melakukan pembaruan data profil di tabel tb_pasien
-    const updateQuery =
-      "UPDATE tb_pasien SET nama_pasien = ?, email_pasien = ?, alamat = ?, nomor_ponsel = ? WHERE id_pasien = ?";
-
-    db.query(
-      updateQuery,
-      [nama_pasien, email_pasien, alamat, nomor_ponsel, id_pasien],
-      (err, result) => {
-        if (err) {
-          // Handle kesalahan jika query gagal
-          console.error("Kesalahan saat memperbarui profil:", err);
-          return res
-            .status(500)
-            .send("Terjadi kesalahan saat memperbarui profil.");
-        }
-
-        // Setelah pembaruan berhasil, tampilkan pesan sukses dan arahkan ke halaman profil
-        const successMessage = "Profil berhasil diperbarui";
-        res.send(`
-        <script>
-          alert('${successMessage}');
-          window.location='/profile'; // Redirect ke halaman profil
-        </script>
-      `);
+    const updateQuery = "UPDATE tb_pasien SET ? WHERE id_pasien = ?";
+    db.query(updateQuery, [user, id_pasien], (err, result) => {
+      if (err) {
+        console.error("Kesalahan saat memperbarui profil:", err);
+        return res
+          .status(500)
+          .send("Terjadi kesalahan saat memperbarui profil.");
       }
-    );
+
+      // Tampilkan pesan sukses dan arahkan pengguna kembali ke halaman edit profil atau halaman profil
+      const successMessage = "Profil berhasil diperbarui";
+      res.send(`
+      <script>
+        alert('${successMessage}');
+        window.location='/edit_profile'; // Ubah '/edit_profile' sesuai dengan URL edit profil Anda
+      </script>
+    `);
+    });
   }
 );
 

@@ -13,60 +13,33 @@
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
-    <header class="header">
-      <a href="#" class="logo">
-        <i class="fas fa-heartbeat"></i>MentalHealth.</a
-      >
-
-      <nav class="navbar">
-        <a href="/index">home</a>
-        <a href="#services">services</a>
-        <a href="#about">about</a>
-        <a href="#doctors">doctors</a>
-        <a href="#book">book</a>
-        <a href="#review">review</a>
-        <a href="#blogs">blogs</a>
-      </nav>
-      <div class="baru">
-      <div class="tombol_kanan">
-      <button type="button" class="btn_sign">
-        <a href="/signup" style="color: #1450a3; margin: 0">Sign In</a>
-      </button>
-      <button type="button" class="btn_login">
-        <a href="/login" style="color: #fff; margin: 0">Login</a>
-      </button>
-      </div>
-      </div>
-      <div id="menu-btn" class="fas fa-bars"></div>
-    </header>
-
-    <div class="isi_form" style="background-color: red;">
-      <form action="/signup" method="POST" enctype="multipart/form-data" class="isi">
-        <img src="boy2.png" alt="">
-      <input type="file" name="foto_pasien" accept="image/*" class="box"/><br />
-      <input type="text" name="nama_pasien" placeholder="Nama" class="box" /><br />
-      <input type="date" name="tanggal_lahir" class="box" required /><br />
-      <select id="gender" name="gender" class="box" required>
-  <option value="laki laki">Laki-laki</option>
-  <option value="perempuan">Perempuan</option>
-</select>
+    <h2>Signup</h2>
+    <form action="/signup" method="POST" enctype="multipart/form-data">
+      <input
+        type="file"
+        name="foto_pasien"
+        accept="image/*"
+        style="display: none" />
+      <input type="text" name="nama_pasien" placeholder="Nama" required /><br />
+      <input type="date" name="tanggal_lahir" required /><br />
+      <input type="radio" name="gender" value="laki laki" required /> Laki-laki
+      <br />
+      <input type="radio" name="gender" value="perempuan" required /> Perempuan
       <br />
       <input
         type="text"
         name="nomor_ponsel"
-        placeholder="Nomor Ponsel" class="box"
+        placeholder="Nomor Ponsel"
         required />
       <br />
-      <input type="email" name="email_pasien" placeholder="Email" class="box" required />
+      <input type="email" name="email_pasien" placeholder="Email" required />
       <br />
-      <input type="text" name="alamat" placeholder="Alamat" class="box" required /> <br />
-      <input type="password" name="password" placeholder="Password" class="box" required />
+      <input type="text" name="alamat" placeholder="Alamat" required /> <br />
+      <input type="password" name="password" placeholder="Password" required />
       <br />
-      <button type="submit" class="box">Signup</button>
+      <button type="submit">Signup</button>
     </form>
-      </div>
-    </div>
-
-     <script src="script.js"></script>
+    <p>Already have an account? <a href="/login">Login</a></p>
+    <p><a href="/index">Kembali</a></p>
   </body>
 </html>

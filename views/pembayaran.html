@@ -15,8 +15,7 @@
       <!-- Menampilkan id_pasien, nama_pasien, dan email_pasien dari sesi -->
       <label style="display: none"
         >ID :<input name="id_pasien" value="<%= id_pasien %>" readonly /></label
-      <label
-        >Nama :
+      <label>Nama :
         <input name="nama_pasien" value="<%= nama_pasien %>" readonly /></label>
       <label style="display: none"
         >Email :
@@ -37,14 +36,14 @@
 <input type="number" name="jumlah_biaya" value="80000" readonly /><br />
 
       <label>Metode Pembayaran:</label><br />
-<input type="radio" name="metode_pembayaran" value="cash" id="cash" required />
-<label for="cash">Cash</label><br />
+<input type="radio" name="metode_pembayaran" value="gopay" id="gopay" required />
+<label for="gopay">Gopay</label><br />
 
-<input type="radio" name="metode_pembayaran" value="kartu kredit" id="kartu_kredit" />
-<label for="kartu_kredit">Kartu Kredit</label><br />
+<input type="radio" name="metode_pembayaran" value="dana" id="dana" />
+<label for="dana">Dana</label><br />
 
-<input type="radio" name="metode_pembayaran" value="transfer bank" id="transfer_bank" />
-<label for="transfer_bank">Transfer Bank</label><br />
+<input type="radio" name="metode_pembayaran" value="bri" id="bri" />
+<label for="bri">BRI</label><br />
 
       <button type="submit">Bayar</button>
     </form>
