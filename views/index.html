@@ -11,26 +11,26 @@
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
 
     <!-- custom css file link -->
-    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="/style/style.css" />
   </head>
 
   <body>
     <!-- header section starts -->
     <% if (nama) { %>
-    <header class="header" >
+      <header class="header">
       <a href="#" class="logo">
-        <i class="fas fa-heartbeat"></i>MentalHealth.</a
+        <img class="logo" src="/img/logo.png" alt="" /></a
       >
 
-      <nav class="navbar" >
+      <nav class="navbar">
         <a href="#home">home</a>
         <a href="#services">services</a>
-        <a href="#about">about</a>
-        <a href="#doctors">doctors</a>
+        <a href="#doctors">find a psycholog</a>
         <a href="#book">book</a>
-        <a href="#review">review</a>
         <a href="#blogs">blogs</a>
+        <a href="#contact">contact us</a>
       </nav>
+
       <div class="profile">
       <img src="data:image/png;base64, <%= foto_pasien %>" alt="Foto Profil" class="poto_profile">
       <div class="profile-menu">
@@ -42,31 +42,32 @@
         </div>
       </div>
     </div>
+
+      <div id="menu-btn" class="fas fa-bars"></div>
+    </header>
+      
         <% }else { %>
           <header class="header">
       <a href="#" class="logo">
-        <i class="fas fa-heartbeat"></i>MentalHealth.</a
+        <img class="logo" src="/img/logo.png" alt="" /></a
       >
 
       <nav class="navbar">
         <a href="#home">home</a>
         <a href="#services">services</a>
-        <a href="#about">about</a>
-        <a href="#doctors">doctors</a>
+        <a href="#doctors">find a psycholog</a>
         <a href="#book">book</a>
-        <a href="#review">review</a>
         <a href="#blogs">blogs</a>
+        <a href="#contact">contact us</a>
       </nav>
-      <div class="baru">
-      <div class="tombol_kanan">
-      <button type="button" class="btn_sign">
-        <a href="/signup" style="color: #1450a3; margin: 0">Sign In</a>
-      </button>
-      <button type="button" class="btn_login">
-        <a href="/login" style="color: #fff; margin: 0">Login</a>
-      </button>
+
+      <div class="header-btn">
+        <a href="/signup" class="sign-up">Sign Up</a>
+        <a href="/login" class="login">Login</a>
       </div>
-    </div>
+
+      <div id="menu-btn" class="fas fa-bars"></div>
+    </header>
     <% } %>
       <div id="menu-btn" class="fas fa-bars"></div>
     </header>
@@ -75,47 +76,40 @@
 
     <!-- home section starts -->
     <% if (nama) { %>
-    <section class="home" id="home">
-      <div class="image">
-        <img
-          src="https://img.freepik.com/free-vector/pharmacist-collection-illustration_52683-37172.jpg?size=626&ext=jpg&ga=GA1.2.781077075.1679312414&semt=ais"
-          alt="" />
-      </div>
-
+      <section class="home" id="home">
       <div class="content">
         <h2 style="font-size: 2rem ;
     color: var(--black);">Hi <%= nama %>,</h2>
-        <h3>stay safe, stay healthy</h3>
+        <h4>Welcome To</h4>
+        <h3>Virtual Healthcare For You</h3>
         <p>
-          Lorem ipsum dolor sit amet consectetur, adipisicing elit. Doloribus,
-          excepturi ex maxime magnam recusandae nostrum quas sint, doloremque
-          dolorum in odio quaerat possimus porro? Quas sunt ab maxime tempora
-          cupiditate?
+          ReBios provides progressive, and affordable psycholog healthcare,
+          accessible on mobile and online for everyone
         </p>
-        <a href="#book" class="btn">
-          book now <span class="fas fa-chevron-right"></span>
+        <a href="/appointment" class="btn">
+          consult today <span class="fas fa-chevron-right"></span>
         </a>
+      </div>
+
+      <div class="image">
+        <img src="/img/index.png" alt="" />
       </div>
     </section>
     <% } else { %>
       <section class="home" id="home">
-      <div class="image">
-        <img
-          src="https://img.freepik.com/free-vector/pharmacist-collection-illustration_52683-37172.jpg?size=626&ext=jpg&ga=GA1.2.781077075.1679312414&semt=ais"
-          alt="" />
+      <div class="content">
+        <h3>Virtual Healthcare For You</h3>
+        <p>
+          ReBios provides progressive, and affordable psycholog healthcare,
+          accessible on mobile and online for everyone
+        </p>
+        <a href="/appointment" class="btn">
+          consult today <span class="fas fa-chevron-right"></span>
+        </a>
       </div>
 
-      <div class="content">
-        <h3>stay safe, stay healthy</h3>
-        <p>
-          Lorem ipsum dolor sit amet consectetur, adipisicing elit. Doloribus,
-          excepturi ex maxime magnam recusandae nostrum quas sint, doloremque
-          dolorum in odio quaerat possimus porro? Quas sunt ab maxime tempora
-          cupiditate?
-        </p>
-        <a href="#book" class="btn">
-          contact us <span class="fas fa-chevron-right"></span>
-        </a>
+      <div class="image">
+        <img src="/img/index.png" alt="" />
       </div>
     </section>
       <% } %>
@@ -353,55 +347,7 @@
     <!-- doctors section ends -->
 
     <!-- booking section starts -->
-    <section class="book" id="book">
-      <h1 class="heading"><span>book</span> now</h1>
-
-      <div class="row">
-        <div class="image">
-          <img
-            src="https://img.freepik.com/free-vector/smart-pill-boxes-abstract-concept-illustration_335657-3864.jpg?size=626&ext=jpg&ga=GA1.2.781077075.1679312414&semt=ais"
-            alt="" />
-        </div>
-
-        <form action="/index" method="POST">
-          <h3>book appointment</h3>
-      <input
-        type="text"
-        name="id_pasien"
-        id="id_pasien"
-        value="<%= id_pasien %>"
-        class="box"
-        readonly  /><br />
-        <input
-        type="text"
-        name="nama_pasien"
-        id="nama_pasien"
-        value="<%= nama %>"
-        class="box"
-        readonly /><br />
-        <input
-        type="text"
-        name="email_pasien"
-        id="email_pasien"
-        value="<%= email_pasien %>"
-        class="box"
-        readonly /><br />
-        <select name="nama_psikolog" id="nama_psikolog" class="box">
-        <% for (var i = 0; i < psikolog.length; i++) { %>
-        <option value="<%= psikolog[i].id_psikolog %>">
-          <%= psikolog[i].nama_psikolog %>
-        </option>
-        <% } %></select
-      ><br />
-      <input type="date" name="tanggal" id="tanggal" class="box" required /><br />
-       <input type="time" name="waktu" id="waktu" required class="box"/><br />
-       <textarea name="keluhan" id="keluhan" class="box" required></textarea><br />
-       <input type="submit" value="Buat Appointment" class="btn"/>
-        </form>
-      </div>
-</div>
-
-    </section>
+    
     <!-- booking section ends -->
 
     <!-- review section starts -->
@@ -646,7 +592,7 @@
 
     <!-- custom js file link -->
     
-    <script src="script.js"></script>
+    <script src="script/script.js"></script>
 
     
   </body>

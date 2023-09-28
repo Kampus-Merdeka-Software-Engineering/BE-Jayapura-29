@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <h1>Halaman Appointment</h1>
+    <p>
+      Selamat datang, <%= nama %>! Anda dapat mengakses halaman appointment.
+    </p>
+    <form method="POST" action="/appointment">
+      <div class="isi" style="display: none">
+        <label for="id_pasien">ID Pasien:</label>
+        <input
+          type="text"
+          name="id_pasien"
+          id="id_pasien"
+          value="<%= id_pasien %>"
+          readonly />
+      </div>
+
+      <label for="nama_pasien">Nama Anda:</label>
+      <input
+        type="text"
+        name="nama_pasien"
+        id="nama_pasien"
+        value="<%= nama %>"
+        readonly /><br />
+
+      <!-- Tambahkan input email_pasien yang akan diisi otomatis -->
+      <label for="email_pasien">Email Pasien:</label>
+      <input
+        type="text"
+        name="email_pasien"
+        id="email_pasien"
+        value="<%= email_pasien %>"
+        readonly /><br />
+
+      <label for="nama_psikolog">Nama Psikolog:</label>
+      <select name="nama_psikolog" id="nama_psikolog">
+        <% for (var i = 0; i < psikolog.length; i++) { %>
+        <option value="<%= psikolog[i].id_psikolog %>">
+          <%= psikolog[i].nama_psikolog %>
+        </option>
+        <% } %></select
+      ><br />
+
+      <label for="tanggal">Tanggal Appointment:</label>
+      <input type="date" name="tanggal" id="tanggal" required /><br />
+
+      <label for="waktu">Waktu Appointment:</label>
+      <input type="time" name="waktu" id="waktu" required /><br />
+
+      <label for="keluhan">Keluhan Anda:</label>
+      <textarea name="keluhan" id="keluhan" required></textarea><br />
+
+      <input type="submit" value="Buat Appointment" />
+    </form>
+    <p><a href="/index">Kembali</a></p>
+  </body>
+</html>

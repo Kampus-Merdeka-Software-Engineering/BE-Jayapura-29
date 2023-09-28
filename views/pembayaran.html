@@ -3,49 +3,198 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title>Pembayaran</title>
+
+    <link rel="stylesheet" href="/style/pembayaran.css" />
+    <script src="script/script.js"></script>
   </head>
   <body>
-    <h1>Pembayaran</h1>
-<label>Gambar Psikolog: <img src="data:image/png;base64,<%= gambar_psikolog.toString('base64') %>" /></label><br />
-<label>Nama Psikolog: <%= nama_psikolog %></label><br />
-<label>Spesialisasi: <%= spesialisasi %></label><br />
+    <!--  -->
+    <header class="header">
+      <a href="#" class="logo_header">
+        <img class="logo_header" src="/img/logo.png" alt=""
+      /></a>
 
-<form action="/proses_pembayaran" method="post">
-      <!-- Menampilkan id_pasien, nama_pasien, dan email_pasien dari sesi -->
-      <label style="display: none"
-        >ID :<input name="id_pasien" value="<%= id_pasien %>" readonly /></label
-      <label>Nama :
-        <input name="nama_pasien" value="<%= nama_pasien %>" readonly /></label>
-      <label style="display: none"
-        >Email :
-        <input
-          name="email_pasien"
-          value="<%= email_pasien %>"
-          readonly /></label
-      ><br />
+      <nav class="navbar">
+        <a href="/index">home</a>
+        <a href="#services">services</a>
+        <a href="#doctors">find a psycholog</a>
+        <a href="#book">book</a>
+        <a href="#blogs">blogs</a>
+        <a href="#contact">contact us</a>
+      </nav>
 
-      <label for="jumlah_biaya">Jumlah Biaya:</label><br>
-      <label for="biaya_sesi">Biaya Sesi:</label>
-<input type="number" name="biaya_sesi" value="70000" readonly /><br />
+      <div class="profile">
+        <img
+          src="data:image/png;base64, <%= foto_pasien %>"
+          alt="Foto Profil"
+          class="poto_profile" />
+        <div class="profile-menu">
+          <button onclick="myFunction()" class="dropbtn"></button>
+          <div id="myDropdown" class="dropdown-content">
+            <a href="/profile" style="margin: 0" class="dropdown">Profile</a>
+            <a href="/pembayaran" style="margin: 0" class="dropdown"
+              >Pembayaran</a
+            >
+            <a href="/logout" style="margin: 0" class="dropdown">Logout</a>
+          </div>
+        </div>
+      </div>
+      <div id="menu-btn" class="fas fa-bars"></div>
+    </header>
+    <!--  -->
+    <a
+      href="/index"
+      style="
+        position: absolute;
+        left: 8em;
+        top: 7em;
+        color: #1450a3;
+        font-weight: bold;
+        border: 1px solid #1450a3;
+        padding: 0.2em;
+        border-radius: 100px;
+      "
+      >Kembali</a
+    >
+    <div class="kata_tengah">
+      <img src="/img/logo-lengkap.png" alt="logo" width="15%" />
+      <h2>Payment</h2>
+      <p>Please complete the consultation fee</p>
+    </div>
 
-<label for="biaya_layanan">Biaya Layanan:</label>
-<input type="number" name="biaya_layanan" value="10000" readonly /><br />
+    <!-- Kolom Pembayaran -->
+    <div class="pembayaran">
+      <div class="kotak">
+        <div class="card">
+          <img src="/img/logo-1.png" alt="Logo" class="logo" />
+          <div class="circle"></div>
+          <img
+            src="data:image/png;base64,<%= gambar_psikolog.toString('base64') %>"
+            alt="Profile Picture"
+            class="profile-picture" />
+        </div>
+        <div class="data">
+          <div class="nama" style="font-size: 1.5m; font-weight: 600">
+            <label style="color: #fff"><%= nama_psikolog %></label><br />
+          </div>
+          <div class="spesialis" style="font-size: 1em">
+            <label style="color: #fff"><%= spesialisasi %></label><br />
+          </div>
+        </div>
+      </div>
 
-<label for="jumlah_biaya">Total Biaya:</label>
-<input type="number" name="jumlah_biaya" value="80000" readonly /><br />
+      <form action="/proses_pembayaran" method="post">
+        <div class="prosesPembayaran_container">
+          <div class="biodata_container">
+            <label style="display: none"
+              >ID : <<input name="id_pasien" value="" readonly />
+            </label>
 
-      <label>Metode Pembayaran:</label><br />
-<input type="radio" name="metode_pembayaran" value="gopay" id="gopay" required />
-<label for="gopay">Gopay</label><br />
+            <!-- Name Container -->
+            <div class="nama_pasien_container">
+              <label>Nama :</label>
+              <input name="nama_pasien" value="<%= nama_pasien %>" readonly />
+            </div>
 
-<input type="radio" name="metode_pembayaran" value="dana" id="dana" />
-<label for="dana">Dana</label><br />
+            <label style="display: none"
+              >Email : <input name="email_pasien" value="" readonly />
+            </label>
+          </div>
 
-<input type="radio" name="metode_pembayaran" value="bri" id="bri" />
-<label for="bri">BRI</label><br />
+          <!-- biaya container -->
+          <div class="biaya_container">
+            <div class="dalam_kotakTabel">
+              <label class="rincian_biaya" style="border: none"
+                >Rincian Biaya:</label
+              >
+            </div>
+            <div class="dalam_kotakTabel">
+              <div class="kotak_label">
+                <div class="dalam_kotakTabel">
+                  <label for="biaya_sesi">Biaya Sesi:</label>
+                  <input
+                    type="number"
+                    name="biaya_sesi"
+                    value="70000"
+                    readonly /><br />
+                </div>
+                <div class="dalam_kotakTabel">
+                  <label for="biaya_layanan">Biaya Layanan:</label>
+                  <input
+                    type="number"
+                    name="biaya_layanan"
+                    value="10000"
+                    readonly /><br />
+                </div>
+                <hr />
+                <div class="dalam_kotakTabel">
+                  <label for="jumlah_biaya">Total:</label>
+                  <input
+                    type="number"
+                    name="jumlah_biaya"
+                    value="80000"
+                    readonly /><br />
+                </div>
+              </div>
+            </div>
+          </div>
 
-      <button type="submit">Bayar</button>
-    </form>
+          <!-- metode container -->
+          <div class="metode_container">
+            <label class="metode_pembayaran">Metode Pembayaran:</label>
+            <br />
+            <div class="metode">
+              <div class="pilihan">
+                <input
+                  type="radio"
+                  name="metode_pembayaran"
+                  value="gopay"
+                  id="gopay"
+                  required />
+                <label for="gopay"
+                  >Gopay
+                  <img
+                    class="metode_bayar"
+                    src="/img/gopay.png"
+                    alt="gopay" /> </label
+                ><br />
+              </div>
+
+              <div class="pilihan">
+                <input
+                  type="radio"
+                  name="metode_pembayaran"
+                  value="dana"
+                  id="dana" />
+                <label for="dana"
+                  >Dana
+                  <img
+                    class="metode_bayar"
+                    src="/img/dana.png"
+                    alt="dana" /> </label
+                ><br />
+              </div>
+
+              <div class="pilihan">
+                <input
+                  type="radio"
+                  name="metode_pembayaran"
+                  value="bri"
+                  id="bri" />
+                <label for="bri"
+                  >BRI
+                  <img
+                    class="metode_bayar"
+                    src="/img/BRImo.png"
+                    alt="bri" /> </label
+                ><br />
+              </div>
+            </div>
+          </div>
+          <div class="tombol"><button type="submit">Bayar</button></div>
+        </div>
+      </form>
+    </div>
   </body>
 </html>

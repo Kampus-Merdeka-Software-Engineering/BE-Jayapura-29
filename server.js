@@ -43,6 +43,9 @@ app.use(express.static(path.join(__dirname, "views")));
 app.engine("html", require("ejs").renderFile); // Menggunakan ejs sebagai view engine untuk file HTML
 app.set("view engine", "html");
 
+app.use(express.urlencoded({ extended: true }));
+app.use(express.static("public")); // Folder untuk file publik (CSS, gambar, dll.)
+
 // Middleware untuk memeriksa apakah pengguna sudah login
 const checkLoggedIn = (req, res, next) => {
   if (req.session.userId) {
@@ -55,7 +58,7 @@ const checkLoggedIn = (req, res, next) => {
 // poto-profil
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, "uploads/"); // Simpan gambar di folder "uploads/"
+    cb(null, "public/uploads/"); // Simpan gambar di folder "uploads/"
   },
   filename: (req, file, cb) => {
     const uniqueSuffix = Date.now() + "-" + Math.round(Math.random() * 1e9);
@@ -69,9 +72,6 @@ const upload = multer({
     fileSize: 1024 * 1024 * 5, // Batas ukuran file (misalnya, 5MB)
   },
 });
-
-app.use(express.urlencoded({ extended: true }));
-app.use(express.static("public")); // Folder untuk file publik (CSS, gambar, dll.)
 
 // Routing
 app.get("/", (req, res) => {
@@ -93,39 +93,26 @@ app.get("/index", (req, res) => {
   if (req.session.userId) {
     const userId = req.session.userId;
     const query =
-      "SELECT nama_pasien, foto_pasien, email_pasien FROM tb_pasien WHERE id_pasien = ?";
+      "SELECT nama_pasien, foto_pasien FROM tb_pasien WHERE id_pasien = ?";
     db.query(query, [userId], (err, results) => {
       if (err) throw err;
       if (results.length === 1) {
-        const { nama_pasien, foto_pasien, email_pasien } = results[0];
+        const { nama_pasien, foto_pasien } = results[0];
         const id_pasien = userId;
-
-        // Fetch the psikolog data, you should adapt this query to your database structure
-        const queryPsikolog =
-          "SELECT id_psikolog, nama_psikolog FROM tb_psikolog";
-        db.query(queryPsikolog, (err, psikolog) => {
-          if (err) throw err;
-
-          res.render("index", {
-            nama: nama_pasien,
-            id_pasien: id_pasien,
-            foto_pasien: foto_pasien,
-            email_pasien: email_pasien,
-            psikolog: psikolog, // Add psikolog data to the template context
-          });
+        res.render("index", {
+          nama: nama_pasien,
+          id_pasien: id_pasien,
+          foto_pasien: foto_pasien, // Menambahkan foto_pasien ke konteks template
         });
       } else {
         res.redirect("/login");
       }
     });
   } else {
-    // User is not logged in, render the template with empty psikolog data
     res.render("index", {
       nama: null,
       id_pasien: null,
       foto_pasien: null,
-      email_pasien: null,
-      psikolog: [], // Pass an empty array for psikolog data
     });
   }
 });
@@ -150,56 +137,60 @@ app.get("/profile", checkLoggedIn, (req, res) => {
       const profileData = results[0];
 
       // Query SQL untuk mengambil data appointment dari tb_appointment
-      const appointmentQuery =
-        "SELECT tanggal, waktu FROM tb_appointment WHERE id_pasien = ?";
+      const getLastAppointmentQuery =
+        "SELECT tanggal, waktu FROM tb_appointment WHERE id_pasien = ? ORDER BY tanggal DESC LIMIT 1";
 
-      db.query(appointmentQuery, [id_pasien], (err, appointmentResults) => {
-        if (err) {
-          throw err;
-        }
+      db.query(
+        getLastAppointmentQuery,
+        [id_pasien],
+        (err, appointmentResults) => {
+          if (err) {
+            throw err;
+          }
 
-        // Mengambil data appointment jika ada
-        if (appointmentResults.length > 0) {
-          const appointmentData = appointmentResults[0];
-          profileData.tanggal = appointmentData.tanggal;
-          profileData.waktu = appointmentData.waktu;
+          // Mengambil data appointment jika ada
+          if (appointmentResults.length > 0) {
+            const appointmentData = appointmentResults[0];
+            profileData.tanggal = appointmentData.tanggal;
+            profileData.waktu = appointmentData.waktu;
 
-          // Query SQL untuk mengambil data pembayaran dari tb_pembayaran sesuai dengan id_pasien dan email_pasien
-          const pembayaranQuery =
-            "SELECT jumlah_biaya, tanggal_bayar, status_bayar, metode_pembayaran FROM tb_pembayaran WHERE id_pasien = ? AND email_pasien = ?";
+            // Query SQL untuk mengambil data pembayaran dari tb_pembayaran sesuai dengan id_pasien dan email_pasien
+            const pembayaranQuery =
+              "SELECT jumlah_biaya, tanggal_bayar, status_bayar, metode_pembayaran FROM tb_pembayaran WHERE id_pasien = ? AND email_pasien = ?";
 
-          db.query(
-            pembayaranQuery,
-            [id_pasien, email_pasien],
-            (err, pembayaranResults) => {
-              if (err) {
-                throw err;
+            db.query(
+              pembayaranQuery,
+              [id_pasien, email_pasien],
+              (err, pembayaranResults) => {
+                if (err) {
+                  throw err;
+                }
+
+                // Mengambil data pembayaran jika ada
+                if (pembayaranResults.length === 1) {
+                  const pembayaranData = pembayaranResults[0];
+                  profileData.jumlah_bayar = pembayaranData.jumlah_biaya;
+                  profileData.status_bayar = pembayaranData.status_bayar; // Menggunakan status bayar dari data pembayaran
+                } else {
+                  // Jika tidak ada data pembayaran, atur "jumlah bayar" dan "status bayar" sesuai ketentuan
+                  profileData.jumlah_bayar = 70000; // Atur jumlah bayar sesuai dengan ketentuan
+                  profileData.status_bayar = "Belum"; // Set status bayar ke "Belum"
+                }
+
+                // Render halaman profil dengan data pengguna, data pembayaran, dan data appointment
+                res.render("profile.html", { profileData });
               }
+            );
+          } else {
+            // Jika tidak ada appointment, atur "jumlah bayar" dan "status bayar" sesuai ketentuan
+            profileData.jumlah_bayar = "-";
+            profileData.status_bayar = "-";
 
-              // Mengambil data pembayaran jika ada
-              if (pembayaranResults.length === 1) {
-                const pembayaranData = pembayaranResults[0];
-                profileData.jumlah_bayar = pembayaranData.jumlah_biaya;
-                profileData.status_bayar = pembayaranData.status_bayar; // Menggunakan status bayar dari data pembayaran
-              } else {
-                // Jika tidak ada data pembayaran, atur "jumlah bayar" dan "status bayar" sesuai ketentuan
-                profileData.jumlah_bayar = 70000; // Atur jumlah bayar sesuai dengan ketentuan
-                profileData.status_bayar = "Belum"; // Set status bayar ke "Belum"
-              }
-
-              // Render halaman profil dengan data pengguna, data pembayaran, dan data appointment
-              res.render("profile.html", { profileData });
-            }
-          );
-        } else {
-          // Jika tidak ada appointment, atur "jumlah bayar" dan "status bayar" sesuai ketentuan
-          profileData.jumlah_bayar = "-";
-          profileData.status_bayar = "-";
-
-          // Render halaman profil dengan data pengguna, data pembayaran, dan data appointment
-          res.render("profile.html", { profileData });
+            // Render halaman profil dengan data pengguna, data pembayaran, dan data appointment
+            res.render("profile.html", { profileData });
+          }
         }
-      });
+      );
     }
   });
 });
@@ -234,60 +225,162 @@ app.get("/logout", (req, res) => {
   });
 });
 
+// Route untuk Appointment
+app.get("/appointment", (req, res) => {
+  if (req.session.userId) {
+    const userId = req.session.userId;
+    const query =
+      "SELECT id_pasien, nama_pasien, email_pasien FROM tb_pasien WHERE id_pasien = ?";
+
+    db.query(query, [userId], (err, results) => {
+      if (err) {
+        throw err;
+      }
+      if (results.length === 1) {
+        const id_pasien = results[0].id_pasien;
+        const nama_pasien = results[0].nama_pasien;
+        const email_pasien = results[0].email_pasien;
+
+        // Ambil daftar nama psikolog dari database
+        db.query(
+          "SELECT id_psikolog, nama_psikolog FROM tb_psikolog",
+          (err, psikolog) => {
+            if (err) {
+              throw err;
+            }
+
+            // Render halaman appointment dengan data nama pasien, psikolog, email_pasien, dan id_pasien
+            res.render("appointment", {
+              nama: nama_pasien,
+              psikolog,
+              email_pasien,
+              id_pasien,
+            });
+          }
+        );
+      }
+    });
+  } else {
+    // Jika pengguna belum login, kirimkan pesan alert dan arahkan ke halaman login
+    const alertMessage = "Anda belum login. Silakan login terlebih dahulu.";
+    const loginRedirect = "/login";
+
+    res.send(`
+      <script>
+        alert('${alertMessage}');
+        window.location='${loginRedirect}';
+      </script>
+    `);
+  }
+});
 // Route untuk halaman pembayaran
 app.get("/pembayaran", checkLoggedIn, (req, res) => {
-  // Mengambil data pengguna dari sesi
   const id_pasien = req.session.userId;
   const nama_pasien = req.session.nama_pasien;
   const email_pasien = req.session.email_pasien;
 
-  // Mengambil data appointment terakhir pengguna
-  const getLastAppointmentQuery =
-    "SELECT nama_psikolog FROM tb_appointment WHERE id_pasien = ? ORDER BY tanggal DESC LIMIT 1";
+  // Query SQL untuk memeriksa apakah pengguna memiliki appointment yang aktif
+  const checkAppointmentQuery =
+    "SELECT COUNT(*) AS appointmentCount FROM tb_appointment WHERE id_pasien = ?";
 
-  db.query(getLastAppointmentQuery, [id_pasien], (err, appointmentResult) => {
+  db.query(checkAppointmentQuery, [id_pasien], (err, appointmentResult) => {
     if (err) {
-      console.error("Kesalahan saat mengambil data appointment:", err);
-      res
-        .status(500)
-        .send("Terjadi kesalahan saat mengambil data appointment.");
+      console.error("Kesalahan saat memeriksa appointment:", err);
+      res.status(500).send("Terjadi kesalahan saat memeriksa appointment.");
       return;
     }
 
-    // Menyimpan nama_psikolog dari hasil query
-    const nama_psikolog = appointmentResult[0]
-      ? appointmentResult[0].nama_psikolog
-      : "";
+    const appointmentCount = appointmentResult[0].appointmentCount;
 
-    // Mengambil data psikolog berdasarkan nama_psikolog
-    const getPsikologQuery =
-      "SELECT gambar_psikolog, spesialisasi FROM tb_psikolog WHERE nama_psikolog = ?";
+    if (appointmentCount > 0) {
+      // Pengguna memiliki appointment, lanjutkan dengan mengambil data appointment terakhir
+      const getLastAppointmentQuery =
+        "SELECT nama_psikolog FROM tb_appointment WHERE id_pasien = ? ORDER BY tanggal DESC LIMIT 1";
 
-    db.query(getPsikologQuery, [nama_psikolog], (err, psikologResult) => {
-      if (err) {
-        console.error("Kesalahan saat mengambil data psikolog:", err);
-        res.status(500).send("Terjadi kesalahan saat mengambil data psikolog.");
-        return;
-      }
+      db.query(
+        getLastAppointmentQuery,
+        [id_pasien],
+        (err, appointmentResult) => {
+          if (err) {
+            console.error("Kesalahan saat mengambil data appointment:", err);
+            res
+              .status(500)
+              .send("Terjadi kesalahan saat mengambil data appointment.");
+            return;
+          }
 
-      // Menyimpan data gambar_psikolog dan spesialisasi dari hasil query
-      const gambar_psikolog = psikologResult[0]
-        ? psikologResult[0].gambar_psikolog
-        : "";
-      const spesialisasi = psikologResult[0]
-        ? psikologResult[0].spesialisasi
-        : "";
+          // Menyimpan nama_psikolog dari hasil query
+          const nama_psikolog = appointmentResult[0]
+            ? appointmentResult[0].nama_psikolog
+            : "";
 
-      // Render halaman pembayaran dengan data pengguna, nama_psikolog, gambar_psikolog, dan spesialisasi
-      res.render("pembayaran", {
-        id_pasien: id_pasien,
-        nama_pasien: nama_pasien,
-        email_pasien: email_pasien,
-        nama_psikolog: nama_psikolog,
-        gambar_psikolog: gambar_psikolog,
-        spesialisasi: spesialisasi,
-      });
-    });
+          // Mengambil data psikolog berdasarkan nama_psikolog
+          const getPsikologQuery =
+            "SELECT gambar_psikolog, spesialisasi FROM tb_psikolog WHERE nama_psikolog = ?";
+
+          db.query(getPsikologQuery, [nama_psikolog], (err, psikologResult) => {
+            if (err) {
+              console.error("Kesalahan saat mengambil data psikolog:", err);
+              res
+                .status(500)
+                .send("Terjadi kesalahan saat mengambil data psikolog.");
+              return;
+            }
+
+            // Menyimpan data gambar_psikolog dan spesialisasi dari hasil query
+            const gambar_psikolog = psikologResult[0]
+              ? psikologResult[0].gambar_psikolog
+              : "";
+            const spesialisasi = psikologResult[0]
+              ? psikologResult[0].spesialisasi
+              : "";
+
+            // Query SQL untuk mengambil foto_pasien berdasarkan email_pasien
+            const getFotoPasienQuery =
+              "SELECT foto_pasien FROM tb_pasien WHERE email_pasien = ?";
+
+            db.query(
+              getFotoPasienQuery,
+              [email_pasien],
+              (err, fotoPasienResult) => {
+                if (err) {
+                  console.error("Kesalahan saat mengambil foto_pasien:", err);
+                  res
+                    .status(500)
+                    .send("Terjadi kesalahan saat mengambil foto_pasien.");
+                  return;
+                }
+
+                // Menyimpan data foto_pasien dari hasil query
+                const foto_pasien = fotoPasienResult[0]
+                  ? fotoPasienResult[0].foto_pasien
+                  : "";
+
+                // Render halaman pembayaran dengan data pengguna, nama_psikolog, gambar_psikolog, dan spesialisasi
+                res.render("pembayaran", {
+                  id_pasien: id_pasien,
+                  nama_pasien: nama_pasien,
+                  email_pasien: email_pasien,
+                  nama_psikolog: nama_psikolog,
+                  gambar_psikolog: gambar_psikolog,
+                  spesialisasi: spesialisasi,
+                  foto_pasien: foto_pasien, // Tambahkan foto_pasien ke dalam rendering context
+                });
+              }
+            );
+          });
+        }
+      );
+    } else {
+      // Pengguna tidak memiliki appointment, tampilkan pesan kesalahan
+      const errorMessage = "Anda tidak memiliki appointment.";
+      res.send(`
+        <script>
+          alert('${errorMessage}');
+          window.location='/index'; // Redirect ke halaman awal
+        </script>
+      `);
+    }
   });
 });
 
@@ -493,67 +586,76 @@ app.post(
 );
 
 // APPOINTMENT
-app.post("/index", (req, res) => {
-  // Updated route for handling POST requests
-  if (req.session.userId) {
-    // Process the form data here, just like you did in your "/buat-appointment" route handler
-    const id_pasien = req.body.id_pasien;
-    const email_pasien = req.body.email_pasien;
-    const nama_pasien = req.body.nama_pasien;
-    const nama_psikolog = req.body.nama_psikolog;
-    const tanggal = req.body.tanggal;
-    const waktu = req.body.waktu;
-    const keluhan = req.body.keluhan;
+app.post("/appointment", (req, res) => {
+  const { nama_pasien, nama_psikolog, tanggal, waktu, keluhan } = req.body;
+  const email_pasien = req.session.email_pasien; // Mengambil email_pasien dari sesi
 
-    // Lakukan query untuk mendapatkan id_psikolog berdasarkan nama_psikolog
-    const queryPsikolog =
-      "SELECT nama_psikolog FROM tb_psikolog WHERE id_psikolog = ?";
-    db.query(queryPsikolog, [nama_psikolog], (err, results) => {
-      if (err) throw err;
-      if (results.length === 1) {
-        const nama_psikolog = results[0].nama_psikolog;
+  // Query SQL untuk mengambil id_pasien berdasarkan nama_pasien
+  const getIdPasienQuery =
+    "SELECT id_pasien FROM tb_pasien WHERE nama_pasien = ? AND email_pasien = ?";
 
-        // Lakukan query untuk menyimpan data ke tb_appointment
-        const queryAppointment =
-          "INSERT INTO tb_appointment (id_pasien, email_pasien, nama_pasien, nama_psikolog, tanggal, waktu, keluhan) VALUES (?, ?, ?, ?, ?, ?, ?)";
-        db.query(
-          queryAppointment,
-          [
-            id_pasien,
-            email_pasien,
-            nama_pasien,
-            nama_psikolog,
-            tanggal,
-            waktu,
-            keluhan,
-          ],
-          (err, results) => {
-            if (err) throw err;
-
-            // Tampilkan pesan sukses dan arahkan kembali ke halaman index
-            const successMessage = "Appointment berhasil";
-            res.send(`
-              <script>
-                alert('${successMessage}');
-                window.location='/index'; // Ubah '/index' sesuai dengan URL index Anda
-              </script>
-            `);
-          }
-        );
-      } else {
-        res.status(500).send("Nama psikolog tidak valid.");
+  db.query(
+    getIdPasienQuery,
+    [nama_pasien, email_pasien],
+    (err, pasienResults) => {
+      if (err) {
+        throw err;
       }
-    });
-  } else {
-    // User is not logged in, render the template with empty psikolog data
-    res.render("index", {
-      nama: null,
-      id_pasien: null,
-      foto_pasien: null,
-      email_pasien: null,
-      psikolog: [], // Pass an empty array for psikolog data
-    });
-  }
+
+      if (pasienResults.length === 0) {
+        res.status(400).send("Nama pasien tidak ditemukan"); // Handle jika nama pasien tidak ditemukan
+        return;
+      }
+
+      const id_pasien = pasienResults[0].id_pasien; // Mengambil id_pasien yang sesuai
+
+      // Query SQL untuk mengambil nama_psikolog berdasarkan id_psikolog
+      const getIdPsikologQuery =
+        "SELECT nama_psikolog FROM tb_psikolog WHERE id_psikolog = ?";
+
+      db.query(getIdPsikologQuery, [nama_psikolog], (err, psikologResults) => {
+        if (err) {
+          throw err;
+        }
+
+        if (psikologResults.length === 0) {
+          res.status(400).send("Nama psikolog tidak ditemukan"); // Handle jika nama psikolog tidak ditemukan
+          return;
+        }
+
+        const nama_psikolog = psikologResults[0].nama_psikolog; // Mengambil nama_psikolog yang sesuai
+
+        // Simpan data appointment ke database dengan id_pasien, nama_psikolog, dan email_pasien yang sesuai
+        const appointment = {
+          id_pasien,
+          email_pasien, // Memasukkan email_pasien yang sesuai
+          nama_pasien,
+          nama_psikolog,
+          tanggal,
+          waktu,
+          keluhan,
+        };
+
+        // Query SQL untuk memasukkan data appointment ke dalam tb_appointment
+        const insertQuery = "INSERT INTO tb_appointment SET ?";
+
+        db.query(insertQuery, appointment, (err, result) => {
+          if (err) {
+            throw err;
+          }
+
+          // Tampilkan pesan sukses dan arahkan kembali ke halaman dashboard
+          const successMessage = "Appointment berhasil";
+          res.send(`
+          <script>
+            alert('${successMessage}');
+            window.location='/index';
+          </script>
+        `);
+        });
+      });
+    }
+  );
 });
 
 // Route untuk memproses pembayaran
