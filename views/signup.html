@@ -3,43 +3,92 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title>Form</title>
+    <link rel="stylesheet" href="/style/signup.css" />
+    <link rel="stylesheet" href="/style/navbar.css" />
+    <script src="/script/script.js"></script>
     <!-- font awesome cdn link -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Mulish:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet" />
+
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
-
-    <!-- custom css file link -->
-    <link rel="stylesheet" href="style.css" />
   </head>
   <body>
-    <h2>Signup</h2>
-    <form action="/signup" method="POST" enctype="multipart/form-data">
-      <input
-        type="file"
-        name="foto_pasien"
-        accept="image/*"
-        style="display: none" />
-      <input type="text" name="nama_pasien" placeholder="Nama" required /><br />
-      <input type="date" name="tanggal_lahir" required /><br />
-      <input type="radio" name="gender" value="laki laki" required /> Laki-laki
-      <br />
-      <input type="radio" name="gender" value="perempuan" required /> Perempuan
-      <br />
-      <input
-        type="text"
-        name="nomor_ponsel"
-        placeholder="Nomor Ponsel"
-        required />
-      <br />
-      <input type="email" name="email_pasien" placeholder="Email" required />
-      <br />
-      <input type="text" name="alamat" placeholder="Alamat" required /> <br />
-      <input type="password" name="password" placeholder="Password" required />
-      <br />
-      <button type="submit">Signup</button>
-    </form>
-    <p>Already have an account? <a href="/login">Login</a></p>
-    <p><a href="/index">Kembali</a></p>
+    <!-- Header -->
+    <header class="header">
+      <a href="/index" class="logo">
+        <img class="logo" src="/img/logo.png" alt=""
+      /></a>
+
+      <nav class="navbar">
+        <a href="/index">home</a>
+        <a href="#services">services</a>
+        <a href="#doctors">find a psycholog</a>
+        <a href="#book">book</a>
+        <a href="#blogs">blogs</a>
+        <a href="#contact">contact us</a>
+      </nav>
+
+      <div class="header-btn">
+        <a href="/signup" class="sign-up">Sign Up</a>
+        <a href="/login" class="login">Login</a>
+      </div>
+
+      <div id="menu-btn" class="fas fa-bars"></div>
+    </header>
+    <!--  -->
+    <div class="container">
+      <div class="logo_container">
+        <h2 id="logo"></h2>
+      </div>
+      <div class="form_container">
+        <form action="/signup" method="POST" enctype="multipart/form-data">
+          <input
+            type="file"
+            name="foto_pasien"
+            accept="image/*"
+            style="display: none" />
+          <input
+            type="text"
+            name="nama_pasien"
+            placeholder="Nama"
+            required /><br />
+          <input type="date" name="tanggal_lahir" required /><br />
+          <input type="radio" name="gender" value="laki laki" required />
+          <label for="laki">Laki-laki</label>
+          <input type="radio" name="gender" value="perempuan" required />
+          <label for="perempuan">Perempuan</label>
+          <br />
+          <input
+            type="text"
+            name="nomor_ponsel"
+            placeholder="Nomor Ponsel"
+            required />
+          <br />
+          <input
+            type="email"
+            name="email_pasien"
+            placeholder="Email"
+            required />
+          <br />
+          <input type="text" name="alamat" placeholder="Alamat" required />
+          <br />
+          <input
+            type="password"
+            name="password"
+            placeholder="Password"
+            required />
+          <br />
+          <button type="submit">Signup</button>
+          <p>Already have an account? <a href="/login">Login</a></p>
+        </form>
+      </div>
+    </div>
+    <img class="boy" src="/img/boy.png" alt="gambar.1" />
   </body>
 </html>

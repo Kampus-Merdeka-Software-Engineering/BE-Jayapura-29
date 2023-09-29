@@ -233,3 +233,101 @@ nav.navbar {
   right: 0px;
   top: 40px;
 }
+
+@media (max-width: 768px) {
+  .dropbtn {
+    background-color: transparent;
+    padding: 10px;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+    position: absolute;
+    right: 0px;
+    top: -20px;
+    border-radius: 100px;
+    width: 40px;
+    height: 40px;
+  }
+
+  #menu-btn {
+    display: initial;
+    margin-left: 100px;
+    background-color: transparent;
+  }
+
+  .header .navbar {
+    position: absolute;
+    top: 115%;
+    right: 2rem;
+    border-radius: 0.5rem;
+    box-shadow: var(--box-shadow);
+    width: 30rem;
+    border: var(--border);
+    background: #fff;
+    transform: scale(0);
+    opacity: 0;
+    transform-origin: top right;
+    transition: none;
+  }
+
+  nav.navbar {
+    display: block;
+  }
+
+  nav.navbar.active {
+    transform: scale(1);
+    opacity: 1;
+    transition: 0.2s ease-out;
+    display: block;
+  }
+
+  .header .navbar a {
+    font-size: 2rem;
+    display: block;
+    margin: 2.5rem;
+  }
+
+  .btn_sign {
+    display: inline-block;
+    padding: 0.5rem;
+    border: var(--border);
+    border-radius: 0.5rem;
+    color: var(--blue);
+    cursor: pointer;
+    font-size: 1.7rem;
+    background: #fff;
+    height: 4rem;
+    margin-left: 1rem;
+    margin-bottom: 1rem;
+  }
+
+  a.sign {
+    color: #1450a3;
+  }
+
+  .btn_login {
+    display: inline-block;
+    padding: 0.5rem;
+    border: var(--border);
+    border-radius: 0.5rem;
+    color: var(--blue);
+    cursor: pointer;
+    font-size: 1.7rem;
+    background: #1450a3;
+    color: #fff;
+    margin-left: 1rem;
+  }
+
+  .show {
+    display: block;
+    position: absolute;
+    right: -70px;
+    top: 40px;
+  }
+}
+
+@media (max-width: 450px) {
+  html {
+    font-size: 50%;
+  }
+}
