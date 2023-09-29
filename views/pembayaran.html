@@ -11,8 +11,8 @@
   <body>
     <!--  -->
     <header class="header">
-      <a href="#" class="logo_header">
-        <img class="logo_header" src="/img/logo.png" alt=""
+      <a href="/index" class="logo_navbar">
+        <img class="logo_navbar" src="/img/logo.png" alt=""
       /></a>
 
       <nav class="navbar">
@@ -24,41 +24,39 @@
         <a href="#contact">contact us</a>
       </nav>
 
-      <div class="profile">
-        <img
-          src="data:image/png;base64, <%= foto_pasien %>"
-          alt="Foto Profil"
-          class="poto_profile" />
-        <div class="profile-menu">
-          <button onclick="myFunction()" class="dropbtn"></button>
-          <div id="myDropdown" class="dropdown-content">
-            <a href="/profile" style="margin: 0" class="dropdown">Profile</a>
-            <a href="/pembayaran" style="margin: 0" class="dropdown"
-              >Pembayaran</a
-            >
-            <a href="/logout" style="margin: 0" class="dropdown">Logout</a>
+      <div style="display: flex; align-items: center">
+        <p
+          style="
+            color: #4682a9;
+            border: 1px solid #4682a9;
+            padding: 1em 5em 1em 1em;
+            border-radius: 50px;
+            font-size: 1.1em;
+          ">
+          <%= nama_pendek %>
+        </p>
+        <div class="profile">
+          <img
+            src="data:image/png;base64, <%= foto_pasien %>"
+            alt="Foto Profil"
+            class="poto_profile" />
+          <div class="profile-menu">
+            <button onclick="myFunction()" class="dropbtn"></button>
+            <div id="myDropdown" class="dropdown-content">
+              <a href="/profile" style="margin: 0" class="dropdown">Profile</a>
+              <a href="/pembayaran" style="margin: 0" class="dropdown"
+                >Pembayaran</a
+              >
+              <a href="/logout" style="margin: 0" class="dropdown">Logout</a>
+            </div>
           </div>
         </div>
       </div>
       <div id="menu-btn" class="fas fa-bars"></div>
     </header>
     <!--  -->
-    <a
-      href="/index"
-      style="
-        position: absolute;
-        left: 8em;
-        top: 7em;
-        color: #1450a3;
-        font-weight: bold;
-        border: 1px solid #1450a3;
-        padding: 0.2em;
-        border-radius: 100px;
-      "
-      >Kembali</a
-    >
     <div class="kata_tengah">
-      <img src="/img/logo-lengkap.png" alt="logo" width="15%" />
+      <!-- <img src="/img/logo-lengkap.png" alt="logo" width="10%" /> -->
       <h2>Payment</h2>
       <p>Please complete the consultation fee</p>
     </div>
@@ -119,7 +117,7 @@
                     value="70000"
                     readonly /><br />
                 </div>
-                <div class="dalam_kotakTabel">
+                <div class="dalam_kotakTabel" style="margin-top: 0.5vw">
                   <label for="biaya_layanan">Biaya Layanan:</label>
                   <input
                     type="number"
@@ -127,8 +125,13 @@
                     value="10000"
                     readonly /><br />
                 </div>
-                <hr />
-                <div class="dalam_kotakTabel">
+                <div
+                  class="dalam_kotakTabel"
+                  style="
+                    border-top: 1px solid #1450a3;
+                    margin-top: 1vw;
+                    padding-top: 1vw;
+                  ">
                   <label for="jumlah_biaya">Total:</label>
                   <input
                     type="number"
@@ -139,7 +142,6 @@
               </div>
             </div>
           </div>
-
           <!-- metode container -->
           <div class="metode_container">
             <label class="metode_pembayaran">Metode Pembayaran:</label>

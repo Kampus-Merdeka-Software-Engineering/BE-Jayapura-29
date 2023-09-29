@@ -12,9 +12,6 @@ const moment = require("moment-timezone");
 // Set zona waktu server ke "Asia/Jakarta"
 moment.tz.setDefault("Asia/Jakarta");
 
-// Contoh penggunaan untuk memformat tanggal
-const tanggal = moment().format("dddd, D MMMM YYYY");
-
 // Konfigurasi koneksi MySQL
 const db = mysql.createConnection({
   host: "localhost",
@@ -93,14 +90,14 @@ app.get("/index", (req, res) => {
   if (req.session.userId) {
     const userId = req.session.userId;
     const query =
-      "SELECT nama_pasien, foto_pasien FROM tb_pasien WHERE id_pasien = ?";
+      "SELECT CONCAT(SUBSTRING_INDEX(nama_pasien, ' ', 2), ' ') AS nama_pendek, foto_pasien FROM tb_pasien WHERE id_pasien = ?";
     db.query(query, [userId], (err, results) => {
       if (err) throw err;
       if (results.length === 1) {
-        const { nama_pasien, foto_pasien } = results[0];
+        const { nama_pendek, foto_pasien } = results[0];
         const id_pasien = userId;
         res.render("index", {
-          nama: nama_pasien,
+          nama: nama_pendek,
           id_pasien: id_pasien,
           foto_pasien: foto_pasien, // Menambahkan foto_pasien ke konteks template
         });
@@ -126,7 +123,7 @@ app.get("/profile", checkLoggedIn, (req, res) => {
 
   // Query SQL untuk mengambil data pengguna dari tb_pasien
   const query =
-    "SELECT foto_pasien, id_pasien, email_pasien, nama_pasien, alamat, nomor_ponsel FROM tb_pasien WHERE id_pasien = ?";
+    "SELECT foto_pasien, id_pasien, email_pasien, nama_pasien, gender, alamat, nomor_ponsel FROM tb_pasien WHERE id_pasien = ?";
 
   db.query(query, [id_pasien], (err, results) => {
     if (err) {
@@ -153,42 +150,42 @@ app.get("/profile", checkLoggedIn, (req, res) => {
             const appointmentData = appointmentResults[0];
             profileData.tanggal = appointmentData.tanggal;
             profileData.waktu = appointmentData.waktu;
-
-            // Query SQL untuk mengambil data pembayaran dari tb_pembayaran sesuai dengan id_pasien dan email_pasien
-            const pembayaranQuery =
-              "SELECT jumlah_biaya, tanggal_bayar, status_bayar, metode_pembayaran FROM tb_pembayaran WHERE id_pasien = ? AND email_pasien = ?";
-
-            db.query(
-              pembayaranQuery,
-              [id_pasien, email_pasien],
-              (err, pembayaranResults) => {
-                if (err) {
-                  throw err;
-                }
-
-                // Mengambil data pembayaran jika ada
-                if (pembayaranResults.length === 1) {
-                  const pembayaranData = pembayaranResults[0];
-                  profileData.jumlah_bayar = pembayaranData.jumlah_biaya;
-                  profileData.status_bayar = pembayaranData.status_bayar; // Menggunakan status bayar dari data pembayaran
-                } else {
-                  // Jika tidak ada data pembayaran, atur "jumlah bayar" dan "status bayar" sesuai ketentuan
-                  profileData.jumlah_bayar = 70000; // Atur jumlah bayar sesuai dengan ketentuan
-                  profileData.status_bayar = "Belum"; // Set status bayar ke "Belum"
-                }
-
-                // Render halaman profil dengan data pengguna, data pembayaran, dan data appointment
-                res.render("profile.html", { profileData });
-              }
-            );
           } else {
             // Jika tidak ada appointment, atur "jumlah bayar" dan "status bayar" sesuai ketentuan
-            profileData.jumlah_bayar = "-";
-            profileData.status_bayar = "-";
-
-            // Render halaman profil dengan data pengguna, data pembayaran, dan data appointment
-            res.render("profile.html", { profileData });
+            profileData.tanggal = "-";
+            profileData.waktu = "-";
           }
+
+          // Konstanta tanggal dengan format "ddd MMM DD YYYY"
+          const tanggal = moment().format("ddd MMM DD YYYY").slice(0, 15);
+
+          // Query SQL untuk mengambil data pembayaran dari tb_pembayaran sesuai dengan id_pasien dan email_pasien
+          const pembayaranQuery =
+            "SELECT jumlah_biaya, tanggal_bayar, status_bayar, metode_pembayaran FROM tb_pembayaran WHERE id_pasien = ? AND email_pasien = ?";
+
+          db.query(
+            pembayaranQuery,
+            [id_pasien, email_pasien],
+            (err, pembayaranResults) => {
+              if (err) {
+                throw err;
+              }
+
+              // Mengambil data pembayaran jika ada
+              if (pembayaranResults.length === 1) {
+                const pembayaranData = pembayaranResults[0];
+                profileData.jumlah_bayar = pembayaranData.jumlah_biaya;
+                profileData.status_bayar = pembayaranData.status_bayar; // Menggunakan status bayar dari data pembayaran
+              } else {
+                // Jika tidak ada data pembayaran, atur "jumlah bayar" dan "status bayar" sesuai ketentuan
+                profileData.jumlah_bayar = 70000; // Atur jumlah bayar sesuai dengan ketentuan
+                profileData.status_bayar = "Belum"; // Set status bayar ke "Belum"
+              }
+
+              // Render halaman profil dengan data pengguna, data pembayaran, dan data appointment
+              res.render("profile.html", { profileData, tanggal });
+            }
+          );
         }
       );
     }
@@ -337,7 +334,7 @@ app.get("/pembayaran", checkLoggedIn, (req, res) => {
 
             // Query SQL untuk mengambil foto_pasien berdasarkan email_pasien
             const getFotoPasienQuery =
-              "SELECT foto_pasien FROM tb_pasien WHERE email_pasien = ?";
+              "SELECT foto_pasien, CONCAT(SUBSTRING_INDEX(nama_pasien, ' ', 2), ' ') AS nama_pendek FROM tb_pasien WHERE email_pasien = ?";
 
             db.query(
               getFotoPasienQuery,
@@ -355,6 +352,9 @@ app.get("/pembayaran", checkLoggedIn, (req, res) => {
                 const foto_pasien = fotoPasienResult[0]
                   ? fotoPasienResult[0].foto_pasien
                   : "";
+                const nama_pendek = fotoPasienResult[0]
+                  ? fotoPasienResult[0].nama_pendek
+                  : "";
 
                 // Render halaman pembayaran dengan data pengguna, nama_psikolog, gambar_psikolog, dan spesialisasi
                 res.render("pembayaran", {
@@ -364,6 +364,7 @@ app.get("/pembayaran", checkLoggedIn, (req, res) => {
                   nama_psikolog: nama_psikolog,
                   gambar_psikolog: gambar_psikolog,
                   spesialisasi: spesialisasi,
+                  nama_pendek: nama_pendek,
                   foto_pasien: foto_pasien, // Tambahkan foto_pasien ke dalam rendering context
                 });
               }
@@ -406,7 +407,7 @@ app.post("/signup", upload.single("foto_pasien"), (req, res) => {
   } = req.body;
 
   // Ambil file gambar yang diunggah, atau gunakan foto profil default jika tidak ada yang diunggah
-  const foto_pasien = req.file || { path: "img/poto-profil.png" };
+  const foto_pasien = req.file || { path: "public/img/poto-profil.png" };
 
   // Konversi gambar menjadi bentuk Base64
   const gambarBase64 = fs.readFileSync(foto_pasien.path, "base64");

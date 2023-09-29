@@ -20,9 +20,22 @@
 }
 
 html {
+  font-size: 62.5%;
   overflow-x: hidden;
   scroll-padding-top: 7rem;
   scroll-behavior: smooth;
+}
+
+::placeholder {
+  color: #1450a3;
+}
+
+section {
+  padding: 2rem 9%;
+}
+
+section:nth-child(even) {
+  background: #f5f5f5;
 }
 
 /*  */
@@ -75,11 +88,10 @@ html {
 }
 
 .header {
-  padding: 1.3rem 9%;
+  padding: 2rem 9%;
   top: 0;
   left: 0;
   right: 0;
-  z-index: 1000;
   box-shadow: 0 0.1rem 1rem rgba(0, 0, 0, 0.1);
   display: flex;
   align-items: center;
@@ -87,21 +99,21 @@ html {
   background: #fff;
 }
 
-a.logo_header {
+a.logo_navbar {
   display: flex;
   align-items: center;
 }
 
-.header .logo_header img {
-  width: 7.5em;
+.header .logo_navbar img {
+  width: 13em;
   height: auto;
   max-width: 100%;
 }
 
 .header .navbar a {
-  font-size: 1em;
+  font-size: 1.7rem;
   color: var(--light-color);
-  margin-left: 1em;
+  margin-left: 2rem;
 }
 
 .header .navbar a:hover {
@@ -160,6 +172,17 @@ a.logo_header {
   color: #c70039;
 }
 
+.header .navbar a {
+  font-size: 1.7rem;
+  color: var(--light-color);
+  margin-left: 2rem;
+}
+
+.header .navbar a:hover {
+  color: var(--blue);
+  text-decoration: underline;
+}
+
 nav.navbar {
   display: flex;
   justify-content: center;
@@ -187,7 +210,7 @@ nav.navbar {
 .profile {
   display: flex;
   align-items: center;
-  margin-left: 5rem;
+  margin-left: 1rem;
 }
 
 .profile-menu {
@@ -197,11 +220,11 @@ nav.navbar {
 .dropbtn {
   background-color: transparent;
   padding: 10px;
-  font-size: 1em;
+  font-size: 16px;
   border: none;
   cursor: pointer;
   position: absolute;
-  right: 10px;
+  right: 0px;
   top: -20px;
   border-radius: 100px;
   width: 40px;
@@ -228,6 +251,7 @@ nav.navbar {
   padding: 12px 16px;
   text-decoration: none;
   display: block;
+  font-size: 1.5rem;
   border: 1px solid #000000;
 }
 
@@ -242,19 +266,28 @@ nav.navbar {
   top: 40px;
 }
 /* ------------------------------------------- */
-h2,
-p {
-  font-weight: bold;
-  color: #4682a9;
-  margin: 0;
-}
 .kata_tengah {
   margin: auto;
   text-align: center;
-  margin-bottom: 20px;
-  margin-top: 0px;
+  margin-bottom: 1vw;
+  margin-top: 2vw;
+  color: #4682a9;
+}
+.kata_tengah h2 {
+  color: #4682a9;
+  font-size: xx-large;
+}
+.kata_tengah p {
+  color: #4682a9;
+  font-size: larger;
 }
 /* --------------------------- */
+.prosesPembayaran_container {
+  display: flex;
+  flex-direction: column;
+  width: 30vw;
+}
+
 .pembayaran {
   border: 4px solid rgba(70, 130, 169, 1);
   background-color: #fff;
@@ -262,66 +295,68 @@ p {
   display: flex;
   flex-direction: row;
   padding: 10px;
-  width: 70%;
+  width: 60vw;
   margin: auto;
+  margin-top: 1vw;
 }
 
 /* CSS Kotak kiri */
 .kotak {
   background-color: #4682a9;
-  width: 402px;
-  height: 421px;
+  height: 30vw;
+  width: 25vw;
   display: flex;
   justify-content: center;
   align-items: center;
   border-radius: 5px;
-  padding: 0px 0px 0px 20px;
 }
 
 .card {
-  width: 196px;
-  height: 294px;
+  width: 15vw;
+  height: 25vw;
   background-image: linear-gradient(to bottom, #6ca4d8, rgba(93, 86, 86, 0));
   border: 1px solid rgba(0, 0, 0, 0.26);
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   border-radius: 5px;
   position: relative;
   color: white;
+  margin-left: 2vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .logo {
-  width: 33px;
-  height: 33px;
+  width: 2vw;
+  height: 2vw;
   border-radius: 50%;
   position: absolute;
-  top: 15px;
-  left: 15px;
+  top: 1vw;
+  left: 1vw;
 }
 
 .circle {
-  width: 18px;
-  height: 18px;
+  width: 1vw;
+  height: 1vw;
   background-color: #96ec6e;
   border-radius: 50%;
-  display: flex;
-  color: white;
-  font-weight: bold;
   position: absolute;
-  top: 15px;
-  right: 15px;
+  top: 1.5vw;
+  right: 1vw;
 }
 
 .profile-picture {
-  width: 196px;
-  height: 260px;
+  max-height: 20vw;
   border-radius: 50%;
-  margin-top: 40px;
+  margin-top: 2vw;
+  width: fit-content;
 }
 
 .data {
-  margin-left: 20px;
+  margin-left: 1vw;
+  font-size: 1em;
   color: white;
-  width: 7em;
+  margin-right: 1vw;
 }
 
 /* Proses Pembayaran */
@@ -329,65 +364,53 @@ p {
 form {
   margin-left: 20px;
   margin-top: 20px;
-  display: flex;
-  flex-wrap: wrap;
 }
 
 label,
 input {
-  font-size: 1.2em;
+  font-size: 1.5em;
   color: #4682a9;
 }
 
 /* nama */
-b .nama_pasien_container {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-}
-
-.nama_pasien {
-  font-weight: bold;
-  text-shadow: 0px 2px 4px rgba(0, 0, 0, 0.25);
-  text-align: left;
-}
 
 input[name="nama_pasien"] {
   border: 1px solid #4682a9;
   padding: 5px;
-  width: 270px;
+  width: 20vw;
   text-shadow: 0px 2px 4px rgba(0, 0, 0, 0.25);
+  font-size: 1.5em;
 }
 
 .nama_pasien_container {
   display: flex;
-  justify-content: space-between;
   align-items: center;
+  margin-bottom: 1vw;
 }
 
 .nama_pasien_container label {
   font-weight: bold;
   text-shadow: 0px 2px 4px rgba(0, 0, 0, 0.25);
-  text-align: left;
-  padding-right: 10px;
   flex: 1;
 }
 
 /* ------------------------------------ */
 
 /* Biaya */
+
 .biaya_container {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
   text-shadow: 0px 2px 4px rgba(0, 0, 0, 0.25);
+  margin-bottom: 1vw;
 }
 
 .kotak_label {
   border: 1px solid #4682a9;
   padding: 5px;
   margin: 5px 0;
-  width: max-content;
+  width: 20vw;
 }
 
 .dalam_kotakTabel {
@@ -432,19 +455,20 @@ input[name="jumlah_biaya"] {
 }
 
 img.metode_bayar {
-  width: 20%;
+  width: 25%;
 }
 
 label[for="gopay"],
 label[for="dana"],
 label[for="bri"] {
   border: 1px solid #4682a9;
-  padding: 10px;
-  width: 50%;
+  padding: 1.5vw;
+  width: 80%;
   height: 30px;
   display: flex;
   align-items: center;
   justify-content: space-between;
+  margin-left: 1vw;
 }
 
 .pilihan {
@@ -473,4 +497,82 @@ button {
   height: 40px;
   text-shadow: 0px 2px 4px rgba(0, 0, 0, 0.25);
   cursor: pointer;
+}
+
+@media (max-width: 1024px) {
+  .pembayaran {
+    flex-direction: column;
+  }
+
+  .data {
+    margin-left: 1vw;
+    font-size: 0.8em;
+    color: white;
+    margin-right: 1vw;
+  }
+
+  .pembayaran {
+    border: 4px solid rgba(70, 130, 169, 1);
+    background-color: #fff;
+    border-radius: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: start;
+    padding: 10px;
+    width: 60vw;
+    margin: auto;
+  }
+  .pembayaran .kotak {
+    margin: auto;
+  }
+
+  .pembayaran form {
+    margin: 0;
+    margin-top: 2vw;
+  }
+
+  .prosesPembayaran_container {
+    display: flex;
+    flex-direction: column;
+    width: 55vw;
+  }
+
+  .nama_pasien_container {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1vw;
+  }
+
+  .nama_pasien_container label {
+    font-weight: bold;
+    flex: 1;
+  }
+
+  input[name="nama_pasien"] {
+    border: 1px solid #4682a9;
+    padding: 5px;
+    width: 40vw;
+    text-shadow: 0px 2px 4px rgba(0, 0, 0, 0.25);
+    font-size: 1.5em;
+  }
+
+  .biaya_container {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    text-shadow: 0px 2px 4px rgba(0, 0, 0, 0.25);
+    margin-bottom: 1vw;
+  }
+
+  .kotak_label {
+    border: 1px solid #4682a9;
+    width: 40vw;
+  }
+
+  .dalam_kotakTabel {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+  }
 }
