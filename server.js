@@ -10,7 +10,7 @@ const fs = require("fs");
 const moment = require("moment-timezone");
 
 // Set zona waktu server ke "Asia/Jakarta"
-moment.tz.setDefault("Asia/Jakarta");
+moment.tz.setDefault("Jakarta");
 
 // Konfigurasi koneksi MySQL
 const db = mysql.createConnection({
@@ -123,7 +123,7 @@ app.get("/profile", checkLoggedIn, (req, res) => {
 
   // Query SQL untuk mengambil data pengguna dari tb_pasien
   const query =
-    "SELECT foto_pasien, id_pasien, email_pasien, nama_pasien, gender, alamat, nomor_ponsel FROM tb_pasien WHERE id_pasien = ?";
+    "SELECT foto_pasien, id_pasien, email_pasien, nama_pasien, CONCAT(SUBSTRING_INDEX(nama_pasien, ' ', 2), ' ') AS nama_pendek, gender, alamat, nomor_ponsel FROM tb_pasien WHERE id_pasien = ?";
 
   db.query(query, [id_pasien], (err, results) => {
     if (err) {
@@ -134,30 +134,22 @@ app.get("/profile", checkLoggedIn, (req, res) => {
       const profileData = results[0];
 
       // Query SQL untuk mengambil data appointment dari tb_appointment
-      const getLastAppointmentQuery =
-        "SELECT tanggal, waktu FROM tb_appointment WHERE id_pasien = ? ORDER BY tanggal DESC LIMIT 1";
+      const appointmentQuery =
+        "SELECT tanggal, waktu FROM tb_appointment WHERE id_pasien = ?";
 
-      db.query(
-        getLastAppointmentQuery,
-        [id_pasien],
-        (err, appointmentResults) => {
-          if (err) {
-            throw err;
-          }
+      db.query(appointmentQuery, [id_pasien], (err, appointmentResults) => {
+        if (err) {
+          throw err;
+        }
 
-          // Mengambil data appointment jika ada
-          if (appointmentResults.length > 0) {
-            const appointmentData = appointmentResults[0];
-            profileData.tanggal = appointmentData.tanggal;
-            profileData.waktu = appointmentData.waktu;
-          } else {
-            // Jika tidak ada appointment, atur "jumlah bayar" dan "status bayar" sesuai ketentuan
-            profileData.tanggal = "-";
-            profileData.waktu = "-";
-          }
-
-          // Konstanta tanggal dengan format "ddd MMM DD YYYY"
-          const tanggal = moment().format("ddd MMM DD YYYY").slice(0, 15);
+        // Mengambil data appointment jika ada
+        if (appointmentResults.length > 0) {
+          const appointmentData = appointmentResults[0];
+          const formattedDate = moment(appointmentData.tanggal).format(
+            "dddd, MMM DD YYYY"
+          );
+          profileData.tanggal = formattedDate;
+          profileData.waktu = appointmentData.waktu;
 
           // Query SQL untuk mengambil data pembayaran dari tb_pembayaran sesuai dengan id_pasien dan email_pasien
           const pembayaranQuery =
@@ -183,11 +175,18 @@ app.get("/profile", checkLoggedIn, (req, res) => {
               }
 
               // Render halaman profil dengan data pengguna, data pembayaran, dan data appointment
-              res.render("profile.html", { profileData, tanggal });
+              res.render("profile.html", { profileData });
             }
           );
+        } else {
+          // Jika tidak ada appointment, atur "jumlah bayar" dan "status bayar" sesuai ketentuan
+          profileData.jumlah_bayar = "-";
+          profileData.status_bayar = "-";
+
+          // Render halaman profil dengan data pengguna, data pembayaran, dan data appointment
+          res.render("profile.html", { profileData });
         }
-      );
+      });
     }
   });
 });
