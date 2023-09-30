@@ -22,7 +22,7 @@
   </head>
   <body>
     <!-- header section starts -->
-    <% if (nama) { %>
+    <% if (isLoggedIn) { %>
     <header class="header">
       <a href="#" class="logo">
         <img class="logo" src="/img/logo.png" alt=""
@@ -31,7 +31,7 @@
       <nav class="navbar">
         <a href="#home">home</a>
         <a href="#services">services</a>
-        <a href="#doctors">find a psycholog</a>
+        <a href="#doctors">find a psychologist</a>
         <a href="#book">book</a>
         <a href="#blogs">blogs</a>
         <a href="#contact">contact us</a>
@@ -68,8 +68,8 @@
 
       <div id="menu-btn" class="fas fa-bars"></div>
     </header>
-
-    <% }else { %>
+    <% } else { %>
+    <!-- Tampilan sebelum login -->
     <header class="header">
       <a href="#" class="logo">
         <img class="logo" src="/img/logo.png" alt=""
@@ -78,7 +78,7 @@
       <nav class="navbar">
         <a href="#home">home</a>
         <a href="#services">services</a>
-        <a href="#doctors">find a psycholog</a>
+        <a href="#doctors">find a psychologist</a>
         <a href="#book">book</a>
         <a href="#blogs">blogs</a>
         <a href="#contact">contact us</a>
@@ -96,7 +96,7 @@
     <!-- header section ends -->
 
     <!-- home section starts -->
-    <% if (nama) { %>
+    <% if (isLoggedIn) { %>
     <section class="home" id="home">
       <div class="content">
         <h2 style="font-size: 2rem; color: var(--black)">Hi <%= nama %>,</h2>
