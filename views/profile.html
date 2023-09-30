@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Card 1</title>
+    <title>Profile</title>
 
     <!-- Font -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -12,10 +12,12 @@
       href="https://fonts.googleapis.com/css2?family=Mulish:wght@300;400;500;600;700&display=swap"
       rel="stylesheet" />
 
+    <!-- Font -->
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
 
+    <!-- Css -->
     <link rel="stylesheet" href="/style/profile.css" />
     <link rel="stylesheet" href="/style/navbar.css" />
     <script src="/script/script.js"></script>
@@ -76,7 +78,7 @@
             alt="Foto Profil"
             class="profile" />
           <p><%= profileData.nama_pasien %></p>
-          <p>D: <%= profileData.id_pasien %></p>
+          <p>ID: <%= profileData.id_pasien %></p>
           <a href="/edit_profile">Edit Profil</a>
         </div>
 

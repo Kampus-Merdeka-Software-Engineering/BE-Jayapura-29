@@ -505,7 +505,8 @@ app.post(
   upload.single("foto_pasien"),
   (req, res) => {
     const id_pasien = req.session.userId;
-    const { nama_pasien, email_pasien, alamat, nomor_ponsel } = req.body;
+    const { nama_pasien, email_pasien, gender, alamat, nomor_ponsel } =
+      req.body;
 
     // Jika foto profil berhasil diunggah, Anda dapat menghandle pembaruan gambar profil di sini
     if (req.file) {
@@ -557,11 +558,11 @@ app.post(
     } else {
       // Jika tidak ada file yang diunggah, lakukan pembaruan data profil tanpa foto
       const updateQuery =
-        "UPDATE tb_pasien SET nama_pasien = ?, email_pasien = ?, alamat = ?, nomor_ponsel = ? WHERE id_pasien = ?";
+        "UPDATE tb_pasien SET nama_pasien = ?, email_pasien = ?, gender =?, alamat = ?, nomor_ponsel = ? WHERE id_pasien = ?";
 
       db.query(
         updateQuery,
-        [nama_pasien, email_pasien, alamat, nomor_ponsel, id_pasien],
+        [nama_pasien, email_pasien, gender, alamat, nomor_ponsel, id_pasien],
         (err, result) => {
           if (err) {
             // Handle kesalahan jika query gagal
