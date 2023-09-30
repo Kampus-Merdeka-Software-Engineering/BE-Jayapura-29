@@ -197,7 +197,7 @@ app.get("/edit_profile", checkLoggedIn, (req, res) => {
 
   // Query SQL untuk mengambil data pengguna dari tb_pasien
   const query =
-    "SELECT foto_pasien, email_pasien, nama_pasien, alamat, nomor_ponsel FROM tb_pasien WHERE id_pasien = ?";
+    "SELECT foto_pasien, CONCAT(SUBSTRING_INDEX(nama_pasien, ' ', 2), ' ') AS nama_pendek, email_pasien, nama_pasien, alamat, nomor_ponsel FROM tb_pasien WHERE id_pasien = ?";
 
   db.query(query, [id_pasien], (err, results) => {
     if (err) {
@@ -226,7 +226,7 @@ app.get("/appointment", (req, res) => {
   if (req.session.userId) {
     const userId = req.session.userId;
     const query =
-      "SELECT id_pasien, nama_pasien, email_pasien FROM tb_pasien WHERE id_pasien = ?";
+      "SELECT id_pasien, nama_pasien, email_pasien, foto_pasien, CONCAT(SUBSTRING_INDEX(nama_pasien, ' ', 2), ' ') AS nama_pendek FROM tb_pasien WHERE id_pasien = ?";
 
     db.query(query, [userId], (err, results) => {
       if (err) {
@@ -236,6 +236,8 @@ app.get("/appointment", (req, res) => {
         const id_pasien = results[0].id_pasien;
         const nama_pasien = results[0].nama_pasien;
         const email_pasien = results[0].email_pasien;
+        const foto_pasien = results[0].foto_pasien;
+        const nama_pendek = results[0].nama_pendek;
 
         // Ambil daftar nama psikolog dari database
         db.query(
@@ -251,6 +253,8 @@ app.get("/appointment", (req, res) => {
               psikolog,
               email_pasien,
               id_pasien,
+              foto_pasien,
+              nama_pendek,
             });
           }
         );

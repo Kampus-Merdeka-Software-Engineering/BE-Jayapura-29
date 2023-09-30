@@ -271,12 +271,11 @@ nav.navbar {
   #menu-btn {
     display: initial;
     margin-left: 100px;
-    background-color: transparent;
   }
 
   .header .navbar {
     position: absolute;
-    top: 115%;
+    top: 100%;
     right: 2rem;
     border-radius: 0.5rem;
     box-shadow: var(--box-shadow);
@@ -298,6 +297,9 @@ nav.navbar {
     opacity: 1;
     transition: 0.2s ease-out;
     display: block;
+    z-index: 1000;
+    position: absolute;
+    top: 13vw;
   }
 
   .header .navbar a {

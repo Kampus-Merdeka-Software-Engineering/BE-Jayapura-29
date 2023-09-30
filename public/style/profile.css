@@ -36,6 +36,19 @@ html {
   justify-content: center;
 }
 
+.container_profile .kembali {
+  position: absolute;
+  background-color: #fff;
+  padding: 0.8vw;
+  border-radius: 50px;
+  color: #4682a9;
+  font-weight: 400;
+  box-shadow: 1px 1px 5px #777;
+  cursor: pointer;
+  left: 100px;
+  top: 100px;
+}
+
 .baris_satu {
   display: grid;
   grid-template-columns: 1fr;
@@ -157,7 +170,7 @@ img.profile {
   color: #4682a9;
   font-size: 1.4em;
   text-align: left;
-  margin: 20px 0px 20px 0px;
+  margin: 0.5vw 0px 0.5vw 0px;
 }
 
 .card4 .jadwal_konsultasi {
