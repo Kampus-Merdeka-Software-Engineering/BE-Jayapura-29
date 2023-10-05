@@ -10,6 +10,7 @@ const loginRouter = require("./routes/login");
 const appointmentRoutes = require("./routes/appointment");
 const profileRoutes = require("./routes/profile");
 const pembayaranRoutes = require("./routes/pembayaran");
+const editprofileRoutes = require("./routes/edit_profile");
 
 // Import file konfigurasi database Sequelize
 const sequelize = require("./config/database");
@@ -447,38 +448,43 @@ app.get("/profile", async (req, res) => {
 });
 
 // Edit Profile
-
-app.get("/edit_profile", checkLoggedIn, async (req, res) => {
-  try {
-    const id_pasien = req.session.userId;
-
-    // Menggunakan Sequelize untuk mengambil data pengguna dari tb_pasien
-    const profileData = await Pasien.findByPk(id_pasien, {
-      attributes: [
-        "foto_pasien",
-        [
-          sequelize.literal(
-            "CONCAT(SUBSTRING_INDEX(nama_pasien, ' ', 2), ' ')"
-          ),
-          "nama_pendek",
-        ],
-        "email_pasien",
-        "nama_pasien",
-        "alamat",
-        "nomor_ponsel",
-      ],
-    });
-
-    if (profileData) {
-      // Render halaman edit profil dengan data pengguna
-      res.render("edit_profile", { profileData });
-    } else {
-      res.status(404).send("Data pengguna tidak ditemukan.");
-    }
-  } catch (error) {
-    console.error("Kesalahan saat mengambil data profil:", error);
-    res.status(500).send("Terjadi kesalahan saat mengambil data profil.");
+app.use("/", editprofileRoutes);
+app.get("/edit_profile", (req, res) => {
+  // Di sini Anda perlu mengganti kode berikut sesuai dengan logika autentikasi yang Anda miliki
+  const userId = req.session.userId; // Gantilah ini dengan cara Anda mengidentifikasi user yang sedang login
+  if (!userId) {
+    // Jika user tidak terautentikasi, arahkan ke halaman login
+    return res.redirect("/login"); // Gantilah dengan URL login yang sesuai
   }
+
+  // Query database untuk mendapatkan data profil berdasarkan id_pasien atau email_pasien
+  Pasien.findOne({ where: { id_pasien: userId } })
+    .then((profileData) => {
+      if (!profileData) {
+        // Jika data profil tidak ditemukan, tangani sesuai kebutuhan Anda
+        return res.status(404).send("Profil tidak ditemukan");
+      }
+      const editprofileHtml = fs.readFileSync(
+        path.join(__dirname, "views", "edit_profile.html"),
+        "utf8"
+      );
+
+      // Render HTML dengan mengganti placeholder dengan data profil
+      const renderedHtml = editprofileHtml
+        .replace(/<%= profileData.id_pasien %>/g, profileData.id_pasien)
+        .replace(/<%= profileData.foto_pasien %>/g, profileData.foto_pasien)
+        .replace(/<%= profileData.nama_pasien %>/g, profileData.nama_pasien)
+        .replace(/<%= profileData.email_pasien %>/g, profileData.email_pasien)
+        .replace(/<%= profileData.nomor_ponsel %>/g, profileData.nomor_ponsel)
+        .replace(/<%= profileData.alamat %>/g, profileData.alamat);
+
+      // Tampilkan halaman edit profil dengan data profil yang telah dirender
+      res.send(renderedHtml);
+    })
+    .catch((error) => {
+      console.error("Error:", error);
+      res.status(500).send("Terjadi kesalahan saat mengambil data profil");
+    });
 });
 
 // Route Logout
@@ -534,63 +540,63 @@ app.listen(port, () => {
 
 // Update Profil
 
-app.post(
-  "/edit_profile",
-  checkLoggedIn,
-  upload.single("foto_pasien"),
-  async (req, res) => {
-    try {
-      const id_pasien = req.session.userId;
-      const { nama_pasien, email_pasien, gender, alamat, nomor_ponsel } =
-        req.body;
+// app.post(
+//   "/edit_profile",
+//   checkLoggedIn,
+//   upload.single("foto_pasien"),
+//   async (req, res) => {
+//     try {
+//       const id_pasien = req.session.userId;
+//       const { nama_pasien, email_pasien, gender, alamat, nomor_ponsel } =
+//         req.body;
 
-      // Jika foto profil berhasil diunggah, Anda dapat menghandle pembaruan gambar profil di sini
-      if (req.file) {
-        const newProfilePicturePath = req.file.path;
+//       // Jika foto profil berhasil diunggah, Anda dapat menghandle pembaruan gambar profil di sini
+//       if (req.file) {
+//         const newProfilePicturePath = req.file.path;
 
-        // Membaca gambar dan mengonversi ke base64
-        const newProfilePictureBase64 = await fs.promises.readFile(
-          newProfilePicturePath,
-          { encoding: "base64" }
-        );
+//         // Membaca gambar dan mengonversi ke base64
+//         const newProfilePictureBase64 = await fs.promises.readFile(
+//           newProfilePicturePath,
+//           { encoding: "base64" }
+//         );
 
-        // Perbarui kolom foto_pasien dengan gambar baru
-        await Pasien.update(
-          { foto_pasien: newProfilePictureBase64 },
-          { where: { id_pasien } }
-        );
+//         // Perbarui kolom foto_pasien dengan gambar baru
+//         await Pasien.update(
+//           { foto_pasien: newProfilePictureBase64 },
+//           { where: { id_pasien } }
+//         );
 
-        // Jika query berhasil dijalankan, maka Anda dapat mengirimkan respons sukses
-        const successMessage = "Foto profil berhasil diperbarui";
-        res.send(`
-        <script>
-          alert('${successMessage}');
-          window.location='/profile'; // Redirect ke halaman profil
-        </script>
-      `);
-      } else {
-        // Jika tidak ada file yang diunggah, lakukan pembaruan data profil tanpa foto
-        await Pasien.update(
-          { nama_pasien, email_pasien, gender, alamat, nomor_ponsel },
-          { where: { id_pasien } }
-        );
+//         // Jika query berhasil dijalankan, maka Anda dapat mengirimkan respons sukses
+//         const successMessage = "Foto profil berhasil diperbarui";
+//         res.send(`
+//         <script>
+//           alert('${successMessage}');
+//           window.location='/profile'; // Redirect ke halaman profil
+//         </script>
+//       `);
+//       } else {
+//         // Jika tidak ada file yang diunggah, lakukan pembaruan data profil tanpa foto
+//         await Pasien.update(
+//           { nama_pasien, email_pasien, gender, alamat, nomor_ponsel },
+//           { where: { id_pasien } }
+//         );
 
-        // Setelah pembaruan berhasil, tampilkan pesan sukses dan arahkan ke halaman profil
-        const successMessage = "Profil berhasil diperbarui";
-        res.send(`
-        <script>
-          alert('${successMessage}');
-          window.location='/profile'; // Redirect ke halaman profil
-        </script>
-      `);
-      }
-    } catch (error) {
-      // Handle kesalahan jika ada
-      console.error("Kesalahan saat memperbarui profil:", error);
-      res.status(500).send("Terjadi kesalahan saat memperbarui profil.");
-    }
-  }
-);
+//         // Setelah pembaruan berhasil, tampilkan pesan sukses dan arahkan ke halaman profil
+//         const successMessage = "Profil berhasil diperbarui";
+//         res.send(`
+//         <script>
+//           alert('${successMessage}');
+//           window.location='/profile'; // Redirect ke halaman profil
+//         </script>
+//       `);
+//       }
+//     } catch (error) {
+//       // Handle kesalahan jika ada
+//       console.error("Kesalahan saat memperbarui profil:", error);
+//       res.status(500).send("Terjadi kesalahan saat memperbarui profil.");
+//     }
+//   }
+// );
 
 // Route untuk memproses pembayaran
 
