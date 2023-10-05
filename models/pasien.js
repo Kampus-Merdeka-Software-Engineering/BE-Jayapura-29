@@ -2,7 +2,7 @@ const Sequelize = require("sequelize");
 const sequelize = require("../config/database"); // Import dari direktori config
 
 // Import model Appointment
-const Appointment = require("./appointment");
+// const Appointment = require("./appointment");
 
 const Pasien = sequelize.define("tb_pasien", {
   id_pasien: {
@@ -23,4 +23,4 @@ const Pasien = sequelize.define("tb_pasien", {
 module.exports = Pasien;
 
 // Menentukan hubungan antara Pasien dan Appointment
-Pasien.hasMany(Appointment, { foreignKey: "id_pasien" });
+// Pasien.hasMany(Appointment, { foreignKey: "id_pasien" });

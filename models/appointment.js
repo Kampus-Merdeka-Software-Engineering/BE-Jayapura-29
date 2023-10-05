@@ -1,7 +1,9 @@
 const Sequelize = require("sequelize");
-const sequelize = require("../config/database"); // Import your sequelize configuration
+const sequelize = require("../config/database"); //
 
-// Define the Appointment model
+const Pasien = require("./pasien");
+const Psikolog = require("./psikolog");
+
 const Appointment = sequelize.define("tb_appointment", {
   id_appointment: {
     type: Sequelize.INTEGER,
@@ -18,5 +20,9 @@ const Appointment = sequelize.define("tb_appointment", {
   waktu: Sequelize.TIME,
   keluhan: Sequelize.STRING,
 });
+
+// Establish the association after defining the Appointment model
+Appointment.belongsTo(Pasien, { foreignKey: "id_pasien" });
+Appointment.belongsTo(Psikolog, { foreignKey: "nama_psikolog" });
 
 module.exports = Appointment;
