@@ -1,7 +1,7 @@
 const Sequelize = require("sequelize");
 
 // Konfigurasi koneksi ke database
-const sequelize = new Sequelize("db_rumah_sakit", "root", "", {
+const sequelize = new Sequelize("db_kesehatan", "root", "", {
   host: "localhost",
   dialect: "mysql",
   port: 3306,

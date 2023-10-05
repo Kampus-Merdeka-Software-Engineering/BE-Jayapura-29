@@ -22,7 +22,7 @@
   </head>
   <body>
     <!-- header section starts -->
-    <!-- Tampilan header saat belum login -->
+    <!-- Tampilan header saat sudah login -->
     <header class="header">
       <a href="#" class="logo">
         <img class="logo" src="/img/logo.png" alt="" />
@@ -37,9 +37,33 @@
         <a href="#contact">contact us</a>
       </nav>
 
-      <div class="header-btn">
-        <a href="/signup" class="sign-up">Sign Up</a>
-        <a href="/login" class="login">Login</a>
+      <div style="display: flex; align-items: center">
+        <p
+          style="
+            color: #4682a9;
+            border: 1px solid #4682a9;
+            padding: 1em 5em 1em 1em;
+            border-radius: 50px;
+            font-size: 1.1em;
+          ">
+          <%= nama_pendek %>
+        </p>
+        <div class="profile">
+          <img
+            src="data:image/png;base64, <%= foto_pasien %>"
+            alt="Foto Profil"
+            class="poto_profile" />
+          <div class="profile-menu">
+            <button onclick="myFunction()" class="dropbtn"></button>
+            <div id="myDropdown" class="dropdown-content">
+              <a href="/profile" style="margin: 0" class="dropdown">Profile</a>
+              <a href="/pembayaran" style="margin: 0" class="dropdown"
+                >Pembayaran</a
+              >
+              <a href="/logout" style="margin: 0" class="dropdown">Logout</a>
+            </div>
+          </div>
+        </div>
       </div>
 
       <div id="menu-btn" class="fas fa-bars"></div>
@@ -49,6 +73,10 @@
     <!-- home section starts -->
     <section class="home" id="home">
       <div class="content">
+        <h2 style="font-size: 2rem; color: var(--black); text-transform: none">
+          Hi <%= nama_pendek %>,
+        </h2>
+        <h4>Welcome To</h4>
         <h3>Virtual Healthcare For You</h3>
         <p>
           ReBios provides progressive, and affordable psycholog healthcare,
@@ -537,6 +565,7 @@
     <!-- footer section ends -->
 
     <!-- custom js file link -->
+
     <script src="script/script.js"></script>
   </body>
 </html>

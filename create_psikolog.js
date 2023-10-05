@@ -4,13 +4,13 @@ const Psikolog = require("./models/psikolog"); // Sesuaikan dengan path yang ses
 
 // Data psikolog yang ingin Anda tambahkan
 const newPsikolog = {
-  nama_psikolog: "Angel",
-  alamat: "Jalan F",
-  spesialisasi: "Specialist F",
+  nama_psikolog: "Angelina",
+  alamat: "Jalan A",
+  spesialisasi: "Specialist A",
   gender: "Perempuan",
-  nomor_ponsel: "08666666666",
-  email: "angel@gmail.com",
-  gambar_psikolog: "/public/img/angel.png",
+  nomor_ponsel: "0811111111111",
+  email: "angelina@gmail.com",
+  gambar_psikolog: "/public/img/angelina.png",
   // Tambahkan definisi untuk kolom-kolom lainnya
 };
 

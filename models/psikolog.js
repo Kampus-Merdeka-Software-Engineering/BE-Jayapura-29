@@ -2,6 +2,11 @@ const Sequelize = require("sequelize");
 const sequelize = require("../config/database"); // Import dari direktori config
 
 const Psikolog = sequelize.define("tb_psikolog", {
+  id_psikolog: {
+    type: Sequelize.INTEGER,
+    primaryKey: true,
+    autoIncrement: true,
+  },
   nama_psikolog: Sequelize.STRING,
   alamat: Sequelize.STRING,
   spesialisasi: Sequelize.STRING,

@@ -23,12 +23,12 @@
   </head>
   <body>
     <header class="header">
-      <a href="/index" class="logo">
+      <a href="/index2" class="logo">
         <img class="logo" src="/img/logo.png" alt=""
       </a>
 
       <nav class="navbar">
-        <a href="/index">home</a>
+        <a href="/index2">home</a>
         <a href="#services">services</a>
         <a href="#doctors">find a psycholog</a>
         <a href="#book">book</a>
@@ -70,15 +70,12 @@
 
     <!-- -------------------------------- -->
     <div class="container_profile">
-      <p><a href="/index" class="kembali">Kembali</a></p>
+      <p><a href="/index2" class="kembali">Kembali</a></p>
       <div class="baris_satu">
         <div class="card1">
-          <img
-            src="data:image/jpeg;base64, <%= profileData.foto_pasien %>"
-            alt="Foto Profil"
-            class="profile" />
-          <p><%= profileData.nama_pasien %></p>
-          <p>ID: <%= profileData.id_pasien %></p>
+          <img src="" alt="Foto Profil" class="profile" id="profile-image" />
+          <p id="profile-name"></p>
+          <p>ID: <span id="profile-id"></span></p>
           <a href="/edit_profile">Edit Profil</a>
         </div>
 
@@ -86,23 +83,9 @@
           <div class="pembayaran">
             <h4>Status Pembayaran</h4>
             <div class="isi_pembayaran">
-              <p>
-                <% if (profileData.jumlah_bayar !== "-") { %> Jumlah Bayar: <%=
-                profileData.jumlah_bayar %>
-              </p>
+              <p id="jumlah-bayar"></p>
               <hr />
-              <p>
-                Status Bayar: <%= profileData.status_bayar == "sudah" ? "Sudah"
-                : "Belum" %>
-              </p>
-              <% } else { %>
-              <p>Jumlah Bayar: <%= profileData.jumlah_bayar %></p>
-              <hr />
-              <p>
-                Status Bayar: <%= profileData.status_bayar == "sudah" ? "Sudah"
-                : "-" %>
-              </p>
-              <% } %>
+              <p id="status-bayar"></p>
             </div>
           </div>
         </div>
@@ -111,15 +94,15 @@
       <div class="baris_dua">
         <div class="card3">
           <div class="biodata">
-            <p><%= profileData.nama_pasien %></p>
+            <p id="nama-pasien"></p>
             <hr />
-            <p><%= profileData.email_pasien %></p>
+            <p id="email-pasien"></p>
             <hr />
-            <p><%= profileData.gender %></p>
+            <p id="gender"></p>
             <hr />
-            <p><%= profileData.nomor_ponsel %></p>
+            <p id="nomor-ponsel"></p>
             <hr />
-            <p><%= profileData.alamat %></p>
+            <p id="alamat"></p>
           </div>
         </div>
 
@@ -127,21 +110,11 @@
           <div class="jadwal_konsultasi">
             <h4>Jadwal Konsultasi</h4>
             <div class="isi_jadwal">
-              <% if (profileData.tanggal && profileData.waktu) { %> <% const
-              appointmentDate = new Date(profileData.tanggal + " " +
-              profileData.waktu); %> <% const currentDate = new Date(); %> <% if
-              (appointmentDate < currentDate) { %>
-              <p>Anda belum memiliki appointment.</p>
-              <% } else { %>
-              <p>
-                Tanggal Appointment: <br />
-                <%= profileData.tanggal %>
-              </p>
+              <p id="appointment-status"></p>
               <hr />
-              <p>Waktu Appointment: <%= profileData.waktu %></p>
-              <% } %> <% } else { %>
-              <p>Anda belum memiliki appointment.</p>
-              <% } %>
+              <p id="tanggal-appointment"></p>
+              <hr />
+              <p id="waktu-appointment"></p>
             </div>
           </div>
         </div>
@@ -149,5 +122,6 @@
     </div>
 
     <script src="/script/script.js"></script>
+    <script src="/script/profile.js"></script>
   </body>
 </html>
