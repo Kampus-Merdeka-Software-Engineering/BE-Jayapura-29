@@ -1,6 +1,10 @@
 const express = require("express");
 const router = express.Router();
 const Appointment = require("../models/appointment");
+const Pasien = require("../models/pasien");
+const Psikolog = require("../models/psikolog");
+const fs = require("fs");
+const path = require("path");
 
 router.post("/appointment", async (req, res) => {
   try {
@@ -27,11 +31,17 @@ router.post("/appointment", async (req, res) => {
       tanggal,
       waktu,
       keluhan,
-      id_pasien: pasien.id, // Assuming you have a relationship between Appointment and Pasien
+      pasienId: pasien.id, // Assuming you have a relationship between Appointment and Pasien
     });
 
     // Redirect or respond as needed upon successful appointment creation
-    res.redirect("/appointment"); // Redirect to the appointment page or handle success as needed
+    const successMessage = "Appointment berhasil";
+    res.send(`
+          <script>
+            alert('${successMessage}');
+            window.location='/index2';
+          </script>
+        `); // Redirect to the appointment page or handle success as needed
   } catch (error) {
     console.error("Error:", error);
     res.status(500).send("Terjadi kesalahan");

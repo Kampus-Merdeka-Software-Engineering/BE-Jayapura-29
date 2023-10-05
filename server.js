@@ -169,7 +169,7 @@ app.get("/index", (req, res) => {
 });
 
 // Route untuk Appointment
-// app.use("/", appointmentRoutes);
+app.use("/", appointmentRoutes);
 
 app.get("/appointment", checkLoggedIn, async (req, res) => {
   try {
@@ -360,6 +360,15 @@ app.get("/profile", async (req, res) => {
         });
 
         if (appointment) {
+          if (pembayaran) {
+            // Sudah melakukan pembayaran
+            profileData.jumlah_bayar = 8000;
+            profileData.status_bayar = "sudah";
+          } else {
+            // Belum melakukan pembayaran
+            profileData.jumlah_bayar = 80000;
+            profileData.status_bayar = "belum";
+          }
           // Mengambil tanggal dari objek appointment
           const appointmentDate = new Date(appointment.tanggal);
 
@@ -393,6 +402,8 @@ app.get("/profile", async (req, res) => {
           profileData.waktu_appointment = appointment.waktu;
         } else {
           // Jika tidak ada appointment, tampilkan pesan "Anda belum memiliki appointment"
+          profileData.jumlah_bayar = "-";
+          profileData.status_bayar = "-";
           profileData.tanggal_appointment = "Anda belum memiliki appointment";
           profileData.waktu_appointment = "";
         }
