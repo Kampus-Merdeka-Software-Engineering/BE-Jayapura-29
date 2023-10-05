@@ -1,6 +1,7 @@
 const Sequelize = require("sequelize");
-const sequelize = require("../config/database"); //
+const sequelize = require("../config/database"); // Import your sequelize configuration
 
+// Define the Appointment model
 const Appointment = sequelize.define("tb_appointment", {
   id_appointment: {
     type: Sequelize.INTEGER,

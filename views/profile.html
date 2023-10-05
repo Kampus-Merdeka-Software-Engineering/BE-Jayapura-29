@@ -73,9 +73,12 @@
       <p><a href="/index2" class="kembali">Kembali</a></p>
       <div class="baris_satu">
         <div class="card1">
-          <img src="" alt="Foto Profil" class="profile" id="profile-image" />
-          <p id="profile-name"></p>
-          <p>ID: <span id="profile-id"></span></p>
+          <img
+            src="data:image/jpeg;base64, <%= profileData.foto_pasien %>"
+            alt="Foto Profil"
+            class="profile" />
+          <p><%= profileData.nama_pasien %></p>
+          <p>ID: <%= profileData.id_pasien %></p>
           <a href="/edit_profile">Edit Profil</a>
         </div>
 
@@ -83,9 +86,13 @@
           <div class="pembayaran">
             <h4>Status Pembayaran</h4>
             <div class="isi_pembayaran">
-              <p id="jumlah-bayar"></p>
+              <p id="jumlah-bayar">
+                Jumlah Bayar: <%= profileData.jumlah_bayar %>
+              </p>
               <hr />
-              <p id="status-bayar"></p>
+              <p id="status-bayar">
+                Status Bayar: <%= profileData.status_bayar %>
+              </p>
             </div>
           </div>
         </div>
@@ -94,15 +101,15 @@
       <div class="baris_dua">
         <div class="card3">
           <div class="biodata">
-            <p id="nama-pasien"></p>
+            <p><%= profileData.nama_pasien %></p>
             <hr />
-            <p id="email-pasien"></p>
+            <p><%= profileData.email_pasien %></p>
             <hr />
-            <p id="gender"></p>
+            <p><%= profileData.gender %></p>
             <hr />
-            <p id="nomor-ponsel"></p>
+            <p><%= profileData.nomor_ponsel %></p>
             <hr />
-            <p id="alamat"></p>
+            <p><%= profileData.alamat %></p>
           </div>
         </div>
 
@@ -110,11 +117,18 @@
           <div class="jadwal_konsultasi">
             <h4>Jadwal Konsultasi</h4>
             <div class="isi_jadwal">
-              <p id="appointment-status"></p>
-              <hr />
-              <p id="tanggal-appointment"></p>
-              <hr />
-              <p id="waktu-appointment"></p>
+              <div>
+                <p id="tanggal-appointment">
+                  <%= profileData.tanggal_appointment %>
+                </p>
+              </div>
+              <br />
+              <br />
+              <div>
+                <p id="waktu-appointment">
+                  <%= profileData.waktu_appointment %>
+                </p>
+              </div>
             </div>
           </div>
         </div>
@@ -122,6 +136,5 @@
     </div>
 
     <script src="/script/script.js"></script>
-    <script src="/script/profile.js"></script>
   </body>
 </html>

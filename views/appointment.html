@@ -72,7 +72,7 @@
       <p><a href="/index2">Kembali</a></p>
       <h1>Appointment</h1>
       <p>Selamat datang, <%= nama_pendek %>. Silahkan lakukan appointment.</p>
-      <form method="POST" action="/create-appointment">
+      <form action="/appointment" method="POST">
         <div class="isi" style="display: none">
           <label for="id_pasien">ID Pasien:</label>
           <input
@@ -84,11 +84,13 @@
         </div>
 
         <div class="input_field">
-          <label for="nama_pasien">Nama</label>
+          <label for="nama_pasien">Nama:</label>
           <input
             type="text"
             name="nama_pasien"
             id="nama_pasien"
+            value="<%= nama_pasien %>"
+            readonly
             class="input" />
         </div>
 
@@ -98,13 +100,15 @@
             type="text"
             name="email_pasien"
             id="email_pasien"
+            value="<%= email_pasien %>"
+            readonly
             class="input" />
         </div>
 
         <div class="input_field">
           <label for="nama_psikolog">Psycholog</label>
           <select name="nama_psikolog" id="nama_psikolog">
-            <option value="Angelina">Angelina</option>
+            <%= psikologOptions %>
           </select>
         </div>
 

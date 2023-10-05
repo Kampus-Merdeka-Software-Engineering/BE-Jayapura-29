@@ -2,39 +2,39 @@ const express = require("express");
 const router = express.Router();
 const Appointment = require("../models/appointment");
 
-router.post("/create-appointment", async (req, res) => {
+router.post("/appointment", async (req, res) => {
   try {
-    // Ambil data dari formulir yang dikirimkan
-    const {
-      id_pasien,
-      nama_pasien,
-      email_pasien,
-      nama_psikolog,
-      tanggal,
-      waktu,
-      keluhan,
-    } = req.body;
+    // Ambil data yang diperlukan dari request body
+    const { nama_pasien, nama_psikolog, tanggal, waktu, keluhan } = req.body; // Sesuaikan dengan field yang diperlukan
 
-    // Membuat record appointment baru di tb_appointment menggunakan Sequelize
-    const appointment = await Appointment.create({
-      id_pasien,
-      nama_pasien,
-      email_pasien,
-      nama_psikolog,
-      tanggal,
-      waktu,
-      keluhan,
+    // Ambil email_pasien dari sesi atau tempat Anda menyimpannya saat login
+    const { email_pasien } = req.session; // Sesuaikan dengan cara Anda menyimpan email_pasien
+
+    // Cari data pasien berdasarkan email_pasien
+    const pasien = await Pasien.findOne({
+      where: { email_pasien },
     });
 
-    // Jika berhasil, kirimkan respons berhasil
-    res
-      .status(201)
-      .json({ message: "Appointment berhasil dibuat", appointment });
+    if (!pasien) {
+      return res.status(404).send("Pasien tidak ditemukan");
+    }
+
+    // Create a new appointment entry in the tb_appointment table
+    await Appointment.create({
+      nama_pasien,
+      email_pasien,
+      nama_psikolog,
+      tanggal,
+      waktu,
+      keluhan,
+      id_pasien: pasien.id, // Assuming you have a relationship between Appointment and Pasien
+    });
+
+    // Redirect or respond as needed upon successful appointment creation
+    res.redirect("/appointment"); // Redirect to the appointment page or handle success as needed
   } catch (error) {
-    // Jika terjadi kesalahan, tangani dengan mengirimkan pesan error
-    res
-      .status(500)
-      .json({ error: "Terjadi kesalahan saat membuat appointment" });
+    console.error("Error:", error);
+    res.status(500).send("Terjadi kesalahan");
   }
 });
 

@@ -111,8 +111,8 @@ app.get("/index2", (req, res) => {
     );
     // Mengganti placeholder dengan nilai yang sesuai dari sesi
     const renderedHtml = index2Html
-      .replace("<%= nama_pendek %>", req.session.nama_pendek || "")
-      .replace("<%= foto_pasien %>", req.session.foto_pasien || "");
+      .replace(/<%= nama_pendek %>/g, req.session.nama_pendek)
+      .replace(/<%= foto_pasien %>/g, req.session.foto_pasien);
 
     res.send(renderedHtml);
   } else {
@@ -145,21 +145,29 @@ app.get("/signup", (req, res) => {
 
 app.get("/index", (req, res) => {
   if (req.session.email_pasien) {
-    // Ubah req.session.userId menjadi req.session.email_pasien
-    const email_pasien = req.session.email_pasien; // Ubah userId menjadi email_pasien
-    Pasien.findOne({ where: { email_pasien: email_pasien } }) // Ubah id menjadi email_pasien
+    const email_pasien = req.session.email_pasien;
+    Pasien.findOne({ where: { email_pasien: email_pasien } })
       .then((user) => {
         if (user) {
           const { nama_pasien, foto_pasien } = user;
-          const id_pasien = user.id_pasien; // Menggunakan id yang sesuai dengan pengguna
+          const id_pasien = user.id_pasien;
           const isLoggedIn = true;
 
           // Mengambil dua kata pertama dari nama_pasien
           const namaPasienArray = nama_pasien.split(" ");
-          const duaKataPertama = namaPasienArray.slice(0, 2).join(" ");
+          const nama_pendek = namaPasienArray.slice(0, 2).join(" ");
+
+          // Konversi foto_pasien BLOB menjadi URL gambar base64
+          const foto_pasien_base64 = `data:image/jpeg;base64,${foto_pasien.toString(
+            "base64"
+          )}`;
+
+          // Menyimpan nilai ke dalam sesi
+          req.session.nama_pendek = nama_pendek;
+          req.session.foto_pasien = foto_pasien_base64;
 
           res.sendFile(path.join(__dirname, "views", "index2.html"), {
-            nama: duaKataPertama,
+            nama: nama_pendek,
             id_pasien: id_pasien,
             foto_pasien: foto_pasien,
             isLoggedIn: isLoggedIn,
@@ -184,10 +192,57 @@ app.get("/index", (req, res) => {
 });
 
 // Route untuk Appointment
-app.use(express.json());
-app.use("/appointment", appointmentRoutes);
-app.get("/appointment", checkLoggedIn, (req, res) => {
-  res.sendFile(path.join(__dirname, "views", "appointment.html"));
+app.get("/appointment", checkLoggedIn, async (req, res) => {
+  try {
+    // Ambil email_pasien dari sesi atau tempat Anda menyimpannya saat login
+    const { email_pasien } = req.session; // Sesuaikan dengan cara Anda menyimpan email_pasien
+
+    // Cari data pasien berdasarkan email_pasien
+    const pasien = await Pasien.findOne({
+      where: { email_pasien },
+    });
+
+    if (!pasien) {
+      return res.status(404).send("Pasien tidak ditemukan");
+    }
+
+    // Ambil data psikolog dari tabel tb_psikolog
+    const psikologOptions = await Psikolog.findAll();
+
+    // Buat string HTML untuk pilihan dropdown psikolog
+    const psikologOptionsHtml = psikologOptions
+      .map((psikolog) => {
+        return `
+        <option value="${psikolog.nama_psikolog}">
+          ${psikolog.nama_psikolog}
+        </option>
+      `;
+      })
+      .join("");
+
+    // Mengambil nama_pendek dari nama_pasien
+    const namaPasienArray = pasien.nama_pasien.split(" ");
+    const nama_pendek = namaPasienArray.slice(0, 2).join(" ");
+
+    // Baca isi file HTML appointment.html
+    const appointmentHtml = fs.readFileSync(
+      path.join(__dirname, "views", "appointment.html"),
+      "utf8"
+    );
+
+    // Ganti nilai <%= nama_pasien %> dalam file HTML dengan nama_pasien dari hasil pencarian
+    const renderedHtml = appointmentHtml
+      .replace(/<%= nama_pasien %>/g, pasien.nama_pasien)
+      .replace(/<%= email_pasien %>/g, pasien.email_pasien)
+      .replace(/<%= psikologOptions %>/g, psikologOptionsHtml)
+      .replace(/<%= nama_pendek %>/g, nama_pendek); // Menambahkan nama_pendek
+
+    // Kirim file HTML yang telah diubah
+    res.send(renderedHtml);
+  } catch (error) {
+    console.error("Error:", error);
+    res.status(500).send("Terjadi kesalahan");
+  }
 });
 
 // app.get("/appointment", (req, res) => {
@@ -235,26 +290,57 @@ app.get("/appointment", checkLoggedIn, (req, res) => {
 // });
 // Route untuk halaman pembayaran
 
-app.get("/pembayaran", async (req, res) => {
+app.get("/pembayaran", checkLoggedIn, async (req, res) => {
   try {
-    // Ambil data psikolog dari database
-    const psikologData = {
-      nama_psikolog: "Nama Psikolog", // Ganti dengan data psikolog yang sesuai
-      spesialisasi: "Spesialisasi Psikolog", // Ganti dengan data spesialisasi yang sesuai
-    };
+    // Ambil email_pasien dari sesi atau tempat Anda menyimpannya saat login
+    const { email_pasien } = req.session; // Sesuaikan dengan cara Anda menyimpan email_pasien
 
-    // Mendapatkan jalur file pembayaran.html
-    const filePath = path.join(__dirname, "../public/pembayaran.html");
+    // Cari data pasien berdasarkan email_pasien
+    const pasien = await Pasien.findOne({
+      where: { email_pasien },
+    });
 
-    // Kirim file HTML sebagai respons
-    res.sendFile(filePath);
+    if (!pasien) {
+      return res.status(404).send("Pasien tidak ditemukan");
+    }
+
+    // Mengambil data appointment berdasarkan email pasien
+    const appointment = await getAppointmentByEmail(email_pasien);
+
+    if (!appointment) {
+      return res.status(404).send("Appointment tidak ditemukan");
+    }
+
+    // Anda perlu mengeksekusi query untuk mengambil data psikolog sesuai dengan appointment
+    const psikolog = await Psikolog.findOne({
+      where: { nama_psikolog: appointment.nama_psikolog }, // Gantilah ini sesuai dengan sumber data Anda
+    });
+
+    if (!psikolog) {
+      return res.status(404).send("Psikolog tidak ditemukan");
+    }
+
+    // Baca isi file HTML pembayaran.html
+    const pembayaranHtml = fs.readFileSync(
+      path.join(__dirname, "views", "pembayaran.html"),
+      "utf8"
+    );
+
+    const renderedHtml = pembayaranHtml
+      .replace(/<%= nama_pasien %>/g, pasien.nama_pasien)
+      .replace(/<%= email_pasien %>/g, pasien.email_pasien)
+      .replace(/<%= nama_psikolog %>/g, psikolog.nama_psikolog)
+      .replace(/<%= spesialisasi_psikolog %>/g, psikolog.spesialisasi)
+      .replace(/<%= gambar_psikolog %>/g, psikolog.gambar_psikolog);
+
+    // Kirim file HTML yang telah diubah
+    res.send(renderedHtml);
   } catch (error) {
-    console.error(error);
-    res
-      .status(500)
-      .json({ message: "Terjadi kesalahan saat memuat halaman pembayaran." });
+    console.error("Error:", error);
+    res.status(500).send("Terjadi kesalahan");
   }
 });
+
 // app.get("/pembayaran", checkLoggedIn, async (req, res) => {
 //   try {
 //     const id_pasien = req.session.userId;
@@ -335,10 +421,130 @@ app.get("/pembayaran", async (req, res) => {
 // });
 
 // Route untuk halaman profil
-app.use("/profile", profileRoutes);
-app.get("/profile", (req, res) => {
-  // Mengirimkan berkas HTML langsung sebagai respons
-  res.sendFile(__dirname + "/views/profile.html");
+app.get("/profile", async (req, res) => {
+  if (req.session.email_pasien) {
+    const email_pasien = req.session.email_pasien;
+    const id_pasien = req.session.id_pasien; // Ambil id_pasien dari sesi jika sudah tersedia
+
+    // Buat objek untuk mencari berdasarkan email_pasien dan/atau id_pasien
+    const query = id_pasien ? { id_pasien, email_pasien } : { email_pasien };
+
+    try {
+      const user = await Pasien.findOne({ where: query });
+
+      if (user) {
+        const {
+          id_pasien,
+          nama_pasien,
+          email_pasien,
+          gender,
+          nomor_ponsel,
+          alamat,
+          foto_pasien,
+        } = user;
+
+        const pembayaran = await Pembayaran.findOne({ where: { id_pasien } });
+
+        // Mengambil nama_pendek dari nama_pasien
+        const namaPasienArray = nama_pasien.split(" ");
+        const nama_pendek = namaPasienArray.slice(0, 2).join(" ");
+
+        const profileData = {
+          id_pasien: id_pasien,
+          nama_pasien: nama_pasien,
+          email_pasien: email_pasien,
+          gender: gender,
+          nomor_ponsel: nomor_ponsel,
+          alamat: alamat,
+          foto_pasien: `data:image/jpeg;base64,${foto_pasien.toString(
+            "base64"
+          )}`,
+          jumlah_bayar: pembayaran ? pembayaran.jumlah_bayar : "-",
+          status_bayar: pembayaran ? pembayaran.status_bayar : "-",
+          nama_pendek: nama_pendek, // Menambahkan nama_pendek ke profileData
+        };
+
+        // Baca file HTML menggunakan fs.readFileSync
+        const profileHtml = fs.readFileSync(
+          path.join(__dirname, "views", "profile.html"),
+          "utf8"
+        );
+
+        // Periksa apakah ada appointment atau tidak
+        const appointment = await Appointment.findOne({
+          where: { email_pasien },
+        });
+
+        if (appointment) {
+          // Mengambil tanggal dari objek appointment
+          const appointmentDate = new Date(appointment.tanggal);
+
+          // Membuat daftar nama bulan dalam bahasa Inggris
+          const monthNames = [
+            "Jan",
+            "Feb",
+            "Mar",
+            "Apr",
+            "May",
+            "Jun",
+            "Jul",
+            "Aug",
+            "Sep",
+            "Oct",
+            "Nov",
+            "Dec",
+          ];
+
+          // Mengambil informasi tanggal, bulan, dan tahun dari objek tanggal
+          const day = appointmentDate.getDate();
+          const month = monthNames[appointmentDate.getMonth()];
+          const year = appointmentDate.getFullYear();
+
+          // Menggabungkan informasi tersebut untuk membuat format "Fri Oct 06 2023"
+          const formattedDate = `${appointmentDate
+            .toDateString()
+            .substr(0, 3)} ${month} ${day} ${year}`;
+          // Jika ada appointment, isi tanggal dan waktu berdasarkan yang ada di tb_appointment
+          profileData.tanggal_appointment = formattedDate;
+          profileData.waktu_appointment = appointment.waktu;
+        } else {
+          // Jika tidak ada appointment, tampilkan pesan "Anda belum memiliki appointment"
+          profileData.tanggal_appointment = "Anda belum memiliki appointment";
+          profileData.waktu_appointment = "";
+        }
+
+        // Gantilah placeholder dengan data yang sesuai
+        const renderedHtml = profileHtml
+          .replace(/<%= profileData.id_pasien %>/g, profileData.id_pasien)
+          .replace(/<%= profileData.nama_pasien %>/g, profileData.nama_pasien)
+          .replace(/<%= profileData.email_pasien %>/g, profileData.email_pasien)
+          .replace(/<%= profileData.gender %>/g, profileData.gender)
+          .replace(/<%= profileData.nomor_ponsel %>/g, profileData.nomor_ponsel)
+          .replace(/<%= profileData.alamat %>/g, profileData.alamat)
+          .replace(/<%= profileData.foto_pasien %>/g, profileData.foto_pasien)
+          .replace(/<%= profileData.jumlah_bayar %>/g, profileData.jumlah_bayar)
+          .replace(/<%= profileData.status_bayar %>/g, profileData.status_bayar)
+          .replace(/<%= profileData.nama_pendek %>/g, profileData.nama_pendek)
+          .replace(
+            /<%= profileData.tanggal_appointment %>/g,
+            `tanggal: ${profileData.tanggal_appointment}`
+          )
+          .replace(
+            /<%= profileData.waktu_appointment %>/g,
+            `waktu: ${profileData.waktu_appointment}`
+          );
+
+        res.send(renderedHtml);
+      } else {
+        res.redirect("/login");
+      }
+    } catch (error) {
+      console.error("Kesalahan saat mencari data pasien:", error);
+      res.status(500).send("Terjadi kesalahan saat mencari data pasien.");
+    }
+  } else {
+    res.redirect("/login");
+  }
 });
 
 // app.get("/profile", checkLoggedIn, async (req, res) => {

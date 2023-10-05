@@ -86,7 +86,7 @@
             class="profile-picture" />
         </div>
         <div class="data">
-          <div class="nama" style="font-size: 1.5m; font-weight: 600">
+          <div class="nama" style="font-size: 1.5em; font-weight: 600">
             <label style="color: #fff"><%= nama_psikolog %></label><br />
           </div>
           <div class="spesialis" style="font-size: 1em">
@@ -99,7 +99,7 @@
         <div class="prosesPembayaran_container">
           <div class="biodata_container">
             <label style="display: none"
-              >ID : <<input name="id_pasien" value="" readonly />
+              >ID : <input name="id_pasien" value="<%= id_pasien %>" readonly />
             </label>
 
             <!-- Name Container -->
@@ -109,7 +109,8 @@
             </div>
 
             <label style="display: none"
-              >Email : <input name="email_pasien" value="" readonly />
+              >Email :
+              <input name="email_pasien" value="<%= email_pasien %>" readonly />
             </label>
           </div>
 
@@ -127,7 +128,7 @@
                   <input
                     type="number"
                     name="biaya_sesi"
-                    value="70000"
+                    value="<%= biaya_sesi %>"
                     readonly /><br />
                 </div>
                 <div class="dalam_kotakTabel" style="margin-top: 0.5vw">
@@ -135,7 +136,7 @@
                   <input
                     type="number"
                     name="biaya_layanan"
-                    value="10000"
+                    value="<%= biaya_layanan %>"
                     readonly /><br />
                 </div>
                 <div
@@ -149,7 +150,7 @@
                   <input
                     type="number"
                     name="jumlah_biaya"
-                    value="80000"
+                    value="<%= jumlah_biaya %>"
                     readonly /><br />
                 </div>
               </div>
