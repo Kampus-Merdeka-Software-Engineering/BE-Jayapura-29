@@ -2,9 +2,6 @@ const express = require("express");
 const router = express.Router();
 const Appointment = require("../models/appointment");
 const Pasien = require("../models/pasien");
-const Psikolog = require("../models/psikolog");
-const fs = require("fs");
-const path = require("path");
 
 router.post("/appointment", async (req, res) => {
   try {

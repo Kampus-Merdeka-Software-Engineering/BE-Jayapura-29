@@ -9,6 +9,7 @@ const signupRouter = require("./routes/signup");
 const loginRouter = require("./routes/login");
 const appointmentRoutes = require("./routes/appointment");
 const profileRoutes = require("./routes/profile");
+const pembayaranRoutes = require("./routes/pembayaran");
 
 // Import file konfigurasi database Sequelize
 const sequelize = require("./config/database");
@@ -226,6 +227,7 @@ app.get("/appointment", checkLoggedIn, async (req, res) => {
 });
 
 // Route untuk halaman pembayaran
+app.use("/", pembayaranRoutes);
 app.get("/pembayaran", async (req, res) => {
   try {
     // Check if the user is logged in and their email is stored in a session or variable (e.g., req.session.email)
@@ -291,7 +293,9 @@ app.get("/pembayaran", async (req, res) => {
 
     // Replace placeholders with data
     const renderedHtml = pembayaranHtml
-      .replace(/<%= nama_pasien %>/g, appointment.nama_pasien)
+      .replace(/<%= id_pasien %>/g, pasien.id_pasien)
+      .replace(/<%= email_pasien %>/g, pasien.email_pasien)
+      .replace(/<%= nama_pasien %>/g, pasien.nama_pasien)
       .replace(/<%= nama_psikolog %>/g, psikolog.nama_psikolog)
       .replace(/<%= gambar_psikolog %>/g, psikolog.gambar_psikolog)
       .replace(/<%= spesialisasi %>/g, psikolog.spesialisasi)
@@ -493,40 +497,40 @@ app.listen(port, () => {
 });
 
 // Profil
-app.post("/profile", checkLoggedIn, async (req, res) => {
-  try {
-    const id_pasien = req.session.userId;
-    const { tanggal, waktu } = req.body;
+// app.post("/profile", checkLoggedIn, async (req, res) => {
+//   try {
+//     const id_pasien = req.session.userId;
+//     const { tanggal, waktu } = req.body;
 
-    // Cari appointment berdasarkan id
-    const appointment = await Appointment.findOne({
-      where: { id_pasien },
-    });
+//     // Cari appointment berdasarkan id
+//     const appointment = await Appointment.findOne({
+//       where: { id_pasien },
+//     });
 
-    if (!appointment) {
-      return res.status(404).send("Appointment tidak ditemukan");
-    }
+//     if (!appointment) {
+//       return res.status(404).send("Appointment tidak ditemukan");
+//     }
 
-    // Perbarui tanggal dan waktu appointment
-    appointment.tanggal = tanggal;
-    appointment.waktu = waktu;
+//     // Perbarui tanggal dan waktu appointment
+//     appointment.tanggal = tanggal;
+//     appointment.waktu = waktu;
 
-    // Simpan perubahan ke dalam database
-    await appointment.save();
+//     // Simpan perubahan ke dalam database
+//     await appointment.save();
 
-    // Tampilkan pesan sukses dan arahkan kembali ke halaman profil
-    const successMessage = "Appointment berhasil diperbarui";
-    res.send(`
-      <script>
-        alert('${successMessage}');
-        window.location='/profile'; // Redirect ke halaman profil
-      </script>
-    `);
-  } catch (error) {
-    console.error("Kesalahan saat memperbarui appointment:", error);
-    res.status(500).send("Terjadi kesalahan saat memperbarui appointment.");
-  }
-});
+//     // Tampilkan pesan sukses dan arahkan kembali ke halaman profil
+//     const successMessage = "Appointment berhasil diperbarui";
+//     res.send(`
+//       <script>
+//         alert('${successMessage}');
+//         window.location='/profile'; // Redirect ke halaman profil
+//       </script>
+//     `);
+//   } catch (error) {
+//     console.error("Kesalahan saat memperbarui appointment:", error);
+//     res.status(500).send("Terjadi kesalahan saat memperbarui appointment.");
+//   }
+// });
 
 // Update Profil
 
@@ -588,94 +592,41 @@ app.post(
   }
 );
 
-// APPOINTMENT
+// Route untuk memproses pembayaran
 
-// app.post("/appointment", async (req, res) => {
+// app.post("/proses_pembayaran", checkLoggedIn, async (req, res) => {
 //   try {
-//     const { nama_pasien, nama_psikolog, tanggal, waktu, keluhan } = req.body;
-//     const email_pasien = req.session.email_pasien; // Mengambil email_pasien dari sesi
+//     const {
+//       id_pasien,
+//       nama_pasien,
+//       email_pasien,
+//       jumlah_biaya,
+//       metode_pembayaran,
+//     } = req.body;
 
-//     // Cari data pasien berdasarkan nama_pasien dan email_pasien
-//     const pasien = await Pasien.findOne({
-//       where: { nama_pasien, email_pasien },
+//     // Simpan data pembayaran ke tabel tb_pembayaran
+//     const tanggal_bayar = new Date();
+
+//     await Pembayaran.create({
+//       id_pasien,
+//       nama_pasien,
+//       email_pasien,
+//       jumlah_biaya,
+//       tanggal_bayar,
+//       metode_pembayaran,
 //     });
 
-//     if (!pasien) {
-//       res.status(400).send("Nama pasien tidak ditemukan"); // Handle jika nama pasien tidak ditemukan
-//       return;
-//     }
-
-//     // Cari data psikolog berdasarkan nama_psikolog
-//     const psikolog = await Psikolog.findOne({ where: { nama_psikolog } });
-
-//     if (!psikolog) {
-//       res.status(400).send("Nama psikolog tidak ditemukan"); // Handle jika nama psikolog tidak ditemukan
-//       return;
-//     }
-
-//     // Simpan data appointment ke database
-//     const appointment = {
-//       id: pasien.id,
-//       email_pasien,
-//       nama_pasien,
-//       nama_psikolog,
-//       tanggal,
-//       waktu,
-//       keluhan,
-//     };
-
-//     await Appointment.create(appointment);
-
-//     // Tampilkan pesan sukses dan arahkan kembali ke halaman dashboard
-//     const successMessage = "Appointment berhasil";
+//     // Tampilkan pesan sukses dan arahkan pengguna ke halaman lain jika diperlukan
+//     const successMessage = "Pembayaran berhasil";
 //     res.send(`
 //       <script>
 //         alert('${successMessage}');
-//         window.location='/index';
+//         window.location='/index'; // Ubah '/dashboard' sesuai dengan URL yang sesuai
 //       </script>
 //     `);
 //   } catch (error) {
 //     // Handle kesalahan jika ada
-//     console.error("Kesalahan saat membuat appointment:", error);
-//     res.status(500).send("Terjadi kesalahan saat membuat appointment.");
+//     console.error("Kesalahan saat menyimpan data pembayaran:", error);
+//     res.status(500).send("Terjadi kesalahan saat menyimpan data pembayaran.");
 //   }
 // });
-
-// Route untuk memproses pembayaran
-
-app.post("/proses_pembayaran", checkLoggedIn, async (req, res) => {
-  try {
-    const {
-      id_pasien,
-      nama_pasien,
-      email_pasien,
-      jumlah_biaya,
-      metode_pembayaran,
-    } = req.body;
-
-    // Simpan data pembayaran ke tabel tb_pembayaran
-    const tanggal_bayar = new Date();
-
-    await Pembayaran.create({
-      id_pasien,
-      nama_pasien,
-      email_pasien,
-      jumlah_biaya,
-      tanggal_bayar,
-      metode_pembayaran,
-    });
-
-    // Tampilkan pesan sukses dan arahkan pengguna ke halaman lain jika diperlukan
-    const successMessage = "Pembayaran berhasil";
-    res.send(`
-      <script>
-        alert('${successMessage}');
-        window.location='/index'; // Ubah '/dashboard' sesuai dengan URL yang sesuai
-      </script>
-    `);
-  } catch (error) {
-    // Handle kesalahan jika ada
-    console.error("Kesalahan saat menyimpan data pembayaran:", error);
-    res.status(500).send("Terjadi kesalahan saat menyimpan data pembayaran.");
-  }
-});
