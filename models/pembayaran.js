@@ -1,5 +1,5 @@
 const Sequelize = require("sequelize");
-const sequelize = require("../config/database"); // Import dari direktori config
+const sequelize = require("../config/database");
 
 const Pasien = require("./pasien");
 const Pembayaran = sequelize.define("tb_pembayaran", {

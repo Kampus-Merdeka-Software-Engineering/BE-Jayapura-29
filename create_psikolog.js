@@ -11,13 +11,12 @@ const newPsikolog = {
   nomor_ponsel: "0811111111111",
   email: "angelina@gmail.com",
   gambar_psikolog: "/public/img/angelina.png",
-  // Tambahkan definisi untuk kolom-kolom lainnya
 };
 
 async function tambahPsikolog() {
   try {
-    await Psikolog.sync(); // Sinkronisasi model dengan tabel di database
-    const psikologBaru = await Psikolog.create(newPsikolog); // Menambahkan data ke tabel
+    await Psikolog.sync();
+    const psikologBaru = await Psikolog.create(newPsikolog);
     console.log("Data psikolog berhasil ditambahkan:", psikologBaru.toJSON());
   } catch (error) {
     console.error("Gagal menambahkan data psikolog:", error);

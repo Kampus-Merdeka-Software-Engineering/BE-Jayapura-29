@@ -1,10 +1,9 @@
 const express = require("express");
 const router = express.Router();
-const Pembayaran = require("../models/pembayaran"); // Pastikan path sesuai dengan lokasi model Pembayaran
+const Pembayaran = require("../models/pembayaran");
 
 router.post("/pembayaran", async (req, res) => {
   try {
-    // Dapatkan data dari formulir pembayaran.html
     const {
       id_pasien,
       nama_pasien,
@@ -13,18 +12,15 @@ router.post("/pembayaran", async (req, res) => {
       metode_pembayaran,
     } = req.body;
 
-    // Simpan data pembayaran ke dalam tabel tb_pembayaran
     const pembayaran = await Pembayaran.create({
       id_pasien,
       nama_pasien,
       email_pasien,
       jumlah_biaya,
-      tanggal_bayar: new Date(), // Tanggal pembayaran diambil dari saat ini
       metode_pembayaran,
-      status_bayar: "Sudah", // Atur status pembayaran sesuai kebutuhan
+      status_bayar: "Sudah",
     });
 
-    // Lakukan sesuatu setelah pembayaran berhasil disimpan, misalnya, tampilkan pesan sukses atau alihkan ke halaman lain
     const successMessage = "Pembayaran berhasil";
     res.send(`
         <script>

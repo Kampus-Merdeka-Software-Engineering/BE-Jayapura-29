@@ -11,12 +11,11 @@ router.post("/login", async (req, res) => {
     });
 
     if (user) {
-      const match = await bcrypt.compare(password, user.password); // Memeriksa kata sandi dengan bcrypt
+      const match = await bcrypt.compare(password, user.password);
 
       if (match) {
         req.session.userId = user.id_pasien;
 
-        // Membuat nama_pendek dari 2 kata pertama nama_pasien
         req.session.userId = user.id_pasien;
         const nama_pasienWords = user.nama_pasien.split(" ");
         const nama_pendek = `${nama_pasienWords[0]} ${nama_pasienWords[1]}`;
@@ -25,7 +24,6 @@ router.post("/login", async (req, res) => {
         req.session.email_pasien = user.email_pasien;
         req.session.foto_pasien = foto_pasien;
         res.redirect("/index2");
-        // Mengirim file HTML sebagai respons
       } else {
         res.send(
           "<script>alert('Password Anda salah'); window.location='/login';</script>"

@@ -21,7 +21,6 @@ const Appointment = sequelize.define("tb_appointment", {
   keluhan: Sequelize.STRING,
 });
 
-// Establish the association after defining the Appointment model
 Appointment.belongsTo(Pasien, { foreignKey: "id_pasien" });
 Appointment.belongsTo(Psikolog, { foreignKey: "nama_psikolog" });
 
