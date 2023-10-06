@@ -12,6 +12,7 @@ const Pembayaran = sequelize.define("tb_pembayaran", {
     type: Sequelize.INTEGER,
   },
   nama_pasien: Sequelize.STRING,
+  email_pasien: Sequelize.STRING,
   jumlah_biaya: Sequelize.INTEGER,
   tanggal_bayar: Sequelize.DATE,
   metode_pembayaran: Sequelize.ENUM("Dana", "Gopay", "BRI"),

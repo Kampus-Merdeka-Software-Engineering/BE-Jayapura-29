@@ -6,7 +6,8 @@ const Pasien = require("../models/pasien");
 router.post("/appointment", async (req, res) => {
   try {
     // Ambil data yang diperlukan dari request body
-    const { nama_pasien, nama_psikolog, tanggal, waktu, keluhan } = req.body; // Sesuaikan dengan field yang diperlukan
+    const { id_pasien, nama_pasien, nama_psikolog, tanggal, waktu, keluhan } =
+      req.body; // Sesuaikan dengan field yang diperlukan
 
     // Ambil email_pasien dari sesi atau tempat Anda menyimpannya saat login
     const { email_pasien } = req.session; // Sesuaikan dengan cara Anda menyimpan email_pasien
@@ -28,7 +29,7 @@ router.post("/appointment", async (req, res) => {
       tanggal,
       waktu,
       keluhan,
-      pasienId: pasien.id, // Assuming you have a relationship between Appointment and Pasien
+      id_pasien, // Assuming you have a relationship between Appointment and Pasien
     });
 
     // Redirect or respond as needed upon successful appointment creation
