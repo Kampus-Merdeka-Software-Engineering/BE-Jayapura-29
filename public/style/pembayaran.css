@@ -8,7 +8,7 @@
 }
 
 * {
-  font-family: "Mulish", sans-serif;
+  font-family: "Poppins", sans-serif;
   margin: 0;
   padding: 0;
   box-sizing: border-box;
@@ -40,7 +40,7 @@ section:nth-child(even) {
   margin: auto;
   text-align: center;
   margin-bottom: 1vw;
-  margin-top: 2vw;
+  margin-top: 1vw;
   color: #4682a9;
 }
 .kata_tengah h2 {

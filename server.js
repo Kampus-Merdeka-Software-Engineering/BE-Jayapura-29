@@ -36,6 +36,9 @@ app.use(
     secret: "your-secret-key",
     resave: false,
     saveUninitialized: true,
+    cookie: {
+      maxAge: 24 * 60 * 60 * 1000,
+    },
   })
 );
 
@@ -43,7 +46,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.static("public"));
 
 function checkLoggedIn(req, res, next) {
-  if (req.session.userId) {
+  if (req.session.userId && req.session.email_pasien) {
     next();
   } else {
     const alertMessage = "Anda belum login. Silakan login terlebih dahulu.";
@@ -117,13 +120,6 @@ app.get("/index2", checkLoggedIn, (req, res) => {
         res.status(500).send("Terjadi kesalahan saat mencari data pasien.");
       });
   } else {
-    const isLoggedIn = false;
-    res.sendFile(path.join(__dirname, "views", "index2.html"), {
-      nama: null,
-      id_pasien: null,
-      foto_pasien: null,
-      isLoggedIn: isLoggedIn,
-    });
   }
 });
 
@@ -163,7 +159,7 @@ app.use("/", appointmentRoutes);
 
 app.get("/appointment", checkLoggedIn, async (req, res) => {
   try {
-    const { email_pasien } = req.session;
+    const email_pasien = req.session.email_pasien;
 
     const pasien = await Pasien.findOne({
       where: { email_pasien },
@@ -208,7 +204,7 @@ app.get("/appointment", checkLoggedIn, async (req, res) => {
 
 // Route untuk halaman pembayaran
 app.use("/", pembayaranRoutes);
-app.get("/pembayaran", async (req, res) => {
+app.get("/pembayaran", checkLoggedIn, async (req, res) => {
   try {
     const userEmail = req.session.email_pasien;
 
@@ -283,7 +279,7 @@ app.get("/pembayaran", async (req, res) => {
 
 // Route untuk halaman profil
 // app.use("/", profileRoutes);
-app.get("/profile", async (req, res) => {
+app.get("/profile", checkLoggedIn, async (req, res) => {
   if (req.session.email_pasien) {
     const email_pasien = req.session.email_pasien;
     const id_pasien = req.session.id_pasien;
@@ -445,6 +441,51 @@ app.get("/logout", (req, res) => {
     if (err) throw err;
     res.redirect("/index");
   });
+});
+
+// checklogin
+app.get("/check-login-status", (req, res) => {
+  const isLoggedIn =
+    req.session.userId && req.session.email_pasien ? true : false;
+  res.json({ isLoggedIn });
+});
+
+// navbar
+app.get("/navbar-before-login", (req, res) => {
+  res.sendFile(__dirname + "/views/navbar.html");
+});
+
+// navbar
+app.get("/navbar-after-login", async (req, res) => {
+  try {
+    const email_pasien = req.session.email_pasien;
+
+    const pasien = await Pasien.findOne({
+      where: {
+        email_pasien: email_pasien,
+      },
+    });
+
+    if (!pasien) {
+      throw new Error("Pasien not found");
+    }
+
+    const namaPasienArray = pasien.nama_pasien.split(" ");
+    const nama_pendek = namaPasienArray.slice(0, 2).join(" ");
+
+    const navbar2Html = fs.readFileSync(
+      path.join(__dirname, "views", "navbar2.html"),
+      "utf8"
+    );
+
+    const renderedHtml = navbar2Html
+      .replace(/<%= nama_pendek %>/g, nama_pendek)
+      .replace(/<%= foto_pasien %>/g, pasien.foto_pasien);
+
+    res.send(renderedHtml);
+  } catch (error) {
+    res.status(500).send("An error occurred: " + error.message);
+  }
 });
 
 // Implementasi POST routes untuk form submission

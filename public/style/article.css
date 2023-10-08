@@ -1,0 +1,111 @@
+/* Reset CSS */
+* {
+  font-family: "Poppins", sans-serif;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Container styles */
+.container.container-1 {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  align-items: center; /* Ini akan memposisikan gambar di tengah horizontal */
+  justify-content: center; /* Ini akan memposisikan gambar di tengah vertikal */
+}
+
+/* Image styles */
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+.container.container-2 {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 10px;
+  display: flex;
+}
+
+.container.container-2 h1 {
+  font-size: 25px;
+  text-align: left;
+}
+
+.container.container-2 h2 {
+  font-family: "Segoe UI", "Segoe UI Emoji", "Segoe UI Symbol";
+  font-size: 18px;
+  text-transform: uppercase;
+}
+
+.container.container-2 p {
+  font-size: 12px;
+  line-height: 1.7;
+  text-transform: none;
+}
+
+hr {
+  border: 1px solid #bfbcbc;
+}
+article {
+  flex: 2;
+  padding: 20px;
+  text-align: justify;
+}
+
+h1 {
+  font-size: 36px;
+  font-weight: 700;
+  color: #1450a3;
+  font-family: "Poppins", sans-serif;
+  margin-top: 1vw;
+}
+
+p {
+  font-size: 24px;
+  font-weight: 500;
+  font-family: "Poppins", sans-serif;
+}
+
+aside {
+  flex: 1;
+  padding: 40px;
+}
+
+.featured_article {
+  display: flex;
+  border: 1px solid #ccc;
+  padding: 10px;
+  margin: 20px;
+  align-items: center;
+  border-radius: 5px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  background-color: #fff;
+}
+
+h4 {
+  color: rgb(54, 54, 54);
+  font-size: 12px;
+}
+
+h3 {
+  font-size: 20px;
+}
+
+.featured_article img {
+  width: 100px;
+  height: 80px;
+}
+
+/* Gaya Responsif */
+@media (max-width: 768px) {
+  .container {
+    flex-direction: column;
+  }
+  article,
+  aside {
+    flex: none;
+    width: 100%;
+  }
+}

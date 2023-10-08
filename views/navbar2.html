@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/navbar.css" />
+  </head>
+  <body>
+    <header class="header">
+      <a href="/index2" class="logo">
+        <img class="logo" src="/img/logo.png" alt="" />
+      </a>
+
+      <nav class="navbar">
+        <a href="/index2">home</a>
+        <a href="#services">services</a>
+        <a href="#doctors">find a psychologist</a>
+        <a href="#book">book</a>
+        <a href="article1.html">blogs</a>
+        <a href="team.html">our team</a>
+      </nav>
+
+      <div style="display: flex; align-items: center">
+        <p
+          style="
+            color: #4682a9;
+            border: 1px solid #4682a9;
+            padding: 1em 5em 1em 1em;
+            border-radius: 50px;
+            font-size: 1.1em;
+          ">
+          <%= nama_pendek %>
+        </p>
+        <div class="profile">
+          <img
+            src="data:image/png;base64, <%= foto_pasien %>"
+            alt="Foto Profil"
+            class="poto_profile" />
+          <div class="profile-menu">
+            <button onclick="myFunction()" class="dropbtn"></button>
+            <div id="myDropdown" class="dropdown-content">
+              <a href="/profile" style="margin: 0" class="dropdown">Profile</a>
+              <a href="/pembayaran" style="margin: 0" class="dropdown"
+                >Pembayaran</a
+              >
+              <a href="/logout" style="margin: 0" class="dropdown">Logout</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="menu-btn" class="fas fa-bars" onclick="toggleMenu()"></div>
+    </header>
+
+    <script src="/script/script.js"></script>
+  </body>
+</html>

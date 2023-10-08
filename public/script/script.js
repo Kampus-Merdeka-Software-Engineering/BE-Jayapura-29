@@ -1,17 +1,17 @@
-let menu = document.querySelector("#menu-btn");
-let navbar = document.querySelector(".header .navbar");
+// navbar responsive
 
-menu.onclick = () => {
+function toggleMenu() {
+  let menu = document.querySelector("#menu-btn");
+  let navbar = document.querySelector(".header .navbar");
   menu.classList.toggle("fa-times");
   navbar.classList.toggle("active");
-};
+}
 
 //
 function myFunction() {
   document.getElementById("myDropdown").classList.toggle("show");
 }
 
-// Close the dropdown if the user clicks outside of it
 window.onclick = function (event) {
   if (!event.target.matches(".dropbtn")) {
     var dropdowns = document.getElementsByClassName("dropdown-content");
@@ -25,7 +25,7 @@ window.onclick = function (event) {
   }
 };
 
-//
+// posisi tombol
 function updateLayout() {
   const navbar = document.querySelector(".navbar");
   const tombolKanan = document.querySelector(".tombol_kanan");
@@ -33,18 +33,24 @@ function updateLayout() {
   const windowWidth = window.innerWidth;
 
   if (windowWidth <= 768) {
-    // Saat lebar layar kurang dari atau sama dengan 768px, tambahkan .tombol_kanan ke dalam .navbar
     if (tombolKanan.parentNode !== navbar) {
       navbar.appendChild(tombolKanan);
     }
   } else {
-    // Saat lebar layar lebih besar dari 768px, pastikan .tombol_kanan ada dalam .baru
     const baru = document.querySelector(".baru");
     if (tombolKanan.parentNode !== baru) {
       baru.appendChild(tombolKanan);
     }
   }
 }
-
-// Panggil fungsi saat halaman dimuat dan saat jendela diubah ukurannya.
 window.addEventListener("resize", updateLayout);
+
+// async function getDataFromBackend() {
+//   try {
+//     const response = await fetch(`${backendUrl}/api/data`);
+//     const data = await response.json();
+//     // Lakukan sesuatu dengan data dari backend
+//   } catch (error) {
+//     console.error("Error:", error);
+//   }
+// }

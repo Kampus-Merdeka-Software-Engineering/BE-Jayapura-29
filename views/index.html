@@ -8,9 +8,6 @@
     <!-- font -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Mulish:wght@300;400;500;600;700&display=swap"
-      rel="stylesheet" />
 
     <!-- Font -->
     <link
@@ -19,31 +16,17 @@
 
     <!-- CSS -->
     <link rel="stylesheet" href="/style/style.css" />
+    <link rel="stylesheet" href="/style/navbar.css" />
+
+    <!-- add animation on scroll library -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" />
   </head>
   <body>
     <!-- header section starts -->
     <!-- Tampilan header saat belum login -->
-    <header class="header">
-      <a href="#" class="logo">
-        <img class="logo" src="/img/logo.png" alt="" />
-      </a>
-
-      <nav class="navbar">
-        <a href="#home">home</a>
-        <a href="#services">services</a>
-        <a href="#doctors">find a psycholog</a>
-        <a href="#book">book</a>
-        <a href="#blogs">blogs</a>
-        <a href="#contact">contact us</a>
-      </nav>
-
-      <div class="header-btn">
-        <a href="/signup" class="sign-up">Sign Up</a>
-        <a href="/login" class="login">Login</a>
-      </div>
-
-      <div id="menu-btn" class="fas fa-bars"></div>
-    </header>
+    <div id="navbar-container"></div>
     <!-- header section ends -->
 
     <!-- home section starts -->
@@ -65,109 +48,71 @@
     </section>
     <!-- home section ends -->
 
-    <!-- icons section starts -->
-    <section class="icons-container">
-      <div class="icons">
-        <i class="fas fa-user-md"></i>
-        <h3>140+</h3>
-        <p>doctors at work</p>
-      </div>
-
-      <div class="icons">
-        <i class="fas fa-users"></i>
-        <h3>1040+</h3>
-        <p>satisfied patients</p>
-      </div>
-
-      <div class="icons">
-        <i class="fas fa-procedures"></i>
-        <h3>500+</h3>
-        <p>bed facility</p>
-      </div>
-
-      <div class="icons">
-        <i class="fas fa-hospital"></i>
-        <h3>80+</h3>
-        <p>available hospitals</p>
-      </div>
-    </section>
-    <!-- icons section ends -->
-
     <!-- services section starts -->
-    <section class="services" id="services">
+    <section
+      class="services"
+      id="services"
+      data-aos="fade-up"
+      data-aos-duration="1000"
+      data-aos-delay="100"
+      data-aos-anchor-placement="top-center">
       <h1 class="heading">our <span>services</span></h1>
+      <p>
+        We provide to you the best choiches for you. Adjust it to your health
+        needs and make sure your undergo treatment with our highly qualified
+        psycholog you can consult with us which type of service is suitable for
+        your health
+      </p>
+      <br />
 
+      <br />
       <div class="box-container">
         <div class="box">
-          <i class="fas fa-notes-medical"></i>
-          <h3>free checkups</h3>
+          <img src="/img/cari.png" alt="" />
+          <h3>search psycholog</h3>
           <p>
-            Lorem ipsum dolor sit, amet consectetur adipisicing elit. Beatae,
-            aut.
+            choose your psycholog from thousands of specialist, general, and
+            trusted hospitals
           </p>
-          <a href="#" class="btn"
-            >learn more <span class="fas fa-chevron-right"></span
-          ></a>
         </div>
 
         <div class="box">
-          <i class="fas fa-ambulance"></i>
-          <h3>24/7 ambulance</h3>
+          <img src="/img/pharmacy.png" alt="" />
+          <h3>Online pharmacy</h3>
           <p>
-            Lorem ipsum dolor sit, amet consectetur adipisicing elit. Beatae,
-            aut.
+            Buy your medicines with our mobile application with a simple
+            delivery system
           </p>
-          <a href="#" class="btn"
-            >learn more <span class="fas fa-chevron-right"></span
-          ></a>
         </div>
 
         <div class="box">
-          <i class="fas fa-user-md"></i>
-          <h3>expert doctors</h3>
+          <img src="/img/consul.png" alt="" />
+          <h3>consultation</h3>
           <p>
-            Lorem ipsum dolor sit, amet consectetur adipisicing elit. Beatae,
-            aut.
+            Free consultation with our trusted psychologs and get the best
+            recomendations
           </p>
-          <a href="#" class="btn"
-            >learn more <span class="fas fa-chevron-right"></span
-          ></a>
         </div>
 
         <div class="box">
-          <i class="fas fa-pills"></i>
-          <h3>medicines</h3>
+          <img src="/img/info.png" alt="" />
+          <h3>details info</h3>
           <p>
-            Lorem ipsum dolor sit, amet consectetur adipisicing elit. Beatae,
-            aut.
+            Free consultation with our trusted psychologs and get the best
+            recomendations
           </p>
-          <a href="#" class="btn"
-            >learn more <span class="fas fa-chevron-right"></span
-          ></a>
         </div>
 
         <div class="box">
-          <i class="fas fa-procedures"></i>
-          <h3>bed facility</h3>
-          <p>
-            Lorem ipsum dolor sit, amet consectetur adipisicing elit. Beatae,
-            aut.
-          </p>
-          <a href="#" class="btn"
-            >learn more <span class="fas fa-chevron-right"></span
-          ></a>
+          <img src="/img/bag.png" alt="" />
+          <h3>emergency care</h3>
+          <p>You can get 24/7 urgent care for yourself or lovely family</p>
         </div>
 
         <div class="box">
-          <i class="fas fa-heartbeat"></i>
-          <h3>total care</h3>
-          <p>
-            Lorem ipsum dolor sit, amet consectetur adipisicing elit. Beatae,
-            aut.
-          </p>
-          <a href="#" class="btn"
-            >learn more <span class="fas fa-chevron-right"></span
-          ></a>
+          <img src="/img/tracking.png" alt="" />
+          <h3>tracking</h3>
+          <p>Track and save your medical history and health data</p>
         </div>
       </div>
     </section>
@@ -175,136 +120,141 @@
 
     <!-- about section starts -->
 
-    <section class="about" id="about">
-      <h1 class="heading"><span>about</span> us</h1>
-
+    <section
+      class="about"
+      id="about"
+      data-aos="zoom-out"
+      data-aos-duration="1000"
+      data-aos-delay="100"
+      data-aos-anchor-placement="top-center">
       <div class="row">
         <div class="image">
-          <img
-            src="https://img.freepik.com/free-photo/smiling-asian-doctor-female-nurse-holding-clipboard-pen-wearing-uniform-with-gloves-writing-pati_1258-83340.jpg?size=626&ext=jpg&ga=GA1.1.781077075.1679312414&semt=sph"
-            alt="" />
+          <img src="/img/gambar2.png" alt="" />
         </div>
 
         <div class="content">
-          <h3>we take of your healthy mental life</h3>
+          <h3>Leading Healthcare Providers</h3>
           <p>
-            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Debitis
-            quaerat aspernatur, cumque eum numquam accusantium saepe aut ipsa
-            fugiat dolore!
+            ReBios Provides Progressive, And Affordable Psycholog Healthcare,
+            Accessible On Mobile And Online For Everyone. To Us, It’s Not Just
+            Work. We Take Pride In The Solutions We Deliver. Join our growing
+            community of satisfied users and experience the positive impact of
+            accessible mental health care firsthand. Your well-being is our
+            priority.
           </p>
-          <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Nostrum,
-            voluptatibus.
-          </p>
-          <a href="#" class="btn">
-            learn more <span class="fas fa-chevron-right"></span>
-          </a>
         </div>
       </div>
     </section>
     <!-- about section ends -->
 
     <!-- doctors section starts -->
-    <section class="doctors" id="doctors">
-      <h1 class="heading">our <span>doctors</span></h1>
+    <section
+      class="doctors"
+      id="doctors"
+      data-aos="zoom-in"
+      data-aos-duration="1000"
+      data-aos-delay="100"
+      data-aos-anchor-placement="top-center">
+      <h1 class="heading">our <span>psychologies</span></h1>
+      <p>
+        Free consultation with our trusted psychologs and get the best
+        recomendations
+      </p>
 
       <div class="box-container">
         <div class="box">
-          <img
-            src="https://img.freepik.com/free-photo/smiling-doctor-with-strethoscope-isolated-grey_651396-974.jpg?size=626&ext=jpg&ga=GA1.1.781077075.1679312414&semt=sph"
-            alt="" />
+          <img src="/img/bg.png" alt="" />
           <h3>mark jho</h3>
           <span>expert doctors</span>
-          <div class="share">
-            <a href="#" class="fab fa-facebook-f"></a>
-            <a href="#" class="fab fa-twitter"></a>
-            <a href="#" class="fab fa-instagram"></a>
-            <a href="#" class="fab fa-linkedin"></a>
-          </div>
         </div>
 
         <div class="box">
-          <img
-            src="https://img.freepik.com/free-photo/smiling-asian-male-doctor-pointing-upwards_1262-18321.jpg?size=626&ext=jpg&ga=GA1.1.781077075.1679312414&semt=sph"
-            alt="" />
+          <img src="/img/bg.png" alt="" />
           <h3>mark jho</h3>
           <span>expert doctors</span>
-          <div class="share">
-            <a href="#" class="fab fa-facebook-f"></a>
-            <a href="#" class="fab fa-twitter"></a>
-            <a href="#" class="fab fa-instagram"></a>
-            <a href="#" class="fab fa-linkedin"></a>
-          </div>
         </div>
 
         <div class="box">
-          <img
-            src="https://img.freepik.com/free-photo/healthcare-workers-preventing-virus-quarantine-campaign-concept-cheerful-friendly-asian-female-physician-doctor-with-clipboard-during-daily-checkup-standing-white-background_1258-107867.jpg?size=626&ext=jpg&ga=GA1.1.781077075.1679312414&semt=sph"
-            alt="" />
+          <img src="/img/bg.png" alt="" />
           <h3>yasmin lee</h3>
           <span>expert doctors</span>
-          <div class="share">
-            <a href="#" class="fab fa-facebook-f"></a>
-            <a href="#" class="fab fa-twitter"></a>
-            <a href="#" class="fab fa-instagram"></a>
-            <a href="#" class="fab fa-linkedin"></a>
-          </div>
         </div>
 
         <div class="box">
-          <img
-            src="https://img.freepik.com/free-photo/woman-doctor-wearing-lab-coat-with-stethoscope-isolated_1303-29791.jpg?size=626&ext=jpg&ga=GA1.1.781077075.1679312414&semt=sph"
-            alt="" />
+          <img src="/img/bg.png" alt="" />
           <h3>yasmin lee</h3>
           <span>expert doctors</span>
-          <div class="share">
-            <a href="#" class="fab fa-facebook-f"></a>
-            <a href="#" class="fab fa-twitter"></a>
-            <a href="#" class="fab fa-instagram"></a>
-            <a href="#" class="fab fa-linkedin"></a>
-          </div>
         </div>
 
         <div class="box">
-          <img
-            src="https://img.freepik.com/free-photo/portrait-hansome-young-male-doctor-man_171337-5068.jpg?size=626&ext=jpg&ga=GA1.2.781077075.1679312414&semt=sph"
-            alt="" />
+          <img src="/img/bg.png" alt="" />
           <h3>rush fark</h3>
           <span>expert doctors</span>
-          <div class="share">
-            <a href="#" class="fab fa-facebook-f"></a>
-            <a href="#" class="fab fa-twitter"></a>
-            <a href="#" class="fab fa-instagram"></a>
-            <a href="#" class="fab fa-linkedin"></a>
-          </div>
         </div>
 
         <div class="box">
-          <img
-            src="https://img.freepik.com/free-photo/professional-doctor-office_1098-21197.jpg?size=626&ext=jpg&ga=GA1.1.781077075.1679312414&semt=sph"
-            alt="" />
+          <img src="/img/bg.png" alt="" />
           <h3>park ken</h3>
           <span>expert doctors</span>
-          <div class="share">
-            <a href="#" class="fab fa-facebook-f"></a>
-            <a href="#" class="fab fa-twitter"></a>
-            <a href="#" class="fab fa-instagram"></a>
-            <a href="#" class="fab fa-linkedin"></a>
-          </div>
         </div>
       </div>
     </section>
     <!-- doctors section ends -->
 
+    <!-- booking section starts -->
+    <section class="book" id="book">
+      <div class="row">
+        <div
+          class="content"
+          data-aos="fade-right"
+          data-aos-duration="1000"
+          data-aos-delay="100"
+          data-aos-anchor-placement="top-center">
+          <h1 class="heading">Book <span>Now</span></h1>
+          <p>
+            Create Your Account And Immediately Make An Appointment With Our
+            Trusted Psychologist, and let John Smith, David Johnson, and Michael
+            Williams share their experiences with you!
+          </p>
+          <a href="/appointment" class="btn">
+            consult today <span class="fas fa-chevron-right"></span>
+          </a>
+        </div>
+        <div
+          class="image"
+          data-aos="fade-left"
+          data-aos-duration="1000"
+          data-aos-delay="100"
+          data-aos-anchor-placement="top-center">
+          <img
+            src="https://img.freepik.com/free-vector/smart-pill-boxes-abstract-concept-illustration_335657-3864.jpg?size=626&ext=jpg&ga=GA1.2.781077075.1679312414&semt=ais"
+            alt="" />
+        </div>
+      </div>
+    </section>
+    <!-- booking section ends -->
+
     <!-- review section starts -->
     <section class="review" id="review">
       <h1 class="heading">client's <span>review</span></h1>
+      <p>
+        many people have used our srvices. we will continue to provide the best
+        service for the needs of you and your lovely family
+      </p>
+      <br />
+      <br />
+
       <div class="box-container">
-        <div class="box">
+        <div
+          class="box"
+          data-aos="fade-right"
+          data-aos-duration="1000"
+          data-aos-delay="100"
+          data-aos-anchor-placement="top-center">
           <img
             src="https://img.freepik.com/free-photo/smiling-doctor-with-strethoscope-isolated-grey_651396-974.jpg?size=626&ext=jpg&ga=GA1.1.781077075.1679312414&semt=sph"
             alt="" />
-          <h3>matk jho</h3>
+          <h3>John Smith</h3>
           <div class="stars">
             <i class="fas fa-stars"></i>
             <i class="fas fa-stars"></i>
@@ -313,16 +263,24 @@
             <i class="fas fa-star-half-alt"></i>
           </div>
           <p class="text">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Inventore,
-            nihil?
+            This platform has been a lifesaver for me. Booking mental health
+            consultations used to be a hassle, but now I can easily find and
+            schedule appointments with qualified professionals. It's
+            user-friendly, convenient, and has greatly improved my mental
+            well-being
           </p>
         </div>
 
-        <div class="box">
+        <div
+          class="box"
+          data-aos="fade-down"
+          data-aos-duration="1000"
+          data-aos-delay="100"
+          data-aos-anchor-placement="top-center">
           <img
             src="https://img.freepik.com/free-photo/smiling-asian-male-doctor-pointing-upwards_1262-18321.jpg?size=626&ext=jpg&ga=GA1.1.781077075.1679312414&semt=sph"
             alt="" />
-          <h3>matk jho</h3>
+          <h3>David Johnson</h3>
           <div class="stars">
             <i class="fas fa-stars"></i>
             <i class="fas fa-stars"></i>
@@ -331,16 +289,24 @@
             <i class="fas fa-star-half-alt"></i>
           </div>
           <p class="text">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Inventore,
-            nihil?
+            I'm really impressed with this mental health consultation booking
+            platform. It's intuitive, secure, and offers a wide selection of
+            therapists and counselors to choose from. Plus, the ability to read
+            reviews and see their availability makes the whole process
+            stress-free.
           </p>
         </div>
 
-        <div class="box">
+        <div
+          class="box"
+          data-aos="fade-left"
+          data-aos-duration="1000"
+          data-aos-delay="100"
+          data-aos-anchor-placement="top-center">
           <img
             src="https://img.freepik.com/free-photo/healthcare-workers-preventing-virus-quarantine-campaign-concept-cheerful-friendly-asian-female-physician-doctor-with-clipboard-during-daily-checkup-standing-white-background_1258-107867.jpg?size=626&ext=jpg&ga=GA1.1.781077075.1679312414&semt=sph"
             alt="" />
-          <h3>matk jho</h3>
+          <h3>Michael Williams</h3>
           <div class="stars">
             <i class="fas fa-stars"></i>
             <i class="fas fa-stars"></i>
@@ -349,194 +315,91 @@
             <i class="fas fa-star-half-alt"></i>
           </div>
           <p class="text">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Inventore,
-            nihil?
-          </p>
-        </div>
-
-        <div class="box">
-          <img
-            src="https://img.freepik.com/free-photo/woman-doctor-wearing-lab-coat-with-stethoscope-isolated_1303-29791.jpg?size=626&ext=jpg&ga=GA1.1.781077075.1679312414&semt=sph"
-            alt="" />
-          <h3>matk jho</h3>
-          <div class="stars">
-            <i class="fas fa-stars"></i>
-            <i class="fas fa-stars"></i>
-            <i class="fas fa-stars"></i>
-            <i class="fas fa-stars"></i>
-            <i class="fas fa-star-half-alt"></i>
-          </div>
-          <p class="text">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Inventore,
-            nihil?
-          </p>
-        </div>
-
-        <div class="box">
-          <img
-            src="https://img.freepik.com/free-photo/portrait-hansome-young-male-doctor-man_171337-5068.jpg?size=626&ext=jpg&ga=GA1.2.781077075.1679312414&semt=sph"
-            alt="" />
-          <h3>matk jho</h3>
-          <div class="stars">
-            <i class="fas fa-stars"></i>
-            <i class="fas fa-stars"></i>
-            <i class="fas fa-stars"></i>
-            <i class="fas fa-stars"></i>
-            <i class="fas fa-star-half-alt"></i>
-          </div>
-          <p class="text">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Inventore,
-            nihil?
-          </p>
-        </div>
-
-        <div class="box">
-          <img
-            src="https://img.freepik.com/free-photo/professional-doctor-office_1098-21197.jpg?size=626&ext=jpg&ga=GA1.1.781077075.1679312414&semt=sph"
-            alt="" />
-          <h3>matk jho</h3>
-          <div class="stars">
-            <i class="fas fa-stars"></i>
-            <i class="fas fa-stars"></i>
-            <i class="fas fa-stars"></i>
-            <i class="fas fa-stars"></i>
-            <i class="fas fa-star-half-alt"></i>
-          </div>
-          <p class="text">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Inventore,
-            nihil?
+            I can't recommend this platform enough. It's been a game-changer for
+            me in seeking help and support for my mental health. The platform's
+            simplicity and efficiency have made it so much easier to connect
+            with therapists who genuinely care about my well-being.
           </p>
         </div>
       </div>
     </section>
     <!-- review section ends -->
 
-    <!-- blogs section stars -->
-
-    <section class="blogs" id="blogs">
-      <h1 class="heading">our <span>blogs</span></h1>
-
+    <!-- blogs starts -->
+    <section class="blog">
+      <h1 class="heading">our <span>blog</span></h1>
       <div class="box-container">
-        <div class="box">
-          <div class="image">
-            <img
-              src="https://png.pngtree.com/element_our/20200609/ourlarge/pngtree-hand-drawn-psychologist-image_2232034.jpg"
-              alt="" />
-          </div>
-          <div class="content">
-            <div class="icon">
-              <a href="#"><i class="fas fa-calendar"> 1st may,2023</i></a>
-              <a href="#"><i class="fas fa-user"> by admin</i></a>
-            </div>
-            <h3>blog title goes here</h3>
-            <p>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Quasi,
-              mollitia.
-            </p>
-            <a href="#" class="btn"
-              >learn more <span class="fas fa-chevron-right"></span
-            ></a>
-          </div>
+        <div
+          class="box"
+          data-aos="zoom-out-right"
+          data-aos-duration="1000"
+          data-aos-delay="100"
+          data-aos-anchor-placement="top-center">
+          >
+          <img src="/img/article2.png" alt="" />
+          <h3>
+            <a href="article2.html"
+              >Kenali Faktor-Faktor yang Mempengaruhi Mental Health</a
+            >
+          </h3>
+          <p>
+            Dampak terbesar terhadap kesehatan mental seseorang terjadi sebelum
+            masa dewasa awal, yaitu dari periode prenatal hingga 20 tahun ke
+            atas.
+          </p>
         </div>
 
-        <div class="box">
-          <div class="image">
-            <img
-              src="https://img.freepik.com/vector-premium/asesoramiento-al-paciente-ilustracion-psicologo_179970-166.jpg"
-              alt="" />
-          </div>
-          <div class="content">
-            <div class="icon">
-              <a href="#"><i class="fas fa-calendar"> 1st may,2023</i></a>
-              <a href="#"><i class="fas fa-user"> by admin</i></a>
-            </div>
-            <h3>blog title goes here</h3>
-            <p>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Quasi,
-              mollitia.
-            </p>
-            <a href="#" class="btn"
-              >learn more <span class="fas fa-chevron-right"></span
-            ></a>
-          </div>
+        <div
+          class="box"
+          data-aos="zoom-out-up"
+          data-aos-duration="1000"
+          data-aos-delay="100"
+          data-aos-anchor-placement="top-center">
+          <img src="/img/article4.png" alt="" />
+          <h3>
+            <a href="article4.html"
+              >Menjaga Kesehatan Mental dengan Self-Love</a
+            >
+          </h3>
+          <p>
+            Self-love atau yang biasa diketahui dengan mencintai diri sendiri
+          </p>
         </div>
 
-        <div class="box">
-          <div class="image">
-            <img
-              src="https://img.freepik.com/vector-premium/asesoramiento-al-paciente-ilustracion-psicologo_179970-166.jpg"
-              alt="" />
-          </div>
-          <div class="content">
-            <div class="icon">
-              <a href="#"><i class="fas fa-calendar"> 1st may,2023</i></a>
-              <a href="#"><i class="fas fa-user"> by admin</i></a>
-            </div>
-            <h3>blog title goes here</h3>
-            <p>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Quasi,
-              mollitia.
-            </p>
-            <a href="#" class="btn"
-              >learn more <span class="fas fa-chevron-right"></span
-            ></a>
-          </div>
+        <div
+          class="box"
+          data-aos="zoom-out-left"
+          data-aos-duration="1000"
+          data-aos-delay="100"
+          data-aos-anchor-placement="top-center">
+          <img src="/img/article3.png" alt="" />
+          <h3>
+            <a href="article3.html"
+              >5 kebiasaan yang bisa mengganggu Kesehatan Mental</a
+            >
+          </h3>
+          <p>
+            Bukan hanya karena kondisi trauma, kesehatan mental juga dipengaruhi
+            oleh kebiasaan buruk yang kerap dilakukan.
+          </p>
         </div>
       </div>
     </section>
-    <!-- blogs section ends -->
+    <!-- blog section ends -->
 
     <!-- footer section stars -->
 
-    <section class="footer">
-      <div class="box-container">
-        <div class="box">
-          <h3>quick links</h3>
-          <a href="#"><i class="fas fa-chevron-right"></i>home</a>
-          <a href="#"><i class="fas fa-chevron-right"></i>services</a>
-          <a href="#"><i class="fas fa-chevron-right"></i>about</a>
-          <a href="#"><i class="fas fa-chevron-right"></i>doctors</a>
-          <a href="#"><i class="fas fa-chevron-right"></i>book</a>
-          <a href="#"><i class="fas fa-chevron-right"></i>review</a>
-          <a href="#"><i class="fas fa-chevron-right"></i>blogs</a>
-        </div>
-
-        <div class="box">
-          <h3>our services</h3>
-          <a href="#"><i class="fas fa-chevron-right"></i>dental care</a>
-          <a href="#"><i class="fas fa-chevron-right"></i>message therapy</a>
-          <a href="#"><i class="fas fa-chevron-right"></i>cardioloty</a>
-          <a href="#"><i class="fas fa-chevron-right"></i>diagnosis</a>
-          <a href="#"><i class="fas fa-chevron-right"></i>ambulance services</a>
-        </div>
-
-        <div class="box">
-          <h3>contact info</h3>
-          <a href="#"><i class="fas fa-phone"></i>+777-9087-675</a>
-          <a href="#"><i class="fas fa-phone"></i>+777-6453-342</a>
-          <a href="#"><i class="fas fa-envelope"></i>markjhon@gmail.com</a>
-          <a href="#"><i class="fas fa-envelope"></i>xander@gmail.com</a>
-          <a href="#"
-            ><i class="fas fa-map-marker-alt"></i> jakarta, Indonesia - 24567</a
-          >
-        </div>
-
-        <div class="box">
-          <h3>follow us</h3>
-          <a href="#"><i class="fab fa-facebook-f"></i>facebook</a>
-          <a href="#"><i class="fab fa-twitter"></i>twitter</a>
-          <a href="#"><i class="fab fa-instagram"></i>instagram</a>
-          <a href="#"><i class="fab fa-linkedin"></i>linkedin</a>
-        </div>
-      </div>
-
-      <div class="credit">
-        created by <span>team-oman</span> | all rights reserved
-      </div>
-    </section>
+    <div id="footer-container"></div>
     <!-- footer section ends -->
 
     <!-- custom js file link -->
-    <script src="script/script.js"></script>
+    <script src="/script/script.js"></script>
+    <script src="/script/navbar_footer.js"></script>
+    <script src="/script/scroll-to-section.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+    <script>
+      AOS.init();
+    </script>
   </body>
 </html>

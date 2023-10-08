@@ -1,12 +1,17 @@
 const Sequelize = require("sequelize");
+const fs = require("fs");
+const path = require("path");
 
 // Konfigurasi koneksi ke database
-const sequelize = new Sequelize("db_kesehatan", "root", "", {
-  host: "localhost",
-  dialect: "mysql",
-  port: 3306,
-  // Anda dapat menambahkan pengaturan lain yang diperlukan di sini
-});
+const sequelize = new Sequelize(
+  "mysql://avnadmin:AVNS_SykRuM38IyST7lPXCgQ@mysql-25f6aff-capstone-project-jayapura.aivencloud.com:16041/defaultdb?ssl-mode=REQUIRED",
+  {
+    ssl: fs.readFileSync(path.join(__dirname, "ca.pem")),
+    dialect: "mysql",
+    logging: false,
+    // Anda dapat menambahkan pengaturan lain yang diperlukan di sini
+  }
+);
 
 // Coba koneksi ke database
 sequelize

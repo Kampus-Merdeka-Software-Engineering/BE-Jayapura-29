@@ -1,8 +1,8 @@
 const Sequelize = require("sequelize");
 const sequelize = require("../config/database"); //
 
-const Pasien = require("./pasien");
-const Psikolog = require("./psikolog");
+// const Pasien = require("./pasien");
+// const Psikolog = require("./psikolog");
 
 const Appointment = sequelize.define("tb_appointment", {
   id_appointment: {
@@ -21,7 +21,7 @@ const Appointment = sequelize.define("tb_appointment", {
   keluhan: Sequelize.STRING,
 });
 
-Appointment.belongsTo(Pasien, { foreignKey: "id_pasien" });
-Appointment.belongsTo(Psikolog, { foreignKey: "nama_psikolog" });
+// Appointment.belongsTo(Pasien, { foreignKey: "id_pasien" });
+// Appointment.belongsTo(Psikolog, { foreignKey: "nama_psikolog" });
 
 module.exports = Appointment;

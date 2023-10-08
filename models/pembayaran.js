@@ -1,7 +1,7 @@
 const Sequelize = require("sequelize");
 const sequelize = require("../config/database");
 
-const Pasien = require("./pasien");
+// const Pasien = require("./pasien");
 const Pembayaran = sequelize.define("tb_pembayaran", {
   id_pembayaran: {
     type: Sequelize.INTEGER,
@@ -21,4 +21,4 @@ const Pembayaran = sequelize.define("tb_pembayaran", {
 
 module.exports = Pembayaran;
 
-Pembayaran.belongsTo(Pasien, { foreignKey: "id_pasien" });
+// Pembayaran.belongsTo(Pasien, { foreignKey: "id_pasien" });
