@@ -492,6 +492,43 @@ app.get("/navbar-after-login", async (req, res) => {
   }
 });
 
+// article & team
+app.get("/article1", (req, res) => {
+  const article1Html = fs.readFileSync(
+    path.join(__dirname, "../frontend/views", "article1.html"),
+    "utf8"
+  );
+  res.send(article1Html);
+});
+app.get("/article2", (req, res) => {
+  const article2Html = fs.readFileSync(
+    path.join(__dirname, "../frontend/views", "article2.html"),
+    "utf8"
+  );
+  res.send(article2Html);
+});
+app.get("/article3", (req, res) => {
+  const article3Html = fs.readFileSync(
+    path.join(__dirname, "../frontend/views", "article3.html"),
+    "utf8"
+  );
+  res.send(article3Html);
+});
+app.get("/article4", (req, res) => {
+  const article4Html = fs.readFileSync(
+    path.join(__dirname, "../frontend/views", "article4.html"),
+    "utf8"
+  );
+  res.send(article4Html);
+});
+app.get("/team", (req, res) => {
+  const teamHtml = fs.readFileSync(
+    path.join(__dirname, "../frontend/views", "team.html"),
+    "utf8"
+  );
+  res.send(teamHtml);
+});
+
 // Implementasi POST routes untuk form submission
 
 const port = process.env.PORT || 3000;
