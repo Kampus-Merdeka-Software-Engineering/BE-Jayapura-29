@@ -1,0 +1,109 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat&family=Poppins:wght@100;200;300;400;500;600;700&family=Quicksand&display=swap");
+
+:root {
+  --blue: #1450a3;
+  --black: #444;
+  --light-color: #777;
+  --box-shadow: 0.5rem 0.5rem 0 rgba(22, 160, 133, 0.2);
+  --text-shadow: 0.4rem 0.4rem 0 rgba(0, 0, 0, 0.2);
+  --border: 0.2rem solid var(--blue);
+}
+
+* {
+  font-family: "Poppins", sans-serif;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  outline: none;
+  border: none;
+  text-transform: capitalize;
+  transition: all 0.2s ease-out;
+  text-decoration: none;
+}
+
+html {
+  font-size: 62.5%;
+  overflow-x: hidden;
+  scroll-padding-top: 7rem;
+  scroll-behavior: smooth;
+}
+
+/* our-team */
+
+.our-team {
+  margin-top: 10rem;
+  overflow-y: hidden;
+}
+
+.heading {
+  text-align: center;
+  padding-bottom: 2rem;
+  text-shadow: var(--text-shadow);
+  text-transform: uppercase;
+  color: var(--black);
+  font-size: 5rem;
+  letter-spacing: 0.4rem;
+}
+
+.heading span {
+  text-transform: uppercase;
+  color: var(--blue);
+}
+
+.our-team body {
+  font-family: Arial, sans-serif;
+  background-color: #f0f0f0;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+}
+
+.our-team p {
+  text-align: center;
+  line-height: 1.8;
+  font-size: 1.7rem;
+  color: var(--light-color);
+}
+
+.container-team {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+.team-card {
+  border: 3px solid #1450a3; /* Garis pinggir tebal */
+  border-radius: 20px;
+  margin: 30px;
+  padding: 10px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  max-width: 400px;
+  background-color: #fff;
+}
+
+.team-card img {
+  max-width: 100px;
+  border-radius: 50%;
+}
+
+.team-member-info {
+  flex: 1;
+  text-align: center;
+}
+
+.team-member-name {
+  font-size: 20px;
+  margin: 0;
+}
+
+.divider {
+  padding: 20px;
+  height: 150px;
+  border-left: 3px solid #1450a3; /* Garis pembatas tebal */
+  margin: 20px;
+}

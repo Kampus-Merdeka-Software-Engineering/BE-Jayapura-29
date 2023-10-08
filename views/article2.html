@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Website Health App</title>
+
+    <!-- font awesome cdn link -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+    />
+
+    <!-- custom css file link -->
+    <link rel="stylesheet" href="/style/navbar.css" />
+    <link rel="stylesheet" href="/style/article.css" />
+
+    
+  </head>
+  <body>
+    <!-- header section starts -->
+    <div id="navbar-container"></div>
+    <!--  -->
+    <div class="container container-1">
+      <img src="/img/article2.png" alt="Gambar Artikel">
+    </div>
+  
+    <div class="container container-2">
+      <article>
+        <h1>Kenali Faktor-Faktor yang Mempengaruhi Mental Health</h1>
+        <br>
+        <p>Dampak terbesar terhadap kesehatan mental seseorang terjadi sebelum masa dewasa awal, yaitu dari periode prenatal hingga 20 tahun ke atas. Pada saat ini, pematangan otak terjadi, kepercayaan dasar di dunia, ide-ide tentangnya, tentang orang lain dan tentang diri sendiri terbentuk. Banyak gangguan mental juga muncul selama periode ini. </p><br>
+        <p>Oleh karena itu, faktor yang mempengaruhi kesehatan mental orang yang sedang tumbuh sangat penting dan konsekuensi jangka panjangnya. Apa saja yang mempengaruhi kesehatan mental?</p><br>
+        <p><h3>1. Faktor biologis</h3></p>
+        <p>Mengutip WebMD, beberapa gangguan kesehatan mental telah dikaitkan dengan fungsi abnormal dari sirkuit sel saraf atau jalur yang menghubungkan daerah otak tertentu. Sel-sel saraf dalam sirkuit otak ini berkomunikasi melalui bahan kimia yang disebut neurotransmitter.</p><br>
+        <p>Faktor biologis ini termasuk genetika, karakteristik prenatal dan persalinan (gizi ibu yang buruk, infeksi, paparan racun dan obat-obatan, stres ekstrem), berat badan lahir rendah, kesehatan fisik, cedera, nutrisi, aktivitas fisik, tidur, penggunaan narkoba, gaya hidup.</p><br>
+        <p><h3>2. Faktor Psikologis</h3></p>
+        <p>Faktor psikologis adalah kerentanan pribadi; ketahanan – kemampuan untuk beradaptasi dan bertahan dalam kesulitan, situasi stres; keterampilan sosial dan emosional, pengaturan diri, kemampuan untuk menciptakan dan memelihara hubungan sosial</p><br>
+        <p><h3>3. Faktor Lingkungan</h3></p>
+        <p>Mengutip Verywell Mind, lingkungan hidup merupakan faktor yang memengaruhi kesehatan mental seseorang dengan kuat.</p><br>
+        <p>Keadaan lingkungan yang buruk dapat menyebabkan efek negatif pada kesehatan mental. Sebaliknya, hidup dalam lingkungan sosial yang positif dapat memberikan perlindungan terhadap tantangan mental.</p><br>
+        <p>faktor lingkungan yang buruk diantaranya seperti Faktor lingkungan, diantaranya bullying, kekerasan (fisik, emosional, seksual) dan bentuk pelecehan lainnya, kurangnya stimulasi yang tepat, stigmatisasi, diskriminasi (termasuk gender), pelanggaran hak asasi manusia.</p><br>
+        <p><h3>4. Masalah Sosial</h3></p>
+        <p>Masalah sosial, termasuk masalah sosial ekonomi dan kemiskinan, stresor perkotaan, lingkungan, imigrasi, pengucilan sosial, perubahan sosial yang cepat, lingkungan kerja yang penuh tekanan, peristiwa kehidupan yang penuh tekanan, pandemi, perang.</p><br>
+        <p><h3>5. Trauma</h3></p>
+        <p>Pengalaman traumatis yang dialami oleh seseorang dapat mengganggu kesehatan mental orang tersebut. Seperti pelecehan seksual, kekerasan, atau pengalaman masa lalu yang sulit dapat memiliki dampak negatif pada kesehatan mental.</p>
+      </article>
+
+      <aside>
+          <h2>Featured Posts</h2>
+          <hr><br>
+          <div class='featured_article'>
+            <h4><a href="article3.html">5 kebiasaan yang bisa mengganggu kesehatan mental</a></h4>
+            <img src="/img/article3.png" width='88' height='72'>
+          </div>
+          <div class='featured_article'>
+            <h4><a href="article1.html">Pentingnya Mental Health Awareness </a></h4>
+            <img src="/img/article1.png" width='88' height='72'>
+          </div>
+          <div class='featured_article'>
+            <h4><a href="article4.html">Menjaga Kesehatan Mental dengan Self-Love</a></h4>
+            <img src="/img/article4.png" width='88' height='72'>
+          </div>
+      </aside>
+  </div>
+
+      <!-- footer section stars -->
+
+      <div id="footer-container"></div>
+  
+      <!-- footer section ends -->
+    <script src="/script/script.js"></script>
+    <script src="/script/navbar_footer.js"></script>
+    <script src="/script/scroll-to-section.js"></script>
+    <script>
+      // Fungsi untuk memeriksa apakah pengguna sudah login atau belum
+      function checkLoginStatus() {
+        fetch("/check-login-status") // Ganti dengan endpoint yang sesuai untuk memeriksa status login
+          .then((response) => response.json())
+          .then((data) => {
+            if (data.isLoggedIn) {
+              // Pengguna sudah login, load navbar sesudah login
+              fetch("/navbar-after-login")
+                .then((response) => response.text())
+                .then((navbarHTML) => {
+                  document.getElementById("navbar-container").innerHTML =
+                    navbarHTML;
+                });
+            } else {
+              // Pengguna belum login, load navbar sebelum login
+              fetch("/navbar-before-login")
+                .then((response) => response.text())
+                .then((navbarHTML) => {
+                  document.getElementById("navbar-container").innerHTML =
+                    navbarHTML;
+                });
+            }
+          });
+      }
+
+      // Panggil fungsi checkLoginStatus saat halaman dimuat
+      window.onload = checkLoginStatus();
+    </script>
+</body>
+</html>
