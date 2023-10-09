@@ -1,6 +1,5 @@
 const express = require("express");
 const router = express.Router();
-const bcrypt = require("bcrypt");
 const Pasien = require("../models/pasien");
 
 router.post("/login", async (req, res) => {
@@ -11,9 +10,8 @@ router.post("/login", async (req, res) => {
     });
 
     if (user) {
-      const match = await bcrypt.compare(password, user.password);
-
-      if (match) {
+      // Replace bcrypt compare with a simple password check
+      if (password === user.password) {
         // Set status login di session
         req.session.isLoggedIn = true;
         req.session.userId = user.id_pasien;
