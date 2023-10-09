@@ -1,14 +1,5 @@
-:root {
-  --blue: #1450a3;
-  --black: #000000;
-  --light-color: #777;
-  --box-shadow: 0.5rem 0.5rem 0 rgba(22, 160, 133, 0.2);
-  --text-shadow: 0.4rem 0.4rem 0 rgba(0, 0, 0, 0.2);
-  --border: 0.2rem solid var(--blue);
-}
-
 * {
-  font-family: "Mulish", sans-serif;
+  font-family: "Poppins", sans-serif;
   margin: 0;
   padding: 0;
   box-sizing: border-box;
@@ -51,6 +42,7 @@ h2#logo {
 .form_container {
   background-color: #fff;
   width: 100vw;
+  height: 100vh;
   border-radius: 15px 0 0 15px;
   box-shadow: -2px 11px 5px #3c3d3c;
 }
@@ -58,8 +50,7 @@ h2#logo {
 form {
   margin: auto;
   width: fit-content;
-  margin-top: 11vh;
-  margin-bottom: 10.3vh;
+  margin-top: 140px;
 }
 
 label,
@@ -110,7 +101,9 @@ button {
 img.boy {
   position: absolute;
   width: 40%;
+  height: 80vh;
   bottom: 0px;
+  filter: drop-shadow(12px 10px 10px #1450a3);
 }
 
 p {

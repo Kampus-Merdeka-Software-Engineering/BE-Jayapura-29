@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Website Health App</title>
+
+    <!-- font awesome cdn link -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
+
+    <!-- custom css file link -->
+    <link rel="stylesheet" href="/style/navbar.css" />
+    <link rel="stylesheet" href="/style/article.css" />
+  </head>
+  <body>
+    <!-- header section starts -->
+    <div id="navbar-container"></div>
+    <!--  -->
+
+    <div class="container container-1">
+      <img src="/img/article4.png" alt="Gambar Artikel" />
+    </div>
+
+    <div class="container container-2">
+      <article>
+        <h1>Menjaga Kesehatan Mental dengan Self-Love</h1>
+        <br />
+        <p>
+          Self-love atau yang biasa diketahui dengan mencintai diri sendiri
+          merupakan keadaan dimana seseorang merasa puas akan dirinya dan
+          menerima kekurangannya. Self-love tampak mudah dibicarakan, namun hal
+          ini akan menjadi tantangan ketika dijalani dalam kehidupan
+          sehari-hari, karena hal inimerupakan suatu proses dalam penerimaan
+          diri. Konsep ini lebih mendorong seseorang untuk bisa mengenali dan
+          menerima diri sendiri kemudian bisa memperlakukan diri dengan baik dan
+          apa adanya.
+        </p>
+        <br />
+        <p>
+          Self-love merupakan suatu hal yang bersifat universal, hal ini
+          dibuktikan bahwa seseorang tidak bisa menyamaratakan self-love
+          seseorang dengan orang lain, dibuktikan dengan tingkat kepuasan pada
+          diri seseorang berbeda-beda.
+        </p>
+        <br />
+        <p>
+          Self-love merupakan suatu hal yang bersifat universal, hal ini
+          dibuktikan bahwa seseorang tidak bisa menyamaratakan self-love
+          seseorang dengan orang lain, dibuktikan dengan tingkat kepuasan pada
+          diri seseorang berbeda-beda. Mental yang tidak sehat menyebabkan
+          berbagai gangguan baik secara emosional atau mengganggu fungsi fisik
+          tubuh yang lain. Ada banyak manfaat menerapkan self-love, diantaranya:
+        </p>
+        <br />
+        <p>
+          1. Dapat menjaga kesehatan mental serta menurunkan risiko gangguan
+          pada psikis seperti depresi, anti sosial, penyendiri, gelisah,
+          emosional, dan masih banyak lagi
+        </p>
+        <br />
+        <p>
+          2. Belajar mencintai diri sendiri dapat menurunkan risiko penyakit
+          jantung,pasalnya meluangkan waktu untuk memanjakan diri sendiri dapat
+          membuat perasaan menjadi lebih santai dan bahagia, sehingga dibuktikan
+          oleh penelitian bahwa apabila perasaan bahagia maka akan menurunkan
+          risiko penyakit jantung hingga 22 persen.
+        </p>
+        <br />
+        <p>
+          3. Self-love dapat dilakukan dengan me-time, memiliki waktu untukdiri
+          sendiridapat membuat pikiran menjadi lebih jernih dan dapat
+          meningkatkan kreatifitas
+        </p>
+        <br />
+        <p>
+          4. Tidur yang cukup tidak hanya baik untuk kesehatan tubuh, tetapi
+          juga mempengaruhi kesehatan mental. Hal itu disebabkan karena tidur
+          yang cukup membantu keehatan otak, menghindari kebiasaan tidur larut,
+          dan menjauhkan insomnia, sehingga dapat mempengaruhi kesehatan mental
+          seseorang
+        </p>
+        <br />
+        <p>
+          5. Memilih lingkungan dan pertemanan yang baik menjadi salah satu
+          bentuk cinta pada diri sendiri. Hal tersebut dikarenakan memiliki
+          lingkungan supportif membuat kita menjadi dihargai sehingga mampu
+          menjaga kesehatan mental
+        </p>
+        <br />
+        <p>
+          Untuk dapat menerapkan self-love, hal yang dapat dilakukan adalah
+          mengenali diri sendiri, dengan mengetahui apa yang diinginkan dan
+          dibutuhkan, dapat meningkatkan kepedulian terhadap diri sendiri.
+          Selain itu cobalah untuk berhenti membandingkan diri dengan orang lain
+          karena setiap orang itu pasti berbeda dari segi apapun, termasuk
+          fisik, kemampuan, dan pencapaian.
+        </p>
+      </article>
+
+      <aside>
+        <h2>Featured Posts</h2>
+        <hr />
+        <br />
+        <div class="featured_article">
+          <h4>
+            <a href="article2.html"
+              >Kenali Faktor-Faktor yang Mempengaruhi Mental Health</a
+            >
+          </h4>
+          <img src="/img/article2.png" width="88" height="72" />
+        </div>
+        <div class="featured_article">
+          <h4>
+            <a href="article3.html"
+              >5 kebiasaan yang bisa mengganggu kesehatan mental</a
+            >
+          </h4>
+          <img src="/img/article3.png" width="88" height="72" />
+        </div>
+        <div class="featured_article">
+          <h4>
+            <a href="article1.html">Pentingnya Mental Health Awareness</a>
+          </h4>
+          <img src="/img/article1.png" width="88" height="72" />
+        </div>
+      </aside>
+    </div>
+
+    <!-- footer section stars -->
+
+    <div id="footer-container"></div>
+
+    <!-- footer section ends -->
+
+    <script src="/script/script.js"></script>
+    <script src="/script/navbar_footer.js"></script>
+    <script src="/script/scroll-to-section.js"></script>
+    <script>
+      // Fungsi untuk memeriksa apakah pengguna sudah login atau belum
+      function checkLoginStatus() {
+        fetch("/check-login-status") // Ganti dengan endpoint yang sesuai untuk memeriksa status login
+          .then((response) => response.json())
+          .then((data) => {
+            if (data.isLoggedIn) {
+              // Pengguna sudah login, load navbar sesudah login
+              fetch("/navbar-after-login")
+                .then((response) => response.text())
+                .then((navbarHTML) => {
+                  document.getElementById("navbar-container").innerHTML =
+                    navbarHTML;
+                });
+            } else {
+              // Pengguna belum login, load navbar sebelum login
+              fetch("/navbar-before-login")
+                .then((response) => response.text())
+                .then((navbarHTML) => {
+                  document.getElementById("navbar-container").innerHTML =
+                    navbarHTML;
+                });
+            }
+          });
+      }
+
+      // Panggil fungsi checkLoginStatus saat halaman dimuat
+      window.onload = checkLoginStatus();
+    </script>
+  </body>
+</html>

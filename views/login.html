@@ -8,10 +8,6 @@
     <!-- Font -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Mulish:wght@300;400;500;600;700&display=swap"
-      rel="stylesheet" />
-
     <!-- Font -->
     <link
       rel="stylesheet"
@@ -20,41 +16,16 @@
     <!-- CSS -->
     <link rel="stylesheet" href="/style/login.css" />
     <link rel="stylesheet" href="/style/navbar.css" />
-    <script src="script/script.js"></script>
   </head>
   <body>
     <!-- header -->
-    <header class="header">
-      <a href="/index" class="logo">
-        <img class="logo" src="/img/logo.png" alt=""
-      /></a>
-
-      <nav class="navbar">
-        <a href="/index">home</a>
-        <a href="#services">services</a>
-        <a href="#doctors">find a psycholog</a>
-        <a href="#book">book</a>
-        <a href="#blogs">blogs</a>
-        <a href="#contact">contact us</a>
-      </nav>
-
-      <div class="header-btn">
-        <a href="/signup" class="sign-up">Sign Up</a>
-        <a href="/login" class="login">Login</a>
-      </div>
-
-      <div id="menu-btn" class="fas fa-bars"></div>
-    </header>
+    <div id="navbar-container"></div>
     <!--  -->
     <div class="login">
       <h1>LOGIN</h1>
       <p>Please Enter Your Email and Password</p>
       <form action="/login" method="POST">
-        <input
-          type="email_pasien"
-          name="email_pasien"
-          placeholder="Email"
-          required />
+        <input type="email" name="email_pasien" placeholder="Email" required />
         <input
           type="password"
           name="password"
@@ -64,7 +35,38 @@
       </form>
     </div>
     <p class="para-2">
-      Dont have an account? <a href="/signup">Sign in </a>first
+      Dont have an account? <a href="/signup">Sign Up </a>first
     </p>
+
+    <script src="script/script.js"></script>
+    <script>
+      // Fungsi untuk memeriksa apakah pengguna sudah login atau belum
+      function checkLoginStatus() {
+        fetch("/check-login-status") // Ganti dengan endpoint yang sesuai untuk memeriksa status login
+          .then((response) => response.json())
+          .then((data) => {
+            if (data.isLoggedIn) {
+              // Pengguna sudah login, load navbar sesudah login
+              fetch("/navbar-after-login")
+                .then((response) => response.text())
+                .then((navbarHTML) => {
+                  document.getElementById("navbar-container").innerHTML =
+                    navbarHTML;
+                });
+            } else {
+              // Pengguna belum login, load navbar sebelum login
+              fetch("/navbar-before-login")
+                .then((response) => response.text())
+                .then((navbarHTML) => {
+                  document.getElementById("navbar-container").innerHTML =
+                    navbarHTML;
+                });
+            }
+          });
+      }
+
+      // Panggil fungsi checkLoginStatus saat halaman dimuat
+      window.onload = checkLoginStatus();
+    </script>
   </body>
 </html>

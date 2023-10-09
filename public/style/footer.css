@@ -1,0 +1,67 @@
+.footer {
+  padding: 50px;
+  margin-top: 200px;
+  box-shadow: 0px -10px #888888;
+}
+
+.footer .box-container {
+  opacity: 0.6;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(22rem, 1fr));
+  gap: 2rem;
+}
+
+.footer .box-container .box h3 {
+  font-size: 2.5rem;
+  /* color: var(--light-color); */
+  color: #e9a827;
+  padding: 1rem 0;
+}
+
+.footer .box-container .box a {
+  display: block;
+  font-size: 1.5rem;
+  color: #fff;
+  padding: 1rem 0;
+}
+
+.footer .box-container .box p {
+  display: block;
+  font-size: 1.5rem;
+  color: #fff;
+  padding: 1rem 0;
+}
+
+.footer .box-container .box .logo {
+  width: 20rem;
+}
+
+.footer .box-container .box a i {
+  padding-right: 0.5rem;
+  color: #e9a827;
+}
+
+.footer .box-container .box a:hover i {
+  padding-right: 2rem;
+  color: #fff;
+}
+
+.footer .credit {
+  padding: 1rem;
+  padding-top: 2rem;
+  margin-top: 2rem;
+  text-align: center;
+  font-size: 1.5rem;
+  /* color: var(--light-color); */
+  color: #1450a3;
+  /* border-top: 0.1rem solid rgba(0, 0, 0, 0.1);  */
+}
+
+.footer .credit span {
+  color: var(--blue);
+}
+
+.footer {
+  background-color: #1450a3;
+  box-shadow: 0px -10px #8888;
+}

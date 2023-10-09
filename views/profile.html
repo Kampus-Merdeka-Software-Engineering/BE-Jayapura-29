@@ -8,9 +8,6 @@
     <!-- Font -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Mulish:wght@300;400;500;600;700&display=swap"
-      rel="stylesheet" />
 
     <!-- Font -->
     <link
@@ -23,12 +20,12 @@
   </head>
   <body>
     <header class="header">
-      <a href="/index" class="logo">
+      <a href="/index2" class="logo">
         <img class="logo" src="/img/logo.png" alt=""
       </a>
 
       <nav class="navbar">
-        <a href="/index">home</a>
+        <a href="/index2">home</a>
         <a href="#services">services</a>
         <a href="#doctors">find a psycholog</a>
         <a href="#book">book</a>
@@ -70,7 +67,7 @@
 
     <!-- -------------------------------- -->
     <div class="container_profile">
-      <p><a href="/index" class="kembali">Kembali</a></p>
+      <p><a href="/index2" class="kembali">Kembali</a></p>
       <div class="baris_satu">
         <div class="card1">
           <img
@@ -86,23 +83,13 @@
           <div class="pembayaran">
             <h4>Status Pembayaran</h4>
             <div class="isi_pembayaran">
-              <p>
-                <% if (profileData.jumlah_bayar !== "-") { %> Jumlah Bayar: <%=
-                profileData.jumlah_bayar %>
+              <p id="jumlah-bayar">
+                Jumlah Bayar: <%= profileData.jumlah_bayar %>
               </p>
               <hr />
-              <p>
-                Status Bayar: <%= profileData.status_bayar == "sudah" ? "Sudah"
-                : "Belum" %>
+              <p id="status-bayar">
+                Status Bayar: <%= profileData.status_bayar %>
               </p>
-              <% } else { %>
-              <p>Jumlah Bayar: <%= profileData.jumlah_bayar %></p>
-              <hr />
-              <p>
-                Status Bayar: <%= profileData.status_bayar == "sudah" ? "Sudah"
-                : "-" %>
-              </p>
-              <% } %>
             </div>
           </div>
         </div>
@@ -127,21 +114,18 @@
           <div class="jadwal_konsultasi">
             <h4>Jadwal Konsultasi</h4>
             <div class="isi_jadwal">
-              <% if (profileData.tanggal && profileData.waktu) { %> <% const
-              appointmentDate = new Date(profileData.tanggal + " " +
-              profileData.waktu); %> <% const currentDate = new Date(); %> <% if
-              (appointmentDate < currentDate) { %>
-              <p>Anda belum memiliki appointment.</p>
-              <% } else { %>
-              <p>
-                Tanggal Appointment: <br />
-                <%= profileData.tanggal %>
-              </p>
-              <hr />
-              <p>Waktu Appointment: <%= profileData.waktu %></p>
-              <% } %> <% } else { %>
-              <p>Anda belum memiliki appointment.</p>
-              <% } %>
+              <div>
+                <p id="tanggal-appointment">
+                  <%= profileData.tanggal_appointment %>
+                </p>
+              </div>
+              <br />
+              <br />
+              <div>
+                <p id="waktu-appointment">
+                  <%= profileData.waktu_appointment %>
+                </p>
+              </div>
             </div>
           </div>
         </div>

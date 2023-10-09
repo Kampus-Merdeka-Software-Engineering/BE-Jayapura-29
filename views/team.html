@@ -1,0 +1,127 @@
+<!-- our-team.html -->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Our Team</title>
+    <!-- Add any CSS or styles specific to the team page here -->
+    <link rel="stylesheet" href="/style/our-team.css" />
+    <link rel="stylesheet" href="/style/navbar.css" />
+  </head>
+  <body>
+    <!-- Tampilan header saat sudah login -->
+    <div id="navbar-container"></div>
+    <!-- header section ends -->
+    <!-- Copy the contents of your team section from the main page here -->
+    <section class="our-team" id="our-team">
+      <h1 class="heading">meet our <span>team</span></h1>
+      <p>
+        Hello guys! We are the team that made this mental health application, we
+        really hope that this application will be useful for you. We ask for
+        your support for the development of this application
+      </p>
+
+      <div class="container-team">
+        <div class="team-card">
+          <img
+            src="https://www.rri.res.in/sites/default/files/2022-09/Abhisek%20Tamang.jpg"
+            alt="Member 1" />
+          <div class="divider"></div>
+          <div class="team-member-info">
+            <h2 class="team-member-name">Josiah Farrel Suwito</h2>
+            <p class="team-member-title">Universitas</p>
+          </div>
+        </div>
+
+        <div class="team-card">
+          <img
+            src="https://www.rri.res.in/sites/default/files/2022-09/Abhisek%20Tamang.jpg"
+            alt="Member 2" />
+          <div class="divider"></div>
+          <div class="team-member-info">
+            <h2 class="team-member-name">Bintang Ramadhana Faturizky</h2>
+            <p class="team-member-title">Designer</p>
+          </div>
+        </div>
+
+        <div class="team-card">
+          <img
+            src="https://www.rri.res.in/sites/default/files/2022-09/Abhisek%20Tamang.jpg"
+            alt="Member 2" />
+          <div class="divider"></div>
+          <div class="team-member-info">
+            <h2 class="team-member-name">Raditya Agung Mahendra</h2>
+            <p class="team-member-title">Designer</p>
+          </div>
+        </div>
+
+        <div class="team-card">
+          <img
+            src="https://www.rri.res.in/sites/default/files/2022-09/Abhisek%20Tamang.jpg"
+            alt="Member 2" />
+          <div class="divider"></div>
+          <div class="team-member-info">
+            <h2 class="team-member-name">Rahayu Nur Rahmawati</h2>
+            <p class="team-member-title">Designer</p>
+          </div>
+        </div>
+
+        <div class="team-card">
+          <img
+            src="https://www.rri.res.in/sites/default/files/2022-09/Abhisek%20Tamang.jpg"
+            alt="Member 2" />
+          <div class="divider"></div>
+          <div class="team-member-info">
+            <h2 class="team-member-name">Raihanah Zahira</h2>
+            <p class="team-member-title">Designer</p>
+          </div>
+        </div>
+
+        <div class="team-card">
+          <img
+            src="https://www.rri.res.in/sites/default/files/2022-09/Abhisek%20Tamang.jpg"
+            alt="Member 2" />
+          <div class="divider"></div>
+          <div class="team-member-info">
+            <h2 class="team-member-name">Syahyana Iswari</h2>
+            <p class="team-member-title">Designer</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- <script src="/script/navbar_footer.js"></script> -->
+    <script src="/script/script.js"></script>
+
+    <script>
+      // Fungsi untuk memeriksa apakah pengguna sudah login atau belum
+      function checkLoginStatus() {
+        fetch("/check-login-status") // Ganti dengan endpoint yang sesuai untuk memeriksa status login
+          .then((response) => response.json())
+          .then((data) => {
+            if (data.isLoggedIn) {
+              // Pengguna sudah login, load navbar sesudah login
+              fetch("/navbar-after-login")
+                .then((response) => response.text())
+                .then((navbarHTML) => {
+                  document.getElementById("navbar-container").innerHTML =
+                    navbarHTML;
+                });
+            } else {
+              // Pengguna belum login, load navbar sebelum login
+              fetch("/navbar-before-login")
+                .then((response) => response.text())
+                .then((navbarHTML) => {
+                  document.getElementById("navbar-container").innerHTML =
+                    navbarHTML;
+                });
+            }
+          });
+      }
+
+      // Panggil fungsi checkLoginStatus saat halaman dimuat
+      window.onload = checkLoginStatus();
+    </script>
+  </body>
+</html>
