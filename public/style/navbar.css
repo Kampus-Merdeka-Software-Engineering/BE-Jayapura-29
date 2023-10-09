@@ -1,0 +1,354 @@
+:root {
+  --blue: #1450a3;
+  --black: #000000;
+  --light-color: #777;
+  --box-shadow: 0.5rem 0.5rem 0 rgba(22, 160, 133, 0.2);
+  --text-shadow: 0.4rem 0.4rem 0 rgba(0, 0, 0, 0.2);
+  --border: 0.2rem solid var(--blue);
+}
+
+* {
+  font-family: "Poppins", sans-serif;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  outline: none;
+  border: none;
+  text-transform: capitalize;
+  transition: all 0.2s ease-out;
+  text-decoration: none;
+}
+
+html {
+  font-size: 62.5%;
+  overflow-x: hidden;
+  scroll-padding-top: 7rem;
+  scroll-behavior: smooth;
+}
+
+.heading {
+  text-align: center;
+  padding-bottom: 2rem;
+  text-shadow: var(--text-shadow);
+  text-transform: uppercase;
+  color: var(--black);
+  font-size: 5rem;
+  letter-spacing: 0.4rem;
+}
+
+.heading span {
+  text-transform: uppercase;
+  color: var(--blue);
+}
+
+.btn {
+  display: inline-block;
+  margin-top: 1rem;
+  padding: 0.5rem;
+  padding-left: 1rem;
+  border: var(--border);
+  border-radius: 0.5rem;
+  box-shadow: var(--box-shadow);
+  color: var(--blue);
+  cursor: pointer;
+  font-size: 1.7rem;
+  background: #fff;
+}
+
+.btn span {
+  padding: 0.7rem 1rem;
+  border-radius: 0.5rem;
+  background: var(--blue);
+  color: #fff;
+  margin-left: 0.5rem;
+}
+
+.btn:hover {
+  background: var(--blue);
+  color: #fff;
+}
+
+.btn:hover span {
+  color: var(--blue);
+  background-color: #fff;
+  margin-left: 1rem;
+}
+
+.header {
+  padding: 2rem 9%;
+  top: 0;
+  left: 0;
+  right: 0;
+  box-shadow: 0 0.1rem 1rem rgba(0, 0, 0, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #fff;
+}
+
+a.logo {
+  display: flex;
+  align-items: center;
+}
+
+.header .logo img {
+  width: 5em;
+  height: auto;
+  max-width: 100%;
+}
+
+.header .navbar a {
+  font-size: 1.7rem;
+  color: var(--light-color);
+  margin-left: 2rem;
+}
+
+.header .navbar a:hover {
+  color: var(--blue);
+  text-decoration: underline;
+}
+
+#menu-btn {
+  font-size: 2.5rem;
+  border-radius: 0.5rem;
+  background: #eee;
+  color: var(--blue);
+  padding: 1rem 1.5rem;
+  cursor: pointer;
+  display: none;
+}
+
+.header-btn a {
+  padding: 10px 20px;
+  color: var(--blue);
+  font-weight: bold;
+  font-size: 1.1em;
+}
+
+.header-btn .sign-up {
+  border: 2px solid;
+  border-radius: 100px;
+  cursor: pointer;
+}
+
+.header-btn .login {
+  background: #1450a3;
+  color: #f5f5f5;
+  border: 2px solid transparent;
+  border-radius: 100px;
+  transform: all 0.5s ease;
+}
+
+.header-btn .login:hover {
+  color: #1450a3;
+  border: 2px solid #1450a3;
+  background: transparent;
+}
+
+.header-btn .sign-up:hover {
+  color: #f5f5f5;
+  border: 2px solid #1450a3;
+  background: #1450a3;
+}
+.header .logo {
+  font-size: 2.5rem;
+  color: var(--black);
+}
+
+.header .logo i {
+  color: #c70039;
+}
+
+.header .navbar a {
+  font-size: 1.7rem;
+  color: var(--light-color);
+  margin-left: 2rem;
+}
+
+.header .navbar a:hover {
+  color: var(--blue);
+  text-decoration: underline;
+}
+
+nav.navbar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#menu-btn {
+  font-size: 2.5rem;
+  border-radius: 0.5rem;
+  background: #eee;
+  color: var(--blue);
+  padding: 1rem 1.5rem;
+  cursor: pointer;
+  display: none;
+}
+
+.poto_profile {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  margin-left: 10px;
+  border: 1px solid black;
+}
+
+.profile {
+  display: flex;
+  align-items: center;
+  margin-left: 1rem;
+}
+
+.profile-menu {
+  position: relative;
+}
+
+.dropbtn {
+  background-color: transparent;
+  padding: 10px;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+  position: absolute;
+  right: 0px;
+  top: -20px;
+  border-radius: 100px;
+  width: 40px;
+  height: 40px;
+}
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #fff;
+  min-width: 160px;
+  overflow: auto;
+  box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.2);
+  z-index: 1;
+}
+
+.dropdown-content a {
+  color: #777;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+  font-size: 1.5rem;
+  border: 1px solid #000000;
+}
+
+.profile-menu a:hover {
+  background-color: #ddd;
+}
+
+.show {
+  display: block;
+  position: absolute;
+  right: 0px;
+  top: 40px;
+}
+
+@media (max-width: 768px) {
+  .dropbtn {
+    background-color: transparent;
+    padding: 10px;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+    position: absolute;
+    right: 0px;
+    top: -20px;
+    border-radius: 100px;
+    width: 40px;
+    height: 40px;
+  }
+
+  #menu-btn {
+    display: initial;
+    margin-left: 100px;
+  }
+
+  .header .navbar {
+    position: absolute;
+    top: 100%;
+    right: 2rem;
+    border-radius: 0.5rem;
+    box-shadow: var(--box-shadow);
+    width: 30rem;
+    border: var(--border);
+    background: #fff;
+    transform: scale(0);
+    opacity: 0;
+    transform-origin: top right;
+    transition: none;
+  }
+
+  nav.navbar {
+    display: block;
+  }
+
+  nav.navbar.active {
+    transform: scale(1);
+    opacity: 1;
+    transition: 0.2s ease-out;
+    display: block;
+    z-index: 1000;
+    position: absolute;
+    top: 13vw;
+  }
+
+  .header .navbar a {
+    font-size: 2rem;
+    display: block;
+    margin: 2.5rem;
+  }
+
+  .btn_sign {
+    display: inline-block;
+    padding: 0.5rem;
+    border: var(--border);
+    border-radius: 0.5rem;
+    color: var(--blue);
+    cursor: pointer;
+    font-size: 1.7rem;
+    background: #fff;
+    height: 4rem;
+    margin-left: 1rem;
+    margin-bottom: 1rem;
+  }
+
+  a.sign {
+    color: #1450a3;
+  }
+
+  .btn_login {
+    display: inline-block;
+    padding: 0.5rem;
+    border: var(--border);
+    border-radius: 0.5rem;
+    color: var(--blue);
+    cursor: pointer;
+    font-size: 1.7rem;
+    background: #1450a3;
+    color: #fff;
+    margin-left: 1rem;
+  }
+
+  .show {
+    display: block;
+    position: absolute;
+    right: -70px;
+    top: 40px;
+  }
+}
+
+@media (max-width: 450px) {
+  html {
+    font-size: 50%;
+  }
+}

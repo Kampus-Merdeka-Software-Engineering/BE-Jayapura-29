@@ -14,10 +14,22 @@ router.post("/login", async (req, res) => {
       const match = await bcrypt.compare(password, user.password);
 
       if (match) {
+<<<<<<< HEAD
         // Set status login di session
         req.session.isLoggedIn = true;
         req.session.userId = user.id_pasien;
         req.session.email_pasien = user.email_pasien;
+=======
+        req.session.userId = user.id_pasien;
+
+        req.session.userId = user.id_pasien;
+        const nama_pasienWords = user.nama_pasien.split(" ");
+        const nama_pendek = `${nama_pasienWords[0]} ${nama_pasienWords[1]}`;
+        const foto_pasien = user.foto_pasien;
+        req.session.nama_pendek = nama_pendek;
+        req.session.email_pasien = user.email_pasien;
+        req.session.foto_pasien = foto_pasien;
+>>>>>>> ef7d55dc0bf7805581de2cefb2f6bae06b978b2a
         res.redirect("/index2");
       } else {
         res.send(

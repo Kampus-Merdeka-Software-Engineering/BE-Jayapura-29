@@ -1,0 +1,576 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat&family=Poppins:wght@100;200;300;400;500;600;700&family=Quicksand&display=swap");
+
+:root {
+  --blue: #1450a3;
+  --black: #444;
+  --light-color: #777;
+  --box-shadow: 0.5rem 0.5rem 0 rgba(22, 160, 133, 0.2);
+  --text-shadow: 0.4rem 0.4rem 0 rgba(0, 0, 0, 0.2);
+  --border: 0.2rem solid var(--blue);
+}
+
+* {
+  font-family: "Poppins", sans-serif;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  outline: none;
+  border: none;
+  text-transform: capitalize;
+  transition: all 0.2s ease-out;
+  text-decoration: none;
+}
+
+html {
+  font-size: 62.5%;
+  overflow-x: hidden;
+  scroll-padding-top: 7rem;
+  scroll-behavior: smooth;
+}
+
+section {
+  padding: 2rem 9%;
+}
+
+section:nth-child(even) {
+  background: #f5f5f5;
+}
+/* header */
+
+/* SignUp */
+
+/* -------------------------------------------------------------- */
+
+/*home*/
+.home {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  padding-top: 10rem;
+  max-height: 100%;
+  overflow: auto;
+}
+
+.home .image {
+  flex: 1 1 45rem;
+}
+
+.home .image img {
+  width: 100%;
+}
+
+.home .content {
+  flex: 1 1 45rem;
+}
+
+.home .content h3 {
+  font-size: 4.5rem;
+  color: var(--black);
+  line-height: 1.8;
+  text-shadow: var(--text-shadow);
+}
+
+.home .content p {
+  font-size: 1.7rem;
+  color: var(--light-color);
+  line-height: 1.8;
+  padding: 1rem 0;
+}
+
+/* ---------------------------------------- */
+
+/* Service */
+
+.para-2 {
+  text-align: center;
+  color: #1450a3;
+  font-size: 15px;
+  margin-top: -10px;
+}
+
+.services p {
+  text-align: center;
+  line-height: 1.8;
+  font-size: 1.7rem;
+  color: var(--light-color);
+}
+
+.services .box-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(27rem, 1fr));
+  gap: 2rem;
+}
+
+.services .box-container .box {
+  background: #fff;
+  border-radius: 0.5rem;
+  box-shadow: var(--box-shadow);
+  border: var(--border);
+  padding: 2.5rem;
+}
+
+.services .box-container .box i {
+  color: var(--blue);
+  font-size: 5rem;
+  padding-bottom: 0.5rem;
+}
+
+.services .box-container .box h3 {
+  color: var(--black);
+  font-size: 2.5rem;
+  padding: 1rem 0;
+}
+
+.services .box-container .box p {
+  color: var(--light-color);
+  font-size: 1.4rem;
+  line-height: 2;
+  text-align: justify;
+}
+
+/* --------------------------------------------- */
+
+/* about */
+
+.about .row {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 2rem;
+}
+
+.about .row .image {
+  flex: 1 1 45rem;
+}
+
+.about .row .image img {
+  width: 100%;
+}
+
+.about .row .content {
+  flex: 1 1 45rem;
+}
+
+.about .row .content h3 {
+  color: var(--black);
+  text-shadow: var(--text-shadow);
+  font-size: 4rem;
+  line-height: 1.8;
+}
+
+.about .row .content p {
+  color: var(--light-color);
+  padding: 1rem 0;
+  font-size: 1.5rem;
+  line-height: 1.8;
+}
+/* ------------------------------------------------- */
+
+/* doctor */
+
+/* .doctors .box-container{
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(30rem, 1fr));
+    gap: 2rem;
+}
+
+.doctors .box-container .box{
+    text-align: center;
+    background: #fff;
+    border-radius: .5rem;
+    border: var(--border);
+    box-shadow: var(--box-shadow);
+    padding: 2rem;
+}
+
+.doctors .box-container .box img{
+    height: 20rem;
+    border: var(--border);
+    border-radius: .5rem;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+}
+
+.doctors .box-container .box h3{
+    color: var(--black);
+    font-size: 2.5rem;
+}
+
+.doctors .box-container .box span{
+    color: var(--blue);
+    font-size: 1.5rem;
+} */
+.doctors p {
+  text-align: center;
+  line-height: 1.8;
+  font-size: 1.7rem;
+  color: var(--light-color);
+}
+
+.doctors .box-container {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  padding-top: 5rem;
+  padding-bottom: 5rem;
+}
+
+.doctors .box-container .box {
+  border: var(--border);
+  box-shadow: var(--box-shadow);
+  border-radius: 0.5rem;
+  padding: 2.5rem;
+  background: #fff;
+  text-align: center;
+  width: 25vw;
+  margin-left: 0.5vw;
+  margin-right: 0.5vw;
+  margin-bottom: 0.5vw;
+  z-index: 0;
+}
+
+.doctors .box-container .box img {
+  font-size: 1.7rem;
+  color: var(--blue);
+  padding-bottom: 0.7rem;
+}
+
+.doctors .box-container .box h3 {
+  font-size: 1.7rem;
+  color: var(--black);
+  padding-bottom: 0.5rem 0;
+}
+
+.doctors .box-container .box span {
+  font-size: 1.7rem;
+  color: var(--light-color);
+}
+/* ------------------------------------------------------ */
+
+/* book */
+.book .row {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 2rem;
+}
+
+.book .row .content {
+  max-width: 40%;
+  flex: 1 1 45rem;
+}
+
+.book .row .content .heading {
+  text-align: start;
+  padding-bottom: 2rem;
+  text-transform: uppercase;
+  color: var(--black);
+  font-size: 5rem;
+  letter-spacing: 0.4rem;
+}
+
+.book .row .content .heading span {
+  text-transform: uppercase;
+  color: var(--blue);
+}
+
+.book .row .content p {
+  font-size: 1.7rem;
+  color: var(--light-color);
+  line-height: 1.8;
+  padding: 1rem 0;
+}
+
+.book .row .image {
+  flex: 1 1 45rem;
+}
+
+.book .row .image img {
+  width: 100%;
+}
+
+.book .row form {
+  flex: 1 1 45rem;
+  background: #fff;
+  border: var(--border);
+  box-shadow: var(--box-shadow);
+  text-align: center;
+  padding: 2rem;
+  border-radius: 0.5rem;
+}
+
+.book .row form h3 {
+  color: var(--black);
+  padding-bottom: 1rem;
+  font-size: 3rem;
+}
+
+.book .row form .box {
+  width: 100%;
+  margin: 0.7rem 0;
+  border-radius: 0.5rem;
+  border: var(--border);
+  font-size: 1.6rem;
+  color: var(--black);
+  text-transform: none;
+  padding: 1rem;
+}
+
+.book .row form .btn {
+  padding: 1rem 4rem;
+}
+/*----------------------------------------------------------------  */
+
+/* review */
+
+.review p {
+  text-align: center;
+  line-height: 1.8;
+  font-size: 1.7rem;
+  color: var(--light-color);
+}
+
+.review .box-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(27rem, 1fr));
+  gap: 2rem;
+}
+
+.review .box-container .box {
+  border: var(--border);
+  box-shadow: var(--box-shadow);
+  border-radius: 0.5rem;
+  padding: 2.5rem;
+  background: #fff;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  z-index: 0;
+}
+
+.review .box-container .box img {
+  height: 10rem;
+  width: 10rem;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 0.5rem solid #fff;
+}
+
+.review .box-container .box h3 {
+  color: #fff;
+  font-size: 2.2rem;
+  padding: 0.5rem 0;
+}
+
+.review .box-container .box .stars i {
+  color: #fff;
+  font-size: 1.5rem;
+}
+
+.review .box-container .box .text {
+  color: var(--light-color);
+  line-height: 1.8;
+  font-size: 1.6rem;
+  padding-top: 4rem;
+}
+
+.review .box-container .box::before {
+  content: "";
+  position: absolute;
+  top: -4rem;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--blue);
+  border-bottom-left-radius: 50%;
+  border-bottom-right-radius: 50%;
+  height: 25rem;
+  width: 120%;
+  z-index: -1;
+}
+/* --------------------------------------------------- */
+
+/* blog */
+
+.blog {
+  margin-top: 200px;
+}
+
+.blog .box-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(22rem, 1fr));
+  gap: 2rem;
+}
+
+.blog .box-container .box {
+  border: 1px solid #ccc;
+  padding: 10px;
+  margin: 10px;
+  border-radius: 5px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  background-color: #fff;
+  width: auto; /* Adjusted width */
+  display: inline-block; /* Adjusted display */
+}
+
+.blog .box-container .box img {
+  max-width: 100%; /* Ensure the image doesn't exceed the width of the .box */
+  height: auto; /* Maintain aspect ratio */
+}
+
+.blog .box-container .box h3 {
+  font-size: 2rem;
+  color: var(--black);
+  padding: 1rem 0;
+}
+
+.blog .box-container .box p {
+  font-size: 1.5rem;
+  color: var(--light-color);
+  padding: 1rem 0;
+}
+/* ------------------------------------------------------ */
+
+/* footer */
+
+.footer .box-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(22rem, 1fr));
+  gap: 2rem;
+}
+
+.footer .box-container .box h3 {
+  font-size: 2.5rem;
+  color: var(--black);
+  padding: 1rem 0;
+}
+
+.footer .box-container .box a {
+  display: block;
+  font-size: 1.5rem;
+  color: var(--light-color);
+  padding: 1rem 0;
+}
+
+.footer .box-container .box a i {
+  padding-right: 0.5rem;
+  color: var(--blue);
+}
+
+.footer .box-container .box a:hover i {
+  padding-right: 2rem;
+  color: var(--blue);
+}
+
+.footer .credit {
+  padding: 1rem;
+  padding-top: 2rem;
+  margin-top: 2rem;
+  text-align: center;
+  font-size: 2rem;
+  color: var(--light-color);
+  border-top: 0.1rem solid rgba(0, 0, 0, 0.1);
+}
+
+.footer .credit span {
+  color: var(--blue);
+}
+/* ------------------------------------------------ */
+
+/* media queries */
+@media (max-width: 991px) {
+  html {
+    font-size: 55%;
+  }
+
+  .header {
+    padding: 2rem;
+  }
+
+  section {
+    padding: 2rem;
+  }
+}
+
+@media (max-width: 768px) {
+  #menu-btn {
+    display: initial;
+    margin-left: 100px;
+  }
+
+  .header .navbar {
+    position: absolute;
+    top: 115%;
+    right: 2rem;
+    border-radius: 0.5rem;
+    box-shadow: var(--box-shadow);
+    width: 30rem;
+    border: var(--border);
+    background: #fff;
+    transform: scale(0);
+    opacity: 0;
+    transform-origin: top right;
+    transition: none;
+  }
+
+  nav.navbar {
+    display: block;
+  }
+
+  nav.navbar.active {
+    transform: scale(1);
+    opacity: 1;
+    transition: 0.2s ease-out;
+    display: block;
+  }
+
+  .header .navbar a {
+    font-size: 2rem;
+    display: block;
+    margin: 2.5rem;
+  }
+
+  .btn_sign {
+    display: inline-block;
+    padding: 0.5rem;
+    border: var(--border);
+    border-radius: 0.5rem;
+    color: var(--blue);
+    cursor: pointer;
+    font-size: 1.7rem;
+    background: #fff;
+    height: 4rem;
+    margin-left: 1rem;
+    margin-bottom: 1rem;
+  }
+
+  a.sign {
+    color: #1450a3;
+  }
+
+  .btn_login {
+    display: inline-block;
+    padding: 0.5rem;
+    border: var(--border);
+    border-radius: 0.5rem;
+    color: var(--blue);
+    cursor: pointer;
+    font-size: 1.7rem;
+    background: #1450a3;
+    color: #fff;
+    margin-left: 1rem;
+  }
+
+  .show {
+    display: block;
+    position: absolute;
+    right: -70px;
+    top: 40px;
+  }
+}
+
+@media (max-width: 450px) {
+  html {
+    font-size: 50%;
+  }
+}

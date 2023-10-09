@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Website Health App</title>
+
+    <!-- font awesome cdn link -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
+
+    <!-- custom css file link -->
+    <link rel="stylesheet" href="/style/navbar.css" />
+    <link rel="stylesheet" href="/style/article.css" />
+  </head>
+  <body>
+    <!-- header section starts -->
+    <div id="navbar-container"></div>
+    <!--  -->
+    <div class="container container-1">
+      <img src="/img/article1.png" alt="Gambar Artikel" />
+    </div>
+
+    <div class="container container-2">
+      <article>
+        <h1>Pentingnya Mental Health Awareness</h1>
+        <br />
+        <p>“Apa Sih Mental Health Itu?”</p>
+        <br />
+        <p>
+          Mental health atau kesehatan mental adalah segala kondisi yang
+          mencakup kesejahteraan emosional, psikologis, dan sosial. Hal tersebut
+          yang mempengaruhi cara seseorang berpikir, merasa dan bertindak.
+          Kesehatan mental juga menentukan cara seseorang dalam menangani stres,
+          menghadapi orang lain, dan menentukan pilihan.
+        </p>
+        <br />
+        <p>
+          Menurut World Health Organization (WHO), menyatakan bahwa individu
+          yang sehat secara mental adalah individu yang dapat menyadari setiap
+          potensi yang ia miliki, mampu mengelola stres yang wajar, dapat
+          bekerja secara produktif, serta mampu berperan dalam komunitasnya.
+          Oleh karena itu, kesehatan mental merupakan hal yang sangat penting
+          bagi kehidupan manusia.
+        </p>
+        <br />
+        <p>
+          Tetapi banyak orang orang yang menganggap bahwa kesehatan mental itu
+          hal yang sepele. Padalah, sebenarnya kesehatan mental itu menjadi hal
+          yang cukup penting loh, karena kesehatan mental akan mempengaruhi
+          kehidupan kita sehari hari, seperti bisa mewujudkan potensi kita yang
+          sesungguhnya, lebih produktif, dan lebih bersemangat.
+        </p>
+        <br />
+        <p>
+          Lantas, apa itu Mental Health Awareness? mental health awareness
+          artinya adalah kesadaran khalayak umum akan pentingnya kesehatan
+          mental, emosi, dan psikis yang akhirnya berujung kepada pengurangan
+          stigma dan diskriminasi terhadap penderita penyakit mental.
+        </p>
+        <br />
+        <p>
+          <b>Bagaimana Kesadaran Terhadap Kesehatan Mental Dapat Membantu?</b>
+        </p>
+        <br />
+        <p>
+          Dengan adanya kesadaran tentang kesehatan mental, maka hal ini akan
+          memudahkan setiap orang untuk mengidentifikasi serta menentukan
+          perawatan-perawatan apa yang diperlukan. Selain diri sendiri, bisa
+          jadi anggota keluarga, atau teman-teman terdekat juga dapat memetik
+          manfaat dari kesadaran tentang kesehatan mental. Ketika ditemukan
+          sebuah gangguan kesehatan mental, perawatan dini dapat membantu diri
+          kita sendiri atau orang yang kita kasihi untuk menerima perawatan yang
+          tepat yang juga mengakibatkan pemulihan yang lebih cepat.
+        </p>
+        <br />
+        <p>
+          Kesadaran tentang kesehatan mental seharusnya tidak hanya perlu
+          diingat untuk satu atau dua hari atau bahkan sebulan. Kita harus terus
+          menerus diingatkan karena gangguan terhadap kesehatan mental dapat
+          dengan mudah terjadi pada diri kita sendiri maupun seseorang yang
+          dekat dengan kita. Dengan meningkatkan kesadaran, kesehatan mental
+          sekarang dapat dilihat kurang lebih seperti penyakit.
+          Penyakit-penyakit tersebut dapat diatasi dengan pengobatan. Kita tidak
+          boleh mengisolasi penyakit mental dari kondisi kesehatan fisik, karena
+          sering kali keduanya berkaitan erat.
+        </p>
+      </article>
+
+      <aside>
+        <h2>Featured Posts</h2>
+        <hr />
+        <br />
+        <div class="featured_article">
+          <h4>
+            <a href="article2.html"
+              >Kenali Faktor-Faktor yang Mempengaruhi Mental Health</a
+            >
+          </h4>
+          <img src="/img/article2.png" width="88" height="72" />
+        </div>
+        <div class="featured_article">
+          <h4>
+            <a href="article3.html"
+              >5 kebiasaan yang bisa mengganggu kesehatan mental</a
+            >
+          </h4>
+          <img src="/img/article3.png" width="88" height="72" />
+        </div>
+        <div class="featured_article">
+          <h4>
+            <a href="article4.html"
+              >Menjaga Kesehatan Mental dengan Self-Love</a
+            >
+          </h4>
+          <img src="/img/article4.png" width="88" height="72" />
+        </div>
+      </aside>
+    </div>
+
+    <!-- footer section stars -->
+    <div id="footer-container"></div>
+
+    <script src="/script/script.js"></script>
+    <script src="/script/navbar_footer.js"></script>
+    <script src="/script/scroll-to-section.js"></script>
+    <script>
+      // Fungsi untuk memeriksa apakah pengguna sudah login atau belum
+      function checkLoginStatus() {
+        fetch("/check-login-status") // Ganti dengan endpoint yang sesuai untuk memeriksa status login
+          .then((response) => response.json())
+          .then((data) => {
+            if (data.isLoggedIn) {
+              // Pengguna sudah login, load navbar sesudah login
+              fetch("/navbar-after-login")
+                .then((response) => response.text())
+                .then((navbarHTML) => {
+                  document.getElementById("navbar-container").innerHTML =
+                    navbarHTML;
+                });
+            } else {
+              // Pengguna belum login, load navbar sebelum login
+              fetch("/navbar-before-login")
+                .then((response) => response.text())
+                .then((navbarHTML) => {
+                  document.getElementById("navbar-container").innerHTML =
+                    navbarHTML;
+                });
+            }
+          });
+      }
+
+      // Panggil fungsi checkLoginStatus saat halaman dimuat
+      window.onload = checkLoginStatus();
+    </script>
+  </body>
+</html>

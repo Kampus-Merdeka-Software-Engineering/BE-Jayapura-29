@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Profile</title>
+
+    <!-- Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+    <!-- Font -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
+
+    <!-- Css -->
+    <link rel="stylesheet" href="/style/profile.css" />
+    <link rel="stylesheet" href="/style/navbar.css" />
+  </head>
+  <body>
+    <header class="header">
+      <a href="/index2" class="logo">
+        <img class="logo" src="/img/logo.png" alt=""
+      </a>
+
+      <nav class="navbar">
+        <a href="/index2">home</a>
+        <a href="#services">services</a>
+        <a href="#doctors">find a psycholog</a>
+        <a href="#book">book</a>
+        <a href="#blogs">blogs</a>
+        <a href="#contact">contact us</a>
+      </nav>
+
+      <div style="display: flex; align-items: center">
+        <p
+          style="
+            color: #4682a9;
+            border: 1px solid #4682a9;
+            padding: 1em 5em 1em 1em;
+            border-radius: 50px;
+            font-size: 1.1em;
+          ">
+          <%= profileData.nama_pendek %>
+        </p>
+        <div class="profile">
+          <img
+            src="data:image/png;base64, <%= profileData.foto_pasien %>"
+            alt="Foto Profil"
+            class="poto_profile" />
+          <div class="profile-menu">
+            <button onclick="myFunction()" class="dropbtn"></button>
+            <div id="myDropdown" class="dropdown-content">
+              <a href="/profile" style="margin: 0" class="dropdown">Profile</a>
+              <a href="/pembayaran" style="margin: 0" class="dropdown"
+                >Pembayaran</a
+              >
+              <a href="/logout" style="margin: 0" class="dropdown">Logout</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="menu-btn" class="fas fa-bars"></div>
+    </header>
+
+    <!-- -------------------------------- -->
+    <div class="container_profile">
+      <p><a href="/index2" class="kembali">Kembali</a></p>
+      <div class="baris_satu">
+        <div class="card1">
+          <img
+            src="data:image/jpeg;base64, <%= profileData.foto_pasien %>"
+            alt="Foto Profil"
+            class="profile" />
+          <p><%= profileData.nama_pasien %></p>
+          <p>ID: <%= profileData.id_pasien %></p>
+          <a href="/edit_profile">Edit Profil</a>
+        </div>
+
+        <div class="card2">
+          <div class="pembayaran">
+            <h4>Status Pembayaran</h4>
+            <div class="isi_pembayaran">
+              <p id="jumlah-bayar">
+                Jumlah Bayar: <%= profileData.jumlah_bayar %>
+              </p>
+              <hr />
+              <p id="status-bayar">
+                Status Bayar: <%= profileData.status_bayar %>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="baris_dua">
+        <div class="card3">
+          <div class="biodata">
+            <p><%= profileData.nama_pasien %></p>
+            <hr />
+            <p><%= profileData.email_pasien %></p>
+            <hr />
+            <p><%= profileData.gender %></p>
+            <hr />
+            <p><%= profileData.nomor_ponsel %></p>
+            <hr />
+            <p><%= profileData.alamat %></p>
+          </div>
+        </div>
+
+        <div class="card4">
+          <div class="jadwal_konsultasi">
+            <h4>Jadwal Konsultasi</h4>
+            <div class="isi_jadwal">
+              <div>
+                <p id="tanggal-appointment">
+                  <%= profileData.tanggal_appointment %>
+                </p>
+              </div>
+              <br />
+              <br />
+              <div>
+                <p id="waktu-appointment">
+                  <%= profileData.waktu_appointment %>
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="/script/script.js"></script>
+  </body>
+</html>

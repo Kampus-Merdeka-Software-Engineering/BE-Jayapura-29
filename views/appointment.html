@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+    <!-- Font -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="/style/appointment.css" />
+    <link rel="stylesheet" href="/style/navbar.css" />
+
+    <title>Appointment</title>
+  </head>
+  <body>
+    <!--  -->
+    <header class="header">
+      <a href="/index" class="logo">
+        <img class="logo" src="/img/logo.png" alt=""
+      </a>
+
+      <nav class="navbar">
+        <a href="/index">home</a>
+        <a href="#services">services</a>
+        <a href="#doctors">find a psycholog</a>
+        <a href="#book">book</a>
+        <a href="#blogs">blogs</a>
+        <a href="#contact">contact us</a>
+      </nav>
+
+      <div style="display: flex; align-items: center">
+        <p
+          style="
+            color: #4682a9;
+            border: 1px solid #4682a9;
+            padding: 1em 5em 1em 1em;
+            border-radius: 50px;
+            font-size: 1.1em;
+          ">
+          <%= nama_pendek %>
+        </p>
+        <div class="profile">
+          <img
+            src="data:image/png;base64, <%= foto_pasien %>"
+            alt="Foto Profil"
+            class="poto_profile" />
+          <div class="profile-menu">
+            <button onclick="myFunction()" class="dropbtn"></button>
+            <div id="myDropdown" class="dropdown-content">
+              <a href="/profile" style="margin: 0" class="dropdown">Profile</a>
+              <a href="/pembayaran" style="margin: 0" class="dropdown"
+                >Pembayaran</a
+              >
+              <a href="/logout" style="margin: 0" class="dropdown">Logout</a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div id="menu-btn" class="fas fa-bars"></div>
+    </header>
+    <!--  -->
+    <div class="book_container">
+      <p><a href="/index2">Kembali</a></p>
+      <h1>Appointment</h1>
+      <p>Selamat datang, <%= nama_pendek %>. Silahkan lakukan appointment.</p>
+      <form action="/appointment" method="POST">
+        <div class="isi" style="display: none">
+          <label for="id_pasien">ID Pasien:</label>
+          <input
+            type="text"
+            name="id_pasien"
+            id="id_pasien"
+            value="<%= id_pasien %>"
+            readonly />
+        </div>
+
+        <div class="input_field">
+          <label for="nama_pasien">Nama:</label>
+          <input
+            type="text"
+            name="nama_pasien"
+            id="nama_pasien"
+            value="<%= nama_pasien %>"
+            readonly
+            class="input" />
+        </div>
+
+        <div class="input_field">
+          <label for="email_pasien">Email</label>
+          <input
+            type="text"
+            name="email_pasien"
+            id="email_pasien"
+            value="<%= email_pasien %>"
+            readonly
+            class="input" />
+        </div>
+
+        <div class="input_field">
+          <label for="nama_psikolog">Psycholog</label>
+          <select name="nama_psikolog" id="nama_psikolog">
+            <%= psikologOptions %>
+          </select>
+        </div>
+
+        <div class="input_field">
+          <label for="tanggal">Date</label>
+          <input
+            type="date"
+            name="tanggal"
+            id="tanggal"
+            required
+            class="input" />
+        </div>
+
+        <div class="input_field">
+          <label>Time</label>
+          <input type="time" name="waktu" id="waktu" required class="input" />
+        </div>
+
+        <div class="input_field">
+          <label for="keluhan">Complaint</label>
+          <textarea
+            name="keluhan"
+            id="keluhan"
+            required
+            class="input"
+            cols="30"
+            rows="10"
+            placeholder="Your Complaint"
+            style="height: 100px"></textarea>
+        </div>
+        <input type="submit" class="btn_submit" value="Buat Appointment" />
+      </form>
+    </div>
+
+    <script src="/script/script.js"></script>
+  </body>
+</html>

@@ -1,0 +1,125 @@
+:root {
+  --blue: #1450a3;
+  --black: #000000;
+  --light-color: #777;
+  --box-shadow: 0.5rem 0.5rem 0 rgba(22, 160, 133, 0.2);
+  --text-shadow: 0.4rem 0.4rem 0 rgba(0, 0, 0, 0.2);
+  --border: 0.2rem solid var(--blue);
+}
+
+* {
+  font-family: "Poppins", sans-serif;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  outline: none;
+  border: none;
+  transition: all 0.2s ease-out;
+  text-decoration: none;
+}
+
+html {
+  font-size: 62.5%;
+  overflow-x: hidden;
+  scroll-padding-top: 7rem;
+  scroll-behavior: smooth;
+}
+
+::placeholder {
+  color: #1450a3;
+}
+
+/*  */
+.book_container h1 {
+  font-size: 40px;
+  font-weight: 500;
+  color: #1450a3;
+  font-family: "Poppins", sans-serif;
+  margin-top: 1vw;
+}
+.book_container p {
+  font-size: 1.3em;
+  font-weight: 500;
+  color: #1450a3;
+  font-family: "Poppins", sans-serif;
+}
+.book_container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+form {
+  margin-top: 1.2vw;
+}
+
+.book_container form .input_field {
+  margin-bottom: 15px;
+  display: flex;
+  align-items: start;
+}
+
+label {
+  color: #1450a3;
+  font-size: 20px;
+  font-family: "Poppins", sans-serif;
+  font-weight: 500;
+}
+
+.input,
+select {
+  border: solid 1px #1450a3;
+  border-radius: 2px;
+  padding-left: 5px;
+  width: 400px;
+  height: 30px;
+  color: #1450a3;
+  text-transform: none;
+}
+
+.book_container form .input_field label {
+  width: 20%;
+  margin-right: 10px;
+}
+
+.btn_submit {
+  background-color: #1450a3;
+  color: #fff;
+  display: flex;
+  justify-content: center;
+  border-radius: 3px;
+  font-size: 18px;
+  padding: 1vw;
+  cursor: pointer;
+  margin-left: auto;
+}
+
+.book_container a {
+  position: absolute;
+  background-color: #fff;
+  padding: 0.8vw;
+  border-radius: 50px;
+  color: #4682a9;
+  font-weight: 400;
+  box-shadow: 1px 1px 5px #777;
+  cursor: pointer;
+  left: 100px;
+  top: 100px;
+}
+
+.input::-webkit-input-placeholder {
+  font-size: 1.1em;
+}
+
+.input:-ms-input-placeholder {
+  font-size: 1.1em;
+}
+
+.input:-moz-placeholder {
+  font-size: 1.1em;
+}
+
+.input::-moz-placeholder {
+  font-size: 1.1em;
+}

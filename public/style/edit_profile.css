@@ -1,0 +1,309 @@
+Reset style :root {
+  --blue: #1450a3;
+  --blue-weight: #4682a9;
+  --black: #000000;
+  --light-color: #777;
+  --box-shadow: 0.5rem 0.5rem 0 rgba(22, 160, 133, 0.2);
+  --text-shadow: 0.4rem 0.4rem 0 rgba(0, 0, 0, 0.2);
+  --border: 0.2rem solid var(--blue);
+}
+
+* {
+  font-family: "Poppins", sans-serif;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  outline: none;
+  text-transform: capitalize;
+  transition: all 0.2s ease-out;
+  text-decoration: none;
+}
+
+html {
+  font-size: 62.5%;
+  overflow-x: hidden;
+  scroll-padding-top: 7rem;
+  scroll-behavior: smooth;
+}
+
+::placeholder {
+  color: #4682a9;
+}
+
+#background {
+  margin-right: 15vw;
+  margin-left: 15vw;
+  text-align: end;
+  position: relative;
+  margin-top: 5vw;
+}
+
+.container_profile {
+  display: flex;
+  margin: auto;
+  justify-content: center;
+}
+
+.card1 {
+  width: 20vw;
+  height: 25vw;
+  background-color: #fff;
+  border: 1px solid #4682a9;
+  margin: 1vw;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  border-radius: 10px;
+  padding-bottom: 6vw;
+}
+
+.card1 label {
+  font-size: 1.3em;
+  background-color: #4682a9;
+  padding: 7px 10px 7px 10px;
+  border-radius: 50px;
+  font-weight: bold;
+  color: #fff;
+  box-shadow: 1px 1px 5px #777;
+}
+
+img.profile {
+  width: 50%;
+  border-radius: 100px;
+  margin: 4em;
+}
+
+/* ---------------- */
+
+.card3 {
+  width: 50vw;
+  height: 25vw;
+  background-color: #fff;
+  border: 1px solid #4682a9;
+  margin-top: 1vw;
+  border-radius: 10px;
+}
+.card3 input,
+.card3 select {
+  background-color: transparent;
+  border: none;
+  border-bottom: 1px solid #4682a9;
+  width: 40vw;
+  margin-top: 0.2vw;
+  margin-bottom: 0.3vw;
+  padding: 0.8vw;
+  color: #4682a9;
+  font-weight: 400;
+  font-size: 1.4em;
+}
+.card3 option {
+  background-color: transparent;
+  border: none;
+  width: 40vw;
+  padding: 0.8vw;
+  color: #4682a9;
+  font-weight: 200;
+  font-size: 1.2em;
+}
+
+.biodata {
+  margin-top: 1.5vw;
+  width: 100%;
+  background-color: #fff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-radius: 10px;
+}
+
+.biodata p {
+  font-size: 2em;
+  margin: 10px;
+  color: #fff;
+}
+
+/* ------------------- */
+
+button#simpan {
+  background-color: #fff;
+  padding: 0.8vw;
+  border-radius: 50px;
+  color: #4682a9;
+  font-weight: 400;
+  box-shadow: 1px 1px 5px #777;
+  cursor: pointer;
+}
+
+a.kembali {
+  background-color: #fff;
+  padding: 0.8vw;
+  border-radius: 50px;
+  color: #4682a9;
+  font-weight: 400;
+  box-shadow: 1px 1px 5px #777;
+  cursor: pointer;
+  margin-right: 65vw;
+  margin-bottom: 100px;
+}
+/* -------------------------- */
+
+@media (max-width: 1024px) {
+  .container_profile {
+    display: grid;
+    justify-content: flex-start;
+    position: relative;
+  }
+
+  /* Adjust card widths and margins */
+  .card3 {
+    width: 90%;
+    margin: 1rem 0;
+    height: auto;
+  }
+
+  .card1 {
+    text-align: center;
+    width: 100%;
+    margin: 1rem 0;
+  }
+  .card1 p,
+  a {
+    width: 40%;
+  }
+
+  .card2,
+  .card4 {
+    width: 40%;
+    height: auto;
+    margin: 0;
+  }
+
+  .card2 h4,
+  .card2 p,
+  .card4 h4,
+  .card4 p {
+    font-size: 1.5em;
+  }
+
+  /* Adjust font sizes for smaller screens */
+
+  .card3 p {
+    font-size: 2em;
+    width: 100%;
+    line-height: 3em;
+  }
+
+  /* Adjust image size */
+  img {
+    width: 20%;
+  }
+
+  /* Remove margin for biodata paragraphs */
+  .biodata p {
+    margin: 0;
+  }
+
+  /* Adjust margins for .isi_jadwal */
+  .isi_jadwal {
+    margin-top: 1rem;
+  }
+
+  .baris_satu {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .baris_dua {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .card1 {
+    order: 1;
+  }
+
+  .card3 {
+    order: 2;
+  }
+
+  .card4 {
+    position: absolute;
+    bottom: -170px;
+    left: 40px;
+  }
+  .card2 {
+    position: absolute;
+    bottom: -170px;
+    right: 40px;
+  }
+}
+
+/* ------------------ */
+@media (max-width: 576px) {
+  .container_profile {
+    display: block;
+  }
+
+  /* Adjust card widths and margins */
+  .card3 {
+    width: 80%;
+    margin: 1rem 0;
+    height: auto;
+  }
+
+  .card1 {
+    text-align: center;
+    width: 100%;
+    margin: 1rem 0;
+  }
+  .card1 p,
+  a {
+    width: 40%;
+  }
+
+  .card2,
+  .card4 {
+    width: 40%;
+    height: auto;
+    margin: 0;
+  }
+
+  .card2 h4,
+  .card2 p,
+  .card4 h4,
+  .card4 p {
+    font-size: smaller;
+  }
+
+  /* Adjust font sizes for smaller screens */
+
+  .card3 p {
+    font-size: 1.2em;
+    width: 100%;
+  }
+
+  /* Remove margin for biodata paragraphs */
+  .biodata p {
+    margin: 0;
+  }
+
+  /* Adjust margins for .isi_jadwal */
+  .isi_jadwal {
+    margin-top: 1rem;
+  }
+
+  .card4 {
+    position: absolute;
+    bottom: -130px;
+    left: 30px;
+  }
+  .card2 {
+    position: absolute;
+    bottom: -130px;
+    right: 30px;
+  }
+}

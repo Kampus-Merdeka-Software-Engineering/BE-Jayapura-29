@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+    <!-- Font -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
+
+    <!-- Css -->
+    <link rel="stylesheet" href="/style/edit_profile.css" />
+    <link rel="stylesheet" href="/style/navbar.css" />
+
+    <title>Edit Profile</title>
+  </head>
+  <body>
+    <!-- header -->
+
+    <header class="header">
+      <a href="/index2" class="logo">
+        <img class="logo" src="/img/logo.png" alt=""
+      </a>
+
+      <nav class="navbar">
+        <a href="/index2">home</a>
+        <a href="#services">services</a>
+        <a href="#doctors">find a psycholog</a>
+        <a href="#book">book</a>
+        <a href="#blogs">blogs</a>
+        <a href="#contact">contact us</a>
+      </nav>
+
+      <div style="display: flex; align-items: center">
+        <p
+          style="
+            color: #4682a9;
+            border: 1px solid #4682a9;
+            padding: 1em 5em 1em 1em;
+            border-radius: 50px;
+            font-size: 1.1em;
+          ">
+          <%= profileData.nama_pendek %>
+        </p>
+        <div class="profile">
+          <img
+            src="data:image/png;base64, <%= profileData.foto_pasien %>"
+            alt="Foto Profil"
+            class="poto_profile" />
+          <div class="profile-menu">
+            <button onclick="myFunction()" class="dropbtn"></button>
+            <div id="myDropdown" class="dropdown-content">
+              <a href="/profile" style="margin: 0" class="dropdown">Profile</a>
+              <a href="/pembayaran" style="margin: 0" class="dropdown"
+                >Pembayaran</a
+              >
+              <a href="/logout" style="margin: 0" class="dropdown">Logout</a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div id="menu-btn" class="fas fa-bars"></div>
+    </header>
+    <!-- ------------------- -->
+    <section id="background">
+      <a class="kembali" href="/profile">kembali</a>
+      <form action="/edit_profile" method="POST" enctype="multipart/form-data">
+        <div class="container_profile">
+          <div class="card1">
+            <img
+              src="data:image/jpeg;base64, <%= profileData.foto_pasien %>"
+              alt="Foto Profil"
+              class="profile" />
+            <label
+              for="profilePicture"
+              class="custom-file-upload"
+              style="cursor: pointer">
+              Upload Gambar
+            </label>
+            <input
+              type="file"
+              id="profilePicture"
+              name="foto_pasien"
+              accept="image/*"
+              style="display: none" />
+          </div>
+
+          <div class="card3">
+            <div class="biodata">
+              <input
+                type="text"
+                id="nama_pasien"
+                name="nama_pasien"
+                value="<%= profileData.nama_pasien %>"
+                required />
+              <br />
+              <input
+                type="email"
+                id="email_pasien"
+                name="email_pasien"
+                value="<%= profileData.email_pasien %>"
+                required />
+              <br />
+              <select id="gender" name="gender" required>
+                <option value="Laki-laki">Laki-laki</option>
+                <option value="Perempuan">Perempuan</option>
+              </select>
+              <br />
+              <input
+                type="text"
+                id="nomor_ponsel"
+                name="nomor_ponsel"
+                value="<%= profileData.nomor_ponsel %>"
+                required />
+              <br />
+              <input
+                type="text"
+                id="alamat"
+                name="alamat"
+                value="<%= profileData.alamat %>"
+                required />
+            </div>
+          </div>
+        </div>
+        <button id="simpan" type="submit">Simpan Perubahan</button>
+      </form>
+      <br />
+    </section>
+
+    <script>
+      document
+        .getElementById("profilePicture")
+        .addEventListener("change", function () {
+          // Kode di sini akan dijalankan saat pengguna memilih file
+          var selectedFile = this.files[0];
+          if (selectedFile) {
+            // Lakukan sesuatu dengan file yang dipilih, misalnya mengirimnya ke server
+            console.log("File yang dipilih: " + selectedFile.name);
+          }
+        });
+    </script>
+
+    <script src="/script/script.js"></script>
+  </body>
+</html>
