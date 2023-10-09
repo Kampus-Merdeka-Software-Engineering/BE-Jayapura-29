@@ -43,7 +43,7 @@ app.use(
 );
 
 app.use(express.urlencoded({ extended: true }));
-app.use(express.static("public"));
+app.use(express.static("../frontend"));
 
 function checkLoggedIn(req, res, next) {
   if (req.session.userId && req.session.email_pasien) {
@@ -85,7 +85,7 @@ app.use("/", apiRoutes);
 
 app.get("/", (req, res) => {
   const indexHtml = fs.readFileSync(
-    path.join(__dirname, "views", "index.html"),
+    path.join(__dirname, "../frontend/views", "index.html"),
     "utf8"
   );
   res.send(indexHtml);
@@ -103,7 +103,7 @@ app.get("/index2", checkLoggedIn, (req, res) => {
           const nama_pendek = namaPasienArray.slice(0, 2).join(" ");
 
           const index2Html = fs.readFileSync(
-            path.join(__dirname, "views", "index2.html"),
+            path.join(__dirname, "../frontend/views", "index2.html"),
             "utf8"
           );
           const renderedHtml = index2Html
@@ -128,7 +128,7 @@ app.get("/index2", checkLoggedIn, (req, res) => {
 app.use("/", loginRouter);
 app.get("/login", (req, res) => {
   const loginHtml = fs.readFileSync(
-    path.join(__dirname, "views", "login.html"),
+    path.join(__dirname, "../frontend/views", "login.html"),
     "utf8"
   );
   res.send(loginHtml);
@@ -138,7 +138,7 @@ app.get("/login", (req, res) => {
 app.use("/", signupRouter);
 app.get("/signup", (req, res) => {
   const signupHtml = fs.readFileSync(
-    path.join(__dirname, "views", "signup.html"),
+    path.join(__dirname, "../frontend/views", "signup.html"),
     "utf8"
   );
   res.send(signupHtml);
@@ -148,7 +148,7 @@ app.get("/signup", (req, res) => {
 
 app.get("/index", (req, res) => {
   const indexHtml = fs.readFileSync(
-    path.join(__dirname, "views", "index.html"),
+    path.join(__dirname, "../frontend/views", "index.html"),
     "utf8"
   );
   res.send(indexHtml);
@@ -185,7 +185,7 @@ app.get("/appointment", checkLoggedIn, async (req, res) => {
     const nama_pendek = namaPasienArray.slice(0, 2).join(" ");
 
     const appointmentHtml = fs.readFileSync(
-      path.join(__dirname, "views", "appointment.html"),
+      path.join(__dirname, "../frontend/views", "appointment.html"),
       "utf8"
     );
 
@@ -256,7 +256,7 @@ app.get("/pembayaran", checkLoggedIn, async (req, res) => {
     }
 
     const pembayaranHtml = fs.readFileSync(
-      path.join(__dirname, "views", "pembayaran.html"),
+      path.join(__dirname, "../frontend/views", "pembayaran.html"),
       "utf8"
     );
 
@@ -319,7 +319,7 @@ app.get("/profile", checkLoggedIn, async (req, res) => {
         };
 
         const profileHtml = fs.readFileSync(
-          path.join(__dirname, "views", "profile.html"),
+          path.join(__dirname, "../frontend/views", "profile.html"),
           "utf8"
         );
 
@@ -415,7 +415,7 @@ app.get("/edit_profile", (req, res) => {
         return res.status(404).send("Profil tidak ditemukan");
       }
       const editprofileHtml = fs.readFileSync(
-        path.join(__dirname, "views", "edit_profile.html"),
+        path.join(__dirname, "../frontend/views", "edit_profile.html"),
         "utf8"
       );
 
@@ -452,7 +452,11 @@ app.get("/check-login-status", (req, res) => {
 
 // navbar
 app.get("/navbar-before-login", (req, res) => {
-  res.sendFile(__dirname + "/views/navbar.html");
+  const navbarHtml = fs.readFileSync(
+    path.join(__dirname, "../frontend/views", "navbar.html"),
+    "utf8"
+  );
+  res.send(navbarHtml);
 });
 
 // navbar
@@ -474,7 +478,7 @@ app.get("/navbar-after-login", async (req, res) => {
     const nama_pendek = namaPasienArray.slice(0, 2).join(" ");
 
     const navbar2Html = fs.readFileSync(
-      path.join(__dirname, "views", "navbar2.html"),
+      path.join(__dirname, "../frontend/views", "navbar2.html"),
       "utf8"
     );
 
@@ -486,6 +490,43 @@ app.get("/navbar-after-login", async (req, res) => {
   } catch (error) {
     res.status(500).send("An error occurred: " + error.message);
   }
+});
+
+// article & team
+app.get("/article1", (req, res) => {
+  const article1Html = fs.readFileSync(
+    path.join(__dirname, "../frontend/views", "article1.html"),
+    "utf8"
+  );
+  res.send(article1Html);
+});
+app.get("/article2", (req, res) => {
+  const article2Html = fs.readFileSync(
+    path.join(__dirname, "../frontend/views", "article2.html"),
+    "utf8"
+  );
+  res.send(article2Html);
+});
+app.get("/article3", (req, res) => {
+  const article3Html = fs.readFileSync(
+    path.join(__dirname, "../frontend/views", "article3.html"),
+    "utf8"
+  );
+  res.send(article3Html);
+});
+app.get("/article4", (req, res) => {
+  const article4Html = fs.readFileSync(
+    path.join(__dirname, "../frontend/views", "article4.html"),
+    "utf8"
+  );
+  res.send(article4Html);
+});
+app.get("/team", (req, res) => {
+  const teamHtml = fs.readFileSync(
+    path.join(__dirname, "../frontend/views", "team.html"),
+    "utf8"
+  );
+  res.send(teamHtml);
 });
 
 // Implementasi POST routes untuk form submission
