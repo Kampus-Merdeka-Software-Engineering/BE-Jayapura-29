@@ -3,9 +3,23 @@ const router = express.Router();
 const multer = require("multer");
 const fs = require("fs").promises;
 const Pasien = require("../models/pasien");
+const axios = require("axios");
 
 const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });
+
+router.get("/signup", async (req, res) => {
+  try {
+    const response = await axios.get(
+      "https://raw.githubusercontent.com/Kampus-Merdeka-Software-Engineering/FE-Jayapura-29/main/signup.html"
+    );
+
+    res.send(response.data);
+  } catch (error) {
+    console.error("Error fetching signup HTML:", error);
+    res.status(500).send("Error fetching signup HTML from GitHub.");
+  }
+});
 
 router.post("/signup", upload.single("foto_pasien"), async (req, res) => {
   try {
@@ -38,7 +52,7 @@ router.post("/signup", upload.single("foto_pasien"), async (req, res) => {
     res.send(`
       <script>
         alert('${successMessage}');
-        window.location='/login'; // Ubah '/login' sesuai dengan URL login Anda
+        window.location='/login'; 
       </script>
     `);
   } catch (error) {
@@ -47,10 +61,27 @@ router.post("/signup", upload.single("foto_pasien"), async (req, res) => {
   }
 });
 
+// async function getDefaultProfileImage() {
+//   try {
+//     const defaultImageBuffer = await fs.readFile("public/img/poto-profil.png");
+//     return defaultImageBuffer.toString("base64");
+//   } catch (error) {
+//     console.error("Error reading default profile image:", error);
+//     throw error;
+//   }
+// }
+
 async function getDefaultProfileImage() {
   try {
-    const defaultImageBuffer = await fs.readFile("public/img/poto-profil.png");
-    return defaultImageBuffer.toString("base64");
+    const defaultImageBuffer = await axios.get(
+      "https://raw.githubusercontent.com/Kampus-Merdeka-Software-Engineering/FE-Jayapura-29/main/public/img/profile-pic.png",
+      { responseType: "arraybuffer" }
+    );
+
+    const base64Image = Buffer.from(defaultImageBuffer.data, "binary").toString(
+      "base64"
+    );
+    return base64Image;
   } catch (error) {
     console.error("Error reading default profile image:", error);
     throw error;
