@@ -7,7 +7,7 @@ const axios = require("axios");
 router.get("/login", async (req, res) => {
   try {
     const response = await axios.get(
-      "https://raw.githubusercontent.com/Kampus-Merdeka-Software-Engineering/FE-Jayapura-29/main/login.html"
+      "https://kampus-merdeka-software-engineering.github.io/FE-Jayapura-29/login.html"
       // "localhost:5501/index"
     );
 
