@@ -10,7 +10,7 @@ const Psikolog = sequelize.define("tb_psikolog", {
   nama_psikolog: Sequelize.STRING,
   alamat: Sequelize.STRING,
   spesialisasi: Sequelize.STRING,
-  gender: Sequelize.ENUM("Laki - laki", "Perempuan"),
+  gender: Sequelize.ENUM("Laki-laki", "Perempuan"),
   nomor_ponsel: Sequelize.STRING,
   email: Sequelize.STRING,
   gambar_psikolog: Sequelize.BLOB,
