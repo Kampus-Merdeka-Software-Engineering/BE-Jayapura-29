@@ -84,6 +84,8 @@ html {
   align-items: center;
   justify-content: space-between;
   background: #fff;
+  position: fixed;
+  z-index: 999;
 }
 
 a.logo {
