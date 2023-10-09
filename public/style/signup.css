@@ -50,7 +50,8 @@ h2#logo {
 form {
   margin: auto;
   width: fit-content;
-  margin-top: 140px;
+  margin-top: 11vh;
+  margin-bottom: 10.3vh;
 }
 
 label,

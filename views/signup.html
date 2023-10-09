@@ -20,7 +20,27 @@
   </head>
   <body>
     <!-- Header -->
-    <div id="navbar-container"></div>
+    <header class="header">
+      <a href="/index" class="logo">
+        <img class="logo" src="/img/logo.png" alt=""
+      /></a>
+
+      <nav class="navbar">
+        <a href="/index">home</a>
+        <a href="#services">services</a>
+        <a href="#doctors">find a psycholog</a>
+        <a href="#book">book</a>
+        <a href="#blogs">blogs</a>
+        <a href="#contact">contact us</a>
+      </nav>
+
+      <div class="header-btn">
+        <a href="/signup" class="sign-up">Sign Up</a>
+        <a href="/login" class="login">Login</a>
+      </div>
+
+      <div id="menu-btn" class="fas fa-bars"></div>
+    </header>
     <!--  -->
     <div class="container">
       <div class="logo_container">
@@ -70,36 +90,5 @@
       </div>
     </div>
     <img class="boy" src="/img/boy.png" alt="gambar.1" />
-
-    <script src="/script/script.js"></script>
-    <script>
-      // Fungsi untuk memeriksa apakah pengguna sudah login atau belum
-      function checkLoginStatus() {
-        fetch("/check-login-status") // Ganti dengan endpoint yang sesuai untuk memeriksa status login
-          .then((response) => response.json())
-          .then((data) => {
-            if (data.isLoggedIn) {
-              // Pengguna sudah login, load navbar sesudah login
-              fetch("/navbar-after-login")
-                .then((response) => response.text())
-                .then((navbarHTML) => {
-                  document.getElementById("navbar-container").innerHTML =
-                    navbarHTML;
-                });
-            } else {
-              // Pengguna belum login, load navbar sebelum login
-              fetch("/navbar-before-login")
-                .then((response) => response.text())
-                .then((navbarHTML) => {
-                  document.getElementById("navbar-container").innerHTML =
-                    navbarHTML;
-                });
-            }
-          });
-      }
-
-      // Panggil fungsi checkLoginStatus saat halaman dimuat
-      window.onload = checkLoginStatus();
-    </script>
   </body>
 </html>
