@@ -230,6 +230,24 @@ section:nth-child(even) {
   z-index: 0;
 }
 
+.box {
+  position: relative;
+}
+
+.img-box {
+  position: relative;
+}
+
+.background-img {
+  position: absolute;
+  z-index: 1; /* Ubah z-index sesuai kebutuhan Anda */
+}
+
+.foreground-img {
+  position: relative;
+  z-index: 2; /* Ubah z-index sesuai kebutuhan Anda (lebih tinggi dari background) */
+}
+
 .doctors .box-container .box img {
   font-size: 1.7rem;
   color: var(--blue);
