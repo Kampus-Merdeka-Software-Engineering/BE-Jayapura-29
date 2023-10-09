@@ -3,7 +3,6 @@ const router = express.Router();
 const multer = require("multer");
 const fs = require("fs").promises;
 const Pasien = require("../models/pasien");
-const bcrypt = require("bcrypt");
 
 const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });
@@ -20,8 +19,6 @@ router.post("/signup", upload.single("foto_pasien"), async (req, res) => {
       password,
     } = req.body;
 
-    const hashedPassword = await bcrypt.hash(password, 10);
-
     const foto_pasien = req.file
       ? req.file.buffer.toString("base64")
       : await getDefaultProfileImage();
@@ -33,7 +30,7 @@ router.post("/signup", upload.single("foto_pasien"), async (req, res) => {
       nomor_ponsel,
       email_pasien,
       alamat,
-      password: hashedPassword,
+      password, // Simpan password secara plaintext
       foto_pasien,
     });
 
