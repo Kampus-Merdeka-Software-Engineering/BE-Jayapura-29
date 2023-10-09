@@ -4,6 +4,7 @@ const session = require("express-session");
 const bodyParser = require("body-parser");
 const app = express();
 const multer = require("multer");
+const axios = require("axios");
 const fs = require("fs");
 const signupRouter = require("./routes/signup");
 const loginRouter = require("./routes/login");
@@ -78,108 +79,99 @@ const upload = multer({
   },
 });
 
-// app.use(express.static(path.join(__dirname, "views")));
 app.use(
   express.static(
-    path.join(
-      __dirname,
-      "https://github.com/Kampus-Merdeka-Software-Engineering/FE-Jayapura-29/"
-    )
+    "https://kampus-merdeka-software-engineering.github.io/FE-Jayapura-29"
   )
 );
 
 // Routing
-app.use("/", apiRoutes);
-
-app.get("/", (req, res) => {
-  const indexHtml = fs.readFileSync(
-    path.join(
-      __dirname,
-      "https://github.com/Kampus-Merdeka-Software-Engineering/FE-Jayapura-29/",
-      "index.html"
-    ),
-    "utf8"
-  );
-  res.send(indexHtml);
+app.get("/", async (req, res) => {
+  try {
+    const response = await axios.get(
+      "https://raw.githubusercontent.com/Kampus-Merdeka-Software-Engineering/FE-Jayapura-29/main/index.html"
+    );
+    res.send(response.data);
+  } catch (error) {
+    console.error("Error fetching HTML:", error);
+    res.status(500).send("Error fetching HTML from external URL");
+  }
 });
 
-app.get("/index2", checkLoggedIn, (req, res) => {
-  if (req.session.email_pasien) {
-    const email_pasien = req.session.email_pasien;
-    Pasien.findOne({ where: { email_pasien: email_pasien } })
-      .then((user) => {
-        if (user) {
-          const { nama_pasien, foto_pasien } = user;
-
-          const namaPasienArray = nama_pasien.split(" ");
-          const nama_pendek = namaPasienArray.slice(0, 2).join(" ");
-
-          const index2Html = fs.readFileSync(
-            path.join(
-              __dirname,
-              "https://github.com/Kampus-Merdeka-Software-Engineering/FE-Jayapura-29/",
-              "index2.html"
-            ),
-            "utf8"
-          );
-          const renderedHtml = index2Html
-            .replace(/<%= nama_pendek %>/g, nama_pendek)
-            .replace(/<%= foto_pasien %>/g, foto_pasien);
-
-          res.send(renderedHtml);
-        } else {
-          res.redirect("/login");
-        }
-      })
-      .catch((err) => {
-        console.error("Kesalahan saat mencari data pasien:", err);
-        res.status(500).send("Terjadi kesalahan saat mencari data pasien.");
+app.get("/index2", checkLoggedIn, async (req, res) => {
+  try {
+    if (req.session.email_pasien) {
+      const email_pasien = req.session.email_pasien;
+      const user = await Pasien.findOne({
+        where: { email_pasien: email_pasien },
       });
-  } else {
+
+      if (user) {
+        const { nama_pasien, foto_pasien } = user;
+        const namaPasienArray = nama_pasien.split(" ");
+        const nama_pendek = namaPasienArray.slice(0, 2).join(" ");
+
+        const response = await axios.get(
+          "https://raw.githubusercontent.com/Kampus-Merdeka-Software-Engineering/FE-Jayapura-29/main/index2.html"
+        );
+
+        const renderedHtml = response.data
+          .replace(/<%= nama_pendek %>/g, nama_pendek)
+          .replace(/<%= foto_pasien %>/g, foto_pasien);
+
+        res.send(renderedHtml);
+      } else {
+        res.redirect("/login");
+      }
+    } else {
+      // Handle the case where req.session.email_pasien is not defined
+    }
+  } catch (error) {
+    console.error("Error fetching and rendering HTML:", error);
+    res.status(500).send("Error fetching and rendering HTML from GitHub.");
   }
 });
 
 // Route Login
+app.get("/login", async (req, res) => {
+  try {
+    const response = await axios.get(
+      "https://raw.githubusercontent.com/Kampus-Merdeka-Software-Engineering/FE-Jayapura-29/main/login.html"
+    );
 
-app.use("/", loginRouter);
-app.get("/login", (req, res) => {
-  const loginHtml = fs.readFileSync(
-    path.join(
-      __dirname,
-      "https://github.com/Kampus-Merdeka-Software-Engineering/FE-Jayapura-29/",
-      "login.html"
-    ),
-    "utf8"
-  );
-  res.send(loginHtml);
+    res.send(response.data);
+  } catch (error) {
+    console.error("Error fetching login HTML:", error);
+    res.status(500).send("Error fetching login HTML from GitHub.");
+  }
 });
 
 // Route Signup
-app.use("/", signupRouter);
-app.get("/signup", (req, res) => {
-  const signupHtml = fs.readFileSync(
-    path.join(
-      __dirname,
-      "https://github.com/Kampus-Merdeka-Software-Engineering/FE-Jayapura-29/",
-      "signup.html"
-    ),
-    "utf8"
-  );
-  res.send(signupHtml);
+app.get("/signup", async (req, res) => {
+  try {
+    const response = await axios.get(
+      "https://raw.githubusercontent.com/Kampus-Merdeka-Software-Engineering/FE-Jayapura-29/main/signup.html"
+    );
+
+    res.send(response.data);
+  } catch (error) {
+    console.error("Error fetching signup HTML:", error);
+    res.status(500).send("Error fetching signup HTML from GitHub.");
+  }
 });
 
 // Route Dashboard
+app.get("/index", async (req, res) => {
+  try {
+    const response = await axios.get(
+      "https://raw.githubusercontent.com/Kampus-Merdeka-Software-Engineering/FE-Jayapura-29/main/index.html"
+    );
 
-app.get("/index", (req, res) => {
-  const indexHtml = fs.readFileSync(
-    path.join(
-      __dirname,
-      "https://github.com/Kampus-Merdeka-Software-Engineering/FE-Jayapura-29/",
-      "index.html"
-    ),
-    "utf8"
-  );
-  res.send(indexHtml);
+    res.send(response.data);
+  } catch (error) {
+    console.error("Error fetching index HTML:", error);
+    res.status(500).send("Error fetching index HTML from GitHub.");
+  }
 });
 
 // Route untuk Appointment
@@ -212,14 +204,11 @@ app.get("/appointment", checkLoggedIn, async (req, res) => {
     const namaPasienArray = pasien.nama_pasien.split(" ");
     const nama_pendek = namaPasienArray.slice(0, 2).join(" ");
 
-    const appointmentHtml = fs.readFileSync(
-      path.join(
-        __dirname,
-        "https://github.com/Kampus-Merdeka-Software-Engineering/FE-Jayapura-29/",
-        "appointment.html"
-      ),
-      "utf8"
+    const response = await axios.get(
+      "https://raw.githubusercontent.com/Kampus-Merdeka-Software-Engineering/FE-Jayapura-29/main/appointment.html"
     );
+
+    const appointmentHtml = response.data;
 
     const renderedHtml = appointmentHtml
       .replace(/<%= nama_pasien %>/g, pasien.nama_pasien)
@@ -227,6 +216,7 @@ app.get("/appointment", checkLoggedIn, async (req, res) => {
       .replace(/<%= foto_pasien %>/g, pasien.foto_pasien)
       .replace(/<%= psikologOptions %>/g, psikologOptionsHtml)
       .replace(/<%= nama_pendek %>/g, nama_pendek);
+
     res.send(renderedHtml);
   } catch (error) {
     console.error("Error:", error);
@@ -287,14 +277,11 @@ app.get("/pembayaran", checkLoggedIn, async (req, res) => {
       return res.status(404).send("Data psikolog tidak ditemukan");
     }
 
-    const pembayaranHtml = fs.readFileSync(
-      path.join(
-        __dirname,
-        "https://github.com/Kampus-Merdeka-Software-Engineering/FE-Jayapura-29/",
-        "pembayaran.html"
-      ),
-      "utf8"
+    const response = await axios.get(
+      "https://raw.githubusercontent.com/Kampus-Merdeka-Software-Engineering/FE-Jayapura-29/main/pembayaran.html"
     );
+
+    const pembayaranHtml = response.data;
 
     const renderedHtml = pembayaranHtml
       .replace(/<%= id_pasien %>/g, pasien.id_pasien)
@@ -354,14 +341,11 @@ app.get("/profile", checkLoggedIn, async (req, res) => {
           nama_pendek: nama_pendek,
         };
 
-        const profileHtml = fs.readFileSync(
-          path.join(
-            __dirname,
-            "https://github.com/Kampus-Merdeka-Software-Engineering/FE-Jayapura-29/",
-            "profile.html"
-          ),
-          "utf8"
+        const response = await axios.get(
+          "https://raw.githubusercontent.com/Kampus-Merdeka-Software-Engineering/FE-Jayapura-29/main/profile.html"
         );
+
+        const profileHtml = response.data;
 
         const appointment = await Appointment.findOne({
           where: { email_pasien },
@@ -443,40 +427,39 @@ app.get("/profile", checkLoggedIn, async (req, res) => {
 
 // Edit Profile
 app.use("/", editprofileRoutes);
-app.get("/edit_profile", (req, res) => {
+
+app.get("/edit_profile", async (req, res) => {
   const userId = req.session.userId;
   if (!userId) {
     return res.redirect("/login");
   }
 
-  Pasien.findOne({ where: { id_pasien: userId } })
-    .then((profileData) => {
-      if (!profileData) {
-        return res.status(404).send("Profil tidak ditemukan");
-      }
-      const editprofileHtml = fs.readFileSync(
-        path.join(
-          __dirname,
-          "https://github.com/Kampus-Merdeka-Software-Engineering/FE-Jayapura-29/",
-          "edit_profile.html"
-        ),
-        "utf8"
-      );
+  try {
+    const profileData = await Pasien.findOne({ where: { id_pasien: userId } });
 
-      const renderedHtml = editprofileHtml
-        .replace(/<%= profileData.id_pasien %>/g, profileData.id_pasien)
-        .replace(/<%= profileData.foto_pasien %>/g, profileData.foto_pasien)
-        .replace(/<%= profileData.nama_pasien %>/g, profileData.nama_pasien)
-        .replace(/<%= profileData.email_pasien %>/g, profileData.email_pasien)
-        .replace(/<%= profileData.nomor_ponsel %>/g, profileData.nomor_ponsel)
-        .replace(/<%= profileData.alamat %>/g, profileData.alamat);
+    if (!profileData) {
+      return res.status(404).send("Profil tidak ditemukan");
+    }
 
-      res.send(renderedHtml);
-    })
-    .catch((error) => {
-      console.error("Error:", error);
-      res.status(500).send("Terjadi kesalahan saat mengambil data profil");
-    });
+    const response = await axios.get(
+      "https://raw.githubusercontent.com/Kampus-Merdeka-Software-Engineering/FE-Jayapura-29/main/edit_profile.html"
+    );
+
+    const editprofileHtml = response.data;
+
+    const renderedHtml = editprofileHtml
+      .replace(/<%= profileData.id_pasien %>/g, profileData.id_pasien)
+      .replace(/<%= profileData.foto_pasien %>/g, profileData.foto_pasien)
+      .replace(/<%= profileData.nama_pasien %>/g, profileData.nama_pasien)
+      .replace(/<%= profileData.email_pasien %>/g, profileData.email_pasien)
+      .replace(/<%= profileData.nomor_ponsel %>/g, profileData.nomor_ponsel)
+      .replace(/<%= profileData.alamat %>/g, profileData.alamat);
+
+    res.send(renderedHtml);
+  } catch (error) {
+    console.error("Error:", error);
+    res.status(500).send("Terjadi kesalahan saat mengambil data profil");
+  }
 });
 
 // Route Logout
@@ -495,11 +478,18 @@ app.get("/check-login-status", (req, res) => {
 });
 
 // navbar
-app.get("/navbar-before-login", (req, res) => {
-  res.sendFile(
-    __dirname +
-      "/https://github.com/Kampus-Merdeka-Software-Engineering/FE-Jayapura-29/navbar.html"
-  );
+app.get("/navbar-before-login", async (req, res) => {
+  try {
+    const response = await axios.get(
+      "https://raw.githubusercontent.com/Kampus-Merdeka-Software-Engineering/FE-Jayapura-29/main/navbar.html"
+    );
+
+    const navbarHtml = response.data;
+    res.send(navbarHtml);
+  } catch (error) {
+    console.error("Error:", error);
+    res.status(500).send("Terjadi kesalahan saat mengambil data navbar");
+  }
 });
 
 // navbar
@@ -520,14 +510,11 @@ app.get("/navbar-after-login", async (req, res) => {
     const namaPasienArray = pasien.nama_pasien.split(" ");
     const nama_pendek = namaPasienArray.slice(0, 2).join(" ");
 
-    const navbar2Html = fs.readFileSync(
-      path.join(
-        __dirname,
-        "https://github.com/Kampus-Merdeka-Software-Engineering/FE-Jayapura-29/",
-        "navbar2.html"
-      ),
-      "utf8"
+    const response = await axios.get(
+      "https://raw.githubusercontent.com/Kampus-Merdeka-Software-Engineering/FE-Jayapura-29/main/navbar2.html"
     );
+
+    const navbar2Html = response.data;
 
     const renderedHtml = navbar2Html
       .replace(/<%= nama_pendek %>/g, nama_pendek)
@@ -535,6 +522,7 @@ app.get("/navbar-after-login", async (req, res) => {
 
     res.send(renderedHtml);
   } catch (error) {
+    console.error("Error:", error);
     res.status(500).send("An error occurred: " + error.message);
   }
 });
