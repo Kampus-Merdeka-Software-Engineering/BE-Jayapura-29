@@ -19,6 +19,7 @@ const Pasien = require("./models/pasien");
 const Psikolog = require("./models/psikolog");
 const Appointment = require("./models/appointment");
 const Pembayaran = require("./models/pembayaran");
+const cors = require("cors");
 
 sequelize
   .sync()
@@ -80,10 +81,22 @@ const upload = multer({
 });
 
 app.use(
-  express.static(
-    "https://kampus-merdeka-software-engineering.github.io/FE-Jayapura-29"
-  )
+  cors({
+    // origin: "http://127.0.0.1:5501", // Allow requests from this origin
+    origin:
+      "https://kampus-merdeka-software-engineering.github.io/FE-Jayapura-29",
+    methods: "GET,HEAD,PUT,PATCH,POST,DELETE", // Allow these HTTP methods
+    credentials: true, // Allow sending cookies with the request
+  })
 );
+
+// app.use(
+//   express.static(
+//     // "https://kampus-merdeka-software-engineering.github.io/FE-Jayapura-29"
+//     // localhost
+//     "localhost:5501"
+//   )
+// );
 
 // middleware
 app.use("/", loginRouter);
