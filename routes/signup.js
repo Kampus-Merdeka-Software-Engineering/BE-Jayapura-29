@@ -61,16 +61,6 @@ router.post("/signup", upload.single("foto_pasien"), async (req, res) => {
   }
 });
 
-// async function getDefaultProfileImage() {
-//   try {
-//     const defaultImageBuffer = await fs.readFile("public/img/poto-profil.png");
-//     return defaultImageBuffer.toString("base64");
-//   } catch (error) {
-//     console.error("Error reading default profile image:", error);
-//     throw error;
-//   }
-// }
-
 async function getDefaultProfileImage() {
   try {
     const defaultImageBuffer = await axios.get(

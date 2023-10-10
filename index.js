@@ -82,7 +82,7 @@ const upload = multer({
 
 app.use(
   cors({
-    origin: "http://127.0.0.1:5501", // Allow requests from this origin
+    origin: "*", // Allow requests from this origin
     // origin: "https://kampus-merdeka-software-engineering.github.io",
     methods: "GET,HEAD,PUT,PATCH,POST,DELETE", // Allow these HTTP methods
     credentials: true, // Allow sending cookies with the request
